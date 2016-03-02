@@ -19,6 +19,7 @@ public class MAQuestion extends Question{
 		this.answer.addAnswer(answer);
 	}
 	
+
 	@Override
 	public int checkAnswer(String[] answers) {
 		if (answers.length != numanswers) return -1;

@@ -13,7 +13,6 @@
 <body>
 <h1>Display Quiz</h1>
 <%
-
 Quiz quiz = (Quiz)(session.getAttribute("quiz"));
 out.println("<h2>"+quiz.getName()+ "</h2>");
 out.println("<p>"+quiz.getDescription()+"<p>");

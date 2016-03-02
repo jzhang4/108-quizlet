@@ -12,10 +12,18 @@
 <body>
 <h1><% out.println(((User)request.getAttribute("user")).getUserName());%>'s Page</h1>
 
-<form action="FriendRequestServlet" method="post">
-<input name="user" type="hidden" value="<% out.println(((User)request.getAttribute("user")).getUserName()); %>"/>
-<input type="submit" value="Send Friend Request"/></p>
-</form>
+<p>
+<% 
+	if(request.getAttribute("requestStatus") != null)
+		out.println("Request sent to " + request.getAttribute("requestStatus"));
+	else {
+		out.println("<form action=\"FriendRequestServlet\" method=\"post\">");
+		out.println("<input name=\"user\" type=\"hidden\" value=\""+ ((User)request.getAttribute("user")).getUserName() + "\"/>");
+		out.println("<input type=\"submit\" value=\"Send Friend Request\"/>");
+		out.println("</form>");
+	}
+%>
+</p>
 
 
 </body>

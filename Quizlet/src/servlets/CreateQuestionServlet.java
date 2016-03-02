@@ -41,7 +41,6 @@ public class CreateQuestionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("qtype");
 		RequestDispatcher dispatch; 
-
 		switch (type) {
 			case "qr": 
 				dispatch = request.getRequestDispatcher("NewQRQuestion.html");
