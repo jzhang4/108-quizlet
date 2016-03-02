@@ -9,20 +9,9 @@ public class User {
 	private int ID;
 	private HashSet<Integer> friends;
 	
-	public User(String username, String password) {
+	public User(String username, byte[] password) {
 		this.username = username;
-		this.passwordHash = generate(password);
-	}
-	
-	private static byte[] generate(String toHash) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA");
-			md.update(toHash.getBytes());
-			return md.digest();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();	
-			return null;
-		}
+		this.passwordHash = password;
 	}
 	
 	public String getPasswordHash() {
@@ -40,6 +29,9 @@ public class User {
 		return buff.toString();
 	}
 	
+	public String getUserName() {
+		return username;
+	}
 	
 }
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Create New Question</title>
+</head>
+<body>
+<h1>Create New Question</h1>
+<p>Pick question type: </p>
+<form action="CreateQuestionServlet" method="post">
+  <input type="radio" name="qtype" value="qr" checked> Question-Response<br>
+  <input type="radio" name="qtype" value="fb"> Fill in the Blank<br>
+  <input type="radio" name="qtype" value="mc"> Multiple Choice<br>
+  <input type="radio" name="qtype" value="pr">  Picture-Response<br>
+  <input type="radio" name="qtype" value="ma">  Multiple-Answer<br>
+  <input type="submit" value = "Create"/>
+</form>
+
+<form action="DisplayQuizServlet" method="post">
+  <input type="submit" value = "Display Quiz"/>
+</form>
+
+
+</body>
+</html>

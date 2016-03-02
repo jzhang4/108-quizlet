@@ -1,6 +1,8 @@
 package user;
 
 import java.util.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class AccountManager {
@@ -10,15 +12,33 @@ public class AccountManager {
 	public AccountManager() {
 		accounts = new HashSet<User>();
 		dbc = new DBConnection();
-		
+		loadUsers();
+	}
+	
+	private void loadUsers() {
 		try {
-			dbc.stmt.executeQuery("SELECT * FROM users");
+			ResultSet rs = dbc.stmt.executeQuery("SELECT * FROM users");
+			while(rs.next()) {
+				String username = rs.getString("username");
+				String strPasswordHash = rs.getString("passwordHash");
+				User toAdd = new User(username, hexToArray(strPasswordHash));
+			}
+			
 		} catch (SQLException e) {}
 	}
 	
+	public byte[] hexToArray(String hex) {
+		System.out.println(hex);
+		byte[] result = new byte[hex.length()/2];
+		for (int i=0; i<hex.length(); i+=2) {
+			result[i/2] = (byte) Integer.parseInt(hex.substring(i, i+2), 16);
+		}
+		return result;
+	}
+	
 	public void newAccount(String user, String password) {
-		User toCheck = new User(user, password);
-		if (!accountExists(toCheck)) {
+		if (!accountExists(user)) {
+			User toCheck = new User(user, generate(password));
 			accounts.add(toCheck);
 			try {
 				dbc.stmt.executeUpdate("INSERT INTO users VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\");");
@@ -26,8 +46,24 @@ public class AccountManager {
 		}
 	}
 	
-	public boolean accountExists(User u) {
-		return accounts.contains(u);
+	private byte[] generate(String toHash) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			md.update(toHash.getBytes());
+			return md.digest();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();	
+			return null;
+		}
+	}
+	
+	public boolean accountExists(String username) {
+		for (User u : accounts) {
+			if (u.getUserName().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	//only gets called if account exists already
