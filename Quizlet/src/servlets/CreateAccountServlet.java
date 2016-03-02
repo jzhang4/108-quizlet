@@ -46,12 +46,11 @@ public class CreateAccountServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		request.setAttribute("user", user);
 		if (am.accountExists(user)) {
-			RequestDispatcher rd = request.getRequestDispatcher("name-taken.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("username-taken.jsp");
 			rd.forward(request, response);
 		} else {
 			am.newAccount(user, password);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("welcome.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 			rd.forward(request, response);
 		}
 	}
