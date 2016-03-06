@@ -1,0 +1,22 @@
+package user;
+
+import java.sql.*;
+
+public class Request {
+	private boolean accepted;
+	private int senderID;
+	private int recipientID;
+	
+	public Request(int senderID, int recipientID, Statement stmt) {
+		accepted = false;
+		this.senderID = senderID;
+		this.recipientID = recipientID;
+	}
+	
+	public void acceptRequest() {
+		accepted = true;
+	}
+	
+	
+
+}

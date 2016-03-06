@@ -40,12 +40,13 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc = getServletContext();
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
+		request.setAttribute("am", am);
 		
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		if (am.accountExists(user)) {
 			if (am.passwordMatches(user, password)) {
-				request.setAttribute("user", user);
+				request.setAttribute("user", am.getAccount(user));
 				RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 				rd.forward(request, response);
 			} else {

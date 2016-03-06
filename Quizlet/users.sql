@@ -9,3 +9,9 @@ CREATE TABLE users (
 	passwordHash CHAR(64) NOT NULL,
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE requests (
+	senderID BIGINT NOT NULL,
+	recipientID BIGINT NOT NULL,
+	accepted CHAR(64) NOT NULL
+);

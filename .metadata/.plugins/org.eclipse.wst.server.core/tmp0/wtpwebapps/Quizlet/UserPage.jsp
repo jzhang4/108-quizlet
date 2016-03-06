@@ -11,6 +11,7 @@
 </head>
 <body>
 <h1><% out.println(((User)request.getAttribute("user")).getUserName());%>'s Page</h1>
+<h2>ID <% out.println(((User)request.getAttribute("user")).getID());%></h2>
 
 <p>
 <% 
@@ -20,10 +21,13 @@
 		out.println("<form action=\"FriendRequestServlet\" method=\"post\">");
 		out.println("<input name=\"user\" type=\"hidden\" value=\""+ ((User)request.getAttribute("user")).getUserName() + "\"/>");
 		out.println("<input type=\"submit\" value=\"Send Friend Request\"/>");
+		out.println("<input type=\"hidden\" name=\"currUser\" value=\"" + request.getAttribute("currUser") + "\"/>");
 		out.println("</form>");
 	}
 %>
 </p>
+
+<a href="/Quizlet/HomepageLogin.html">Logout</a>
 
 
 </body>

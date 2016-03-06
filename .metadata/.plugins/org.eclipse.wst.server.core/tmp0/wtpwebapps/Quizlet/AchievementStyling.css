@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.floated_img {
+    float:left;
+    margin: 0px 0px 15px 20px;
+}
+form {
+  margin:auto; 
+  width:250px;	
+}

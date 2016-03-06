@@ -1,0 +1,12 @@
+package user;
+
+public class Request {
+	private boolean accepted;
+	private int senderID;
+	private int recipientID;
+	
+	public Request() {
+		accepted = false;
+	}
+
+}

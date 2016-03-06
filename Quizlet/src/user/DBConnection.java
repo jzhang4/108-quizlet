@@ -25,4 +25,14 @@ public class DBConnection {
 		return stmt;
 	}
 	
+	public void closeConnection() {
+//		try {
+//			con.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+	}
+	
+	
+	
 }

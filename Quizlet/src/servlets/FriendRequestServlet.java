@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import user.AccountManager;
+import user.DBConnection;
 import user.User;
+import user.Request;
+import java.sql.*;
 
 /**
  * Servlet implementation class FriendRequestServlet
@@ -34,16 +39,30 @@ public class FriendRequestServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc = getServletContext();
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
+		DBConnection con = (DBConnection) sc.getAttribute("Connection");
 		String user = request.getParameter("user").trim();
+		String currUser = request.getParameter("currUser");
 		
-		for (User u : am.accounts) {
-			if (user.equals(u.getUserName())) {
-				request.setAttribute("requestStatus", user);
-				request.setAttribute("user", u);
-				RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
-				rd.forward(request, response);
+		User u = am.getAccount(user);
+		request.setAttribute("requestStatus", user);
+		
+		if (currUser != null) { //have not sent request yet
+			currUser = currUser.trim();
+			User cu = am.getAccount(currUser);
+			Request r = new Request(cu.getID(), u.getID());
+			try {
+				con.getStatement().executeUpdate("INSERT INTO requests VALUES(" + cu.getID() + ", " + u.getID() + ", \"false\");");
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
+			cu.addSentRequest(r);
+			u.addReceivedRequest(r);
 		}
+		
+		request.setAttribute("user", u);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

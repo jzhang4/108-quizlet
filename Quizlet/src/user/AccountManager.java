@@ -7,25 +7,31 @@ import java.sql.*;
 
 public class AccountManager {
 	public HashSet<User> accounts;
-	DBConnection dbc;
 	
-	public AccountManager() {
+	public AccountManager(Statement stmt) {
 		accounts = new HashSet<User>();
-		dbc = new DBConnection();
-		loadUsers();
+		loadUsers(stmt);
 	}
 	
-	private void loadUsers() {
+	private void loadUsers(Statement stmt) {
 		try {
-			ResultSet rs = dbc.stmt.executeQuery("SELECT * FROM users");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users");
 			while(rs.next()) {
 				String username = rs.getString("username");
 				String strPasswordHash = rs.getString("passwordHash");
-				User toAdd = new User(username, hexToArray(strPasswordHash));
+				User toAdd = new User(username, hexToArray(strPasswordHash), stmt);
+				int ID = rs.getInt("id");
+				toAdd.setID(ID);
 				accounts.add(toAdd);
 			}
+			rs.close();
+			for (User u : accounts) {
+				u.loadRequests(stmt);
+			}
 			
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public byte[] hexToArray(String hex) {
@@ -36,15 +42,21 @@ public class AccountManager {
 		return result;
 	}
 	
-	public void newAccount(String user, String password) {
+	public void newAccount(String user, String password, Statement stmt) {
+		int ID = -1;
 		if (!accountExists(user)) {
-			User toCheck = new User(user, generate(password));
+			User toCheck = new User(user, generate(password), stmt);
 			accounts.add(toCheck);
 			try {
-				dbc.stmt.executeUpdate("INSERT INTO users (username, passwordHash) VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\");");
+				stmt.executeUpdate("INSERT INTO users (username, passwordHash) VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\");");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \"" + user + "\";");
+				while (rs.next()) {
+					ID = rs.getInt("id");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			toCheck.setID(ID);
 		}
 	}
 	
@@ -66,6 +78,24 @@ public class AccountManager {
 			}
 		}
 		return false;
+	}
+	
+	public User getAccount(String username) {
+		for (User u : accounts) {
+			if (u.getUserName().equals(username)) {
+				return u;
+			}
+		}
+		return null;
+	}
+	
+	public User getAccount(int ID) {
+		for (User u : accounts) {
+			if (u.getID()==ID) {
+				return u;
+			}
+		}
+		return null;
 	}
 	
 	//only gets called if account exists already
