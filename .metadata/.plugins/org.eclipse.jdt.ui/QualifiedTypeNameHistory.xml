@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="user.MyDBInfo"/>
+<fullyQualifiedTypeName name="user.AccountManager"/>
+<fullyQualifiedTypeName name="user.User"/>
+<fullyQualifiedTypeName name="user.Request"/>
+<fullyQualifiedTypeName name="user.DBConnection"/>
+<fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
+</qualifiedTypeNameHistroy>

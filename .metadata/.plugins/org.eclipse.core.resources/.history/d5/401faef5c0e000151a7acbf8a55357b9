@@ -1,0 +1,105 @@
+package quiz;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+public class MAQuestion extends Question{
+	
+	private int numanswers; 
+	private boolean ordered;
+	
+	public MAQuestion(String question, int numanswers, boolean ordered) {
+		this.question = question;
+		this.numanswers = numanswers; 
+		this.ordered = ordered; 
+		this.answer = new Answer(); 
+	}
+	public void addAnswer(String answer) {
+		this.answer.addAnswer(answer);
+	}
+	
+<<<<<<< HEAD
+	@Override
+	public int checkAnswer(String[] answers) {
+		if (answers.length != numanswers) return -1;
+		int numcorrect = 0; 
+=======
+	public boolean checkAnswers(ArrayList<String> answers) {
+		if (answers.size() != numanswers) return false; 
+>>>>>>> 0a58b8f9288da93a6b682d397071cf85112095e3
+		if (!ordered){
+			Set<String> correct = new HashSet<String>(this.answer.getAnswer());
+			
+			for (String ans : answers) {
+				if (correct.contains(ans)) {
+					correct.remove(ans);
+<<<<<<< HEAD
+					numcorrect++;
+				} 
+			}
+		} else {
+			for (int i = 0; i < numanswers; i++) {
+				if (this.answer.getAnswer().get(i).equals(answers[i])) numcorrect++; 
+			}
+		}
+		return numcorrect;
+	}
+	
+	@Override
+=======
+				} else return false; 
+			}
+			return true; 
+		} else {
+			for (int i = 0; i < numanswers; i++) {
+				if (!this.answer.getAnswer().get(i).equals(answers.get(i))) return false; 
+			}
+			return true; 
+		}
+	}
+	
+>>>>>>> 0a58b8f9288da93a6b682d397071cf85112095e3
+	public int getNumAnswers() {
+		return numanswers; 
+	}
+	
+	public void setNumAnswers(int num) {
+		numanswers = num; 
+	}
+	
+	public boolean ordered() {
+		return ordered; 
+	}
+	
+	@Override 
+	public int getType() {
+		return MULTIPLE_ANSWER; 
+	}
+	
+	//Test Sequence
+	public static void main(String[] args) {
+<<<<<<< HEAD
+		MAQuestion q = new MAQuestion("Name 3 things", 3, false);
+=======
+		MAQuestion q = new MAQuestion("Name 3 things", 3, true);
+>>>>>>> 0a58b8f9288da93a6b682d397071cf85112095e3
+		q.addAnswer("a");
+		q.addAnswer("b");
+		q.addAnswer("c");
+		q.addAnswer("d");
+<<<<<<< HEAD
+		String[] answers = new String[3];
+		answers[0] = "a";
+		answers[1] = "c";
+		answers[2] = "d";
+		System.out.println(q.checkAnswer(answers));
+=======
+		ArrayList<String> answers = new ArrayList<String>(); 
+		answers.add("a");
+		answers.add("b");
+		answers.add("c");
+		System.out.println(q.checkAnswers(answers));
+>>>>>>> 0a58b8f9288da93a6b682d397071cf85112095e3
+	}
+}

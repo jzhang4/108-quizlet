@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+h1 {
+	color: #7d9aff;
+	font-family: "Lucida Console", Monaco, monospace;
+	text-align: center;
+}
+#header {
+	background: #35d7da;
+	textAlign:center;
+	padding: 5px;
+}
+#header h1{
+	 color:#fe0810;
+}
+.leftSide {
+	float:left
+}
+.leftSide h1{
+	color: #7d9aff;
+	font-family: "Lucida Console", Monaco, monospace;
+	text-align: center;
+}
+
+
+
+
+span.purple{
+	color: #7d9aff;
+}
+.panel-group{
+	width: 450px;
+	float: center;
+}
+.panel panel-default{
+	float:center;
+}
+.container{
+	width: 550px;
+	float: left;
+}
+}
