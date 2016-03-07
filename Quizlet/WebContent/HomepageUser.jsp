@@ -6,18 +6,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Successful Login</title>
-<link rel="stylesheet" href="UserHomePage.css">
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%></title>
+	<link rel="stylesheet" href="UserHomePage.css">
 </head>
 <body>
-	<div class = "header"> 
-		<h1>Welcome  <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+	<div id=header>
+	
+	<ul>
+		<li class="name"><a href="HomepageUser.jsp">Quizzler</a></li>
+		<li><a href="HomepageLogin.html">Logout</a></li>
+		<li><a href="/Quizzes">Quizzes</a></li>
+		<li><a href="HomepageUser.jsp">Profile</a></li>
+	</ul>
+	<div id="extra-large-inner-header">
+		<div> 
+			<h1>Welcome  <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+		</div>
 	</div>
+	
 
 
 
-<a href="/Quizlet/HomepageLogin.html">Logout</a>
+
 <p>
 <% 
 	if(request.getAttribute("error") != null)
@@ -83,5 +95,6 @@
 </ul>
 <h1>Achievements</h1>
 <p> Click here to view your achievements </p>
+</div>
 </body>
 </html>
