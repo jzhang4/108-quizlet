@@ -66,3 +66,8 @@
 127.0.0.1 - - [07/Mar/2016:15:07:45 -0800] "GET / HTTP/1.1" 404 994
 0:0:0:0:0:0:0:1 - - [07/Mar/2016:15:07:49 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 200 935
 0:0:0:0:0:0:0:1 - - [07/Mar/2016:15:07:51 -0800] "GET /Quizlet/SearchUserServlet?user=liamNeath&currUser=Molly HTTP/1.1" 200 570
+127.0.0.1 - - [07/Mar/2016:15:21:02 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [07/Mar/2016:15:21:04 -0800] "GET /Quizlet/TakeNewQuiz.jsp HTTP/1.1" 200 638
+0:0:0:0:0:0:0:1 - - [07/Mar/2016:15:21:06 -0800] "POST /Quizlet/TakeDataQuizServlet HTTP/1.1" 200 429
+0:0:0:0:0:0:0:1 - - [07/Mar/2016:15:21:10 -0800] "POST /Quizlet/ScoreQuizServlet HTTP/1.1" 200 385
+0:0:0:0:0:0:0:1 - - [07/Mar/2016:15:21:12 -0800] "POST /Quizlet/DisplayQuizServlet HTTP/1.1" 200 883
