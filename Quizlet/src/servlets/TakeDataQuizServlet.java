@@ -37,9 +37,48 @@ public class TakeDataQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext context = getServletContext(); 
+		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+		
 		HttpSession session = request.getSession();
-        Quiz quiz = (Quiz)(session.getAttribute("quiz"));
         
+        	String name = request.getParameter("quizname");
+        
+        	Statement stmt = connect.getStatement();
+        	String quizstr = "";
+        	try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+			
+			while(rs.next()) {
+				String quizname = rs.getString("name");
+				if (quizname.equals(name)) {
+					Blob quizblob = rs.getBlob("quiz");
+					byte[] bdata = quizblob.getBytes(1, (int)quizblob.length());
+					quizstr = new String(bdata);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        	JSONParser parser = new JSONParser(); 
+        
+        	Quiz quiz =null; 
+        
+        	try {
+			Object obj = parser.parse(quizstr);
+			JSONObject jobj = (JSONObject)obj;
+			quiz = JSONCreator.getQuiz(jobj);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        	session.setAttribute("quiz", quiz);
+        	RequestDispatcher dispatch = request.getRequestDispatcher("TakeQuizServlet");
+		dispatch.forward(request, response);
         
 	}
 
