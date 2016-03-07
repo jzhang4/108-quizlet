@@ -11,9 +11,9 @@
 		<title> Administration Home</title>
 		<!--  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<link rel="stylesheet" href="common.css">
-		<link rel="stylesheet" href="03.css">
-		<link rel="stylesheet" href ="HomePage.css">
+		<link rel="stylesheet" href="./CSS/common.css">
+		<link rel="stylesheet" href="./CSS/03.css">
+		<link rel="stylesheet" href ="./CSS/HomePage.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	</head>
