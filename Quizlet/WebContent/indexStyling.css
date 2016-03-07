@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+#header {
+	height: 650px;
+	width: 100%;
+    background-image: url("tableBack.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;  
+    background-size:  100% 800px;
+}
+#innerHeader {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 600px;
+  height: 100px;
+  border-radius: 25px;
+  background: #e4a21a;
+  padding: 20px; 
+  text-align: center;
+  font-family: "Verdana", Geneva, serif;
+}
+#topBar{
+	height:100px;
+	width: 99%;
+	position:absolute;
+	background: #601830;
+}
+.sitePath{
+	display: inline-block;
+}
+.sitePath h1{
+	color: white;
+	font-size: 25px;
+}
+#admin{
+	width:50%;
+}
+#tab{
+	margin:20px;
+}
+#innerHeader h1{
+	text-align: center;
+	color: #000000;
+}

@@ -11,6 +11,7 @@ h1 {
 }
 #header h1{
 	 color:#fe0810;
+	 textAlign:center;
 }
 .leftSide {
 	float:left

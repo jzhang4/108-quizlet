@@ -28,7 +28,7 @@ while (rs.next()) {
 }
 
 %>
-<input type="submit" value = "Create"/>
+<input type="submit" value = "Take quiz"/>
 </form>
 
 </body>
