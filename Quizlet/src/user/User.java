@@ -17,6 +17,7 @@ public class User {
 		this.passwordHash = password;
 		receivedRequests = new HashSet<Request>();
 		sentRequests = new HashSet<Request>();
+		friends = new HashSet<Integer>();
 	}
 	
 	public String getPasswordHash() {
@@ -40,6 +41,10 @@ public class User {
 	
 	public int getID() {
 		return ID;
+	}
+	
+	public HashSet<Integer> getFriends() {
+		return friends;
 	}
 	
 	public HashSet<Request> getSentRequests() {
@@ -68,19 +73,84 @@ public class User {
 			while(rs1.next()) {
 				int recipientID = rs1.getInt("recipientID");
 				Request toAdd = new Request(ID, recipientID);
-				receivedRequests.add(toAdd);
+				sentRequests.add(toAdd);
 			}
 			rs1.close();
 			ResultSet rs2 = stmt.executeQuery("SELECT * FROM requests WHERE recipientID = " + String.valueOf(ID));
 			while(rs2.next()) {
 				int senderID = rs2.getInt("senderID");
 				Request toAdd = new Request(senderID, ID);
-				sentRequests.add(toAdd);
+				receivedRequests.add(toAdd);
 			}
 			rs2.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void loadFriends(Statement stmt) {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM friends WHERE user1 = " + String.valueOf(ID) + " OR user2 = " + String.valueOf(ID));
+			while(rs.next()) {
+				int user1 = rs.getInt("user1");
+				int user2 = rs.getInt("user2");
+				
+				int friend = (user1 == ID) ? user2 : user1;
+				friends.add(friend);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void acceptRequest(User sender) {
+		friends.add(sender.getID());
+		
+		for (Integer i : friends) {
+			System.out.println(username + " friends with " + i);
+		}
+		Iterator it = receivedRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getSenderID() == sender.getID()) {
+				it.remove();
+			}
+		}
+		
+	}
+	
+	public void acceptedRequest(User recipient) {
+		friends.add(recipient.getID());
+		for (Integer i : friends) {
+			System.out.println(username + " friends with " + i);
+		}
+		
+		
+		Iterator it = sentRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getRecipientID() == recipient.getID()) {
+				it.remove();
+			}
+		}
+	}
+	
+	public void deleteRequest(User sender) {
+		Iterator it = receivedRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getSenderID() == sender.getID()) {
+				it.remove();
+			}
+		}
+		
+	}
+	
+	public void deletedRequest(User recipient) {
+		Iterator it = sentRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getRecipientID() == recipient.getID()) {
+				it.remove();
+			}
 		}
 	}
 	

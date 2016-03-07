@@ -27,6 +27,7 @@ public class AccountManager {
 			rs.close();
 			for (User u : accounts) {
 				u.loadRequests(stmt);
+				u.loadFriends(stmt);
 			}
 			
 		} catch (SQLException e) {
