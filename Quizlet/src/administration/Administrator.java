@@ -56,6 +56,9 @@ public class Administrator {
 	public int getNumUsers(){
 		return countNumElements("users");
 	}
+	public int getNumQuizzes(){
+		return countNumElements("quizzes");
+	}
 	// extracting the search results and storing them in a table
 	public void extractSearchResults(ResultSet results){
 		if (results != null){
