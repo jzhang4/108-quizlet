@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import quiz.DBConnection;
+import user.DBConnection;
 import quiz.JSONCreator;
 import quiz.Quiz;
 
