@@ -82,6 +82,6 @@
 %>
 </ul>
 <h1>Achievements</h1>
-<p> Click <a href = "./AchievementViewer.jsp">here</a> to view your achievements </p>
+<p> Click here to view your achievements </p>
 </body>
 </html>

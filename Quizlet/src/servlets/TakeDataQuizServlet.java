@@ -24,7 +24,7 @@ import org.json.simple.parser.ParseException;
 
 import quiz.JSONCreator;
 import quiz.Quiz;
-import user.DBConnection;
+import quiz.DBConnection;
 
 /**
  * Servlet implementation class TakeDataQuizServlet
