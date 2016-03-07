@@ -9,7 +9,8 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%></title>
-	<link rel="stylesheet" href="UserHomePage.css">
+	<link rel="stylesheet" href="CSS/UserHomePage.css">
+	<link rel="stylesheet" href="CSS/login-formatting.css">
 </head>
 <body>
 	<div id=header>
