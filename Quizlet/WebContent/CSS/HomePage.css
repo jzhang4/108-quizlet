@@ -5,12 +5,12 @@ h1 {
 	text-align: center;
 }
 #header {
-	background: #35d7da;
+	background:#601830;
 	textAlign:center;
 	padding: 5px;
 }
 #header h1{
-	 color:#fe0810;
+	 color:#fa5a0c;
 	 textAlign:center;
 }
 .leftSide {
@@ -21,10 +21,6 @@ h1 {
 	font-family: "Lucida Console", Monaco, monospace;
 	text-align: center;
 }
-
-
-
-
 span.purple{
 	color: #7d9aff;
 }
