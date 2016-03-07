@@ -26,7 +26,7 @@
 </p>
 <h1> Recent Announcements</h1>
 
-<%
+<%	// why is this in yellow???
 	Administrator values = (Administrator) session.getAttribute("currentStats");
 	ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 	announcements = values.getAnnounce();
