@@ -26,8 +26,18 @@
 	position:absolute;
 	background: #601830;
 }
-#topBar h1{
-	color: #f8fcff;
+.sitePath{
+	display: inline-block;
+}
+.sitePath h1{
+	color: white;
+	font-size: 25px;
+}
+#admin{
+	width:50%;
+}
+#tab{
+	margin:20px;
 }
 #innerHeader h1{
 	text-align: center;

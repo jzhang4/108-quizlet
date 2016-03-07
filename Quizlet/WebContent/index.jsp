@@ -11,9 +11,24 @@
 </head>
 <div id="header">
 	<div id="topBar">
-		<h1>Administrator Login</h1>
+		<div class = "sitePath" align = "left" id = "admin" >
+			<h1>Administrator Login</h1>
+		</div>
+		<div class ="sitePath" align = "left" id = "tab">
+			<h1> Terms &amp; Conditions</h1>
+		</div>
+		
+		<div class = "sitePath" align ="left" id = "tab">
+			<h1>User Login</h1>
+		</div>
+		
+		<div class = "sitePath" align ="left" id ="tab">
+			<h1>The Team</h1>
+		</div>
+		
+		
+		
 	</div>
-
 	
 	<div id="innerHeader">
 		<h1>Ready To Get Those Neurons Firing?</h1>
