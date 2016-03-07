@@ -74,6 +74,7 @@
 	}
 %>
 </ul>
-
+<h1>Achievements</h1>
+<p> Click <a href = "./AchievementViewer.jsp">here</a> to view your achievements and the achievements of others! </p>
 </body>
 </html>
