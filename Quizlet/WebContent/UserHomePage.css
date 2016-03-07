@@ -1,4 +1,15 @@
 @CHARSET "UTF-8";
+
+
+.header {
+	background: #35d7da;
+	textAlign:center;
+	padding: 2px;
+}
+.header h1{
+	 color:#fe0810;
+	 textAlign:right;
+}
 table {
     border-collapse: collapse;
     width: 100%;
@@ -9,7 +20,8 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(even){background-color: #f2f2f2;
+}
 
 th {
     background-color: #4CAF50;

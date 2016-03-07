@@ -11,7 +11,12 @@
 <link rel="stylesheet" href="UserHomePage.css">
 </head>
 <body>
-<h1>Welcome Home <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+	<div class = "header"> 
+		<h1>Welcome Home <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+	</div>
+
+
+
 <a href="/Quizlet/HomepageLogin.html">Logout</a>
 <p>
 <% 
@@ -20,24 +25,26 @@
 %>
 </p>
 <h1> Recent Announcements</h1>
-	<%
-		Administrator values = (Administrator) session.getAttribute("currentStats");
-		ArrayList<Announcement> announcements = new ArrayList<Announcement>();
-		announcements = values.getAnnounce();
-		out.write("<table style = \"width:100%\">");
+
+<%
+	Administrator values = (Administrator) session.getAttribute("currentStats");
+	ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+	announcements = values.getAnnounce();
+	out.write("<table style = \"width:100%\">");
+	out.write("<tr>");
+	out.write("<th>Announcement</th>");
+	out.write("<th>Date</th>");
+	out.write("<tr>");
+	for (int i = 0; i < announcements.size(); i++){
+		Announcement temp = announcements.get(i);
 		out.write("<tr>");
-		out.write("<th>Announcement</th>");
-		out.write("<th>Date</th>");
-		out.write("<tr>");
-		for (int i = 0; i < announcements.size(); i++){
-			Announcement temp = announcements.get(i);
-			out.write("<tr>");
-			out.write("<td>" + temp.getText() + "</td>");
-			out.write("<td>" + temp.getDate() + "</td>");
-			out.write("</tr>");
-		}
-		out.write("</table>");
-	%>
+		out.write("<td>" + temp.getText() + "</td>");
+		out.write("<td>" + temp.getDate() + "</td>");
+		out.write("</tr>");
+	}
+	out.write("</table>");
+%>
+
 
 
 <h1> Social Connections </h1>
@@ -75,6 +82,6 @@
 %>
 </ul>
 <h1>Achievements</h1>
-<p> Click <a href = "./AchievementViewer.jsp">here</a> to view your achievements and the achievements of others! </p>
+<p> Click <a href = "./AchievementViewer.jsp">here</a> to view your achievements </p>
 </body>
 </html>
