@@ -134,8 +134,8 @@
 				if (values != null) values.getVisitFreq();
 				if (values == null) System.out.println("VALUES IS NULL LIAM, STUFF WENT WRONG");
 			%>
-			<p> Current Number of Users: <span class = "purple"> <b> <%out.write(Integer.toString(values.getNumUsers())); %></b> </span> </p>
-			<p> Current Number Of Quizzes: <span class = "purple"> <b> 40000 </b> </span> </p>
+			<p> Current Number of Users: <span class = "purple">  <b> <%out.write(Integer.toString(values.getNumUsers())); %></b> </span> </p>
+			<p> Current Number Of Quizzes: <span class = "purple"><b> <% out.write(Integer.toString(values.getNumQuizzes())); %> </b> </span> </p>
 			<button id="showTable">Show Table View</button>			<!--  Buttons that control how the data -->
 			<button id="showBarGraph">Show BarGraph View</button>	<!--  is presented to the administrator -->
 			<button id="showBoth"> Show Both Views</button>

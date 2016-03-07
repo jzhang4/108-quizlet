@@ -8,6 +8,12 @@
 </head>
 <body>
 <h1>Score: <%= session.getAttribute("score")%></h1>
+<%
+long newtime = System.currentTimeMillis(); 
+long time = newtime - (long)session.getAttribute("time");
+time /= 1000; 
+%>
+<h1>Time: <%= time%> seconds</h1>
 <form action="DisplayQuizServlet" method="post">
   <input type="submit" value = "Get Answers"/>
 </form>

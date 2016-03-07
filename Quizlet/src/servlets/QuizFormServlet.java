@@ -46,6 +46,22 @@ public class QuizFormServlet extends HttpServlet {
 		HttpSession session = request.getSession(); 
 		session.setAttribute("quiz", quiz);
 		
+		boolean random = false; 
+		if (request.getParameterValues("random") != null) random = true;
+		quiz.setRandom(random);
+		
+		boolean multi = false; 
+		if (request.getParameterValues("multi") != null) multi = true;
+		quiz.setPage(multi);
+		
+		boolean correct = false; 
+		if (request.getParameterValues("correct") != null) correct = true;
+		quiz.setCorrect(correct);
+		
+		boolean practice = false; 
+		if (request.getParameterValues("practice") != null) practice = true;
+		quiz.setPractice(practice);
+		
 		RequestDispatcher dispatch = request.getRequestDispatcher("QuestionTypeForm.html");
 		dispatch.forward(request, response);
 	}

@@ -151,3 +151,9 @@
 0:0:0:0:0:0:0:1 - - [06/Mar/2016:15:36:13 -0800] "GET /Quizlet/..animatedGraphImages/bar-02-bg.gif HTTP/1.1" 404 1080
 0:0:0:0:0:0:0:1 - - [06/Mar/2016:15:36:13 -0800] "GET /Quizlet/..animatedGraphImages/bar-03-bg.gif HTTP/1.1" 404 1080
 0:0:0:0:0:0:0:1 - - [06/Mar/2016:15:36:13 -0800] "GET /Quizlet/..animatedGraphImages/info-bg.gif HTTP/1.1" 404 1076
+127.0.0.1 - - [06/Mar/2016:15:55:05 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [06/Mar/2016:15:55:07 -0800] "GET /Quizlet/TakeNewQuiz.jsp HTTP/1.1" 500 2923
+127.0.0.1 - - [06/Mar/2016:16:00:24 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [06/Mar/2016:16:00:25 -0800] "GET /Quizlet/TakeDataQuizServlet HTTP/1.1" 200 19
+0:0:0:0:0:0:0:1 - - [06/Mar/2016:16:00:39 -0800] "GET /Quizlet/TakeNewQuiz.jsp HTTP/1.1" 500 4383
+0:0:0:0:0:0:0:1 - - [06/Mar/2016:16:01:31 -0800] "GET /Quizlet/TakeNewQuiz.jsp HTTP/1.1" 200 592

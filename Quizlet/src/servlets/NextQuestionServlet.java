@@ -42,6 +42,7 @@ public class NextQuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		Quiz quiz = (Quiz)(session.getAttribute("quiz"));
 		Iterator<Question> it = (Iterator<Question>)(session.getAttribute("iterator"));	
 		
 		Question q = (Question)session.getAttribute("currentq");
@@ -50,6 +51,14 @@ public class NextQuestionServlet extends HttpServlet {
 
 		int score = (int)session.getAttribute("score");
 		session.setAttribute("score", score + points);
+		
+		request.setAttribute("points", points);
+		
+		if (quiz.isQuickCorrect()) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("QuickScore.jsp");
+			dispatch.forward(request, response);
+			return;
+		}
 		
 		if (it.hasNext()) {
 			RequestDispatcher dispatch = request.getRequestDispatcher("DisplayQuestion.jsp");

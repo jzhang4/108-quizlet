@@ -56,6 +56,9 @@ public class Administrator {
 	public int getNumUsers(){
 		return countNumElements("users");
 	}
+	public int getNumQuizzes(){
+		return countNumElements("quizzes");
+	}
 	// extracting the search results and storing them in a table
 	public void extractSearchResults(ResultSet results){
 		if (results != null){
@@ -163,7 +166,19 @@ public class Administrator {
 	public ArrayList<PageInfo> getPages(){
 		return pageStats;
 	}
-	
+	public ArrayList<Announcement> getAnnounce(){
+		ArrayList<Announcement> notices = new ArrayList<Announcement>();
+		String query = "SELECT * FROM announcements;";
+		try{
+			Statement temp = con.createStatement();
+			ResultSet results = temp.executeQuery(query);
+			while (results.next()){
+				Announcement temp2 = new Announcement(results.getString(1),results.getString(2));
+				notices.add(temp2);
+			}
+		} catch (Exception ex){}
+		return notices;	
+	}
 	// This is just for testing to make sure that everything is working correctly!
 	public static void main (String[] args){
 		Administrator newStats = new Administrator();

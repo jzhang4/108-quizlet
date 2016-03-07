@@ -25,7 +25,6 @@ public class SingleQuestion extends Question {
 			if (answer[0].equals(ans)) return 1; 
 		}
 		return 0; 
-
 	}
 	
 }
