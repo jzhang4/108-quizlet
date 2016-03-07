@@ -17,6 +17,7 @@ public class MAQuestion extends Question{
 		this.ordered = ordered; 
 		this.answer = new Answer(); 
 	}
+	@Override
 	public void addAnswer(String answer) {
 		this.answer.addAnswer(answer);
 	}
