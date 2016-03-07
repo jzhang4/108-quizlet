@@ -33,6 +33,25 @@
 	color: white;
 	font-size: 25px;
 }
+.heading{
+	display: inline-block;
+	
+}
+.heading h1{
+	color: white;
+	font-size: 40px;
+}
+.arrow-left {
+	display: inline-block;
+	width: 0; 
+	height: 0; 
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent; 
+	border-right:20px solid black; 
+}
+
+
+
 #admin{
 	width:50%;
 }
