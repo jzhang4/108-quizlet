@@ -21,6 +21,7 @@
   font-family: "Verdana", Geneva, serif;
 }
 
+
 #topBar{
 	height:50px;
 	width: 99%;
@@ -43,14 +44,7 @@
 	color: white;
 	font-size: 30px;
 }
-.arrow-left {
-	display: inline-block;
-	width: 0; 
-	height: 0; 
-	border-top: 20px solid transparent;
-	border-bottom: 20px solid transparent; 
-	border-right:20px solid black; 
-}
+
 
 
 #admin{

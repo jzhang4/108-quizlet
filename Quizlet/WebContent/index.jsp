@@ -18,7 +18,6 @@
 		<ul>
 		  <li class="name"><a href="index.jsp">Quizzler</a></li>
 		  <li><a href="TheTeam.html">Meet the Team</a></li>
-		  <li><a href="#contact">Admin Login</a></li>
 		  <li><a href="HomepageLogin.html">User Login</a></li>
 		</ul>
 		
@@ -27,5 +26,21 @@
 			<h2><a href="CreateNewAccount.html" class="sign_up">Sign Up</a> and see what it's all about!</h2>
 		</div>
 	</div>
+	<div id = "information">
+		<h1> Why Quizzle? </h1>
+		<div class = "item"> 
+			<img src = "./indexImages/BrainLoves.png"/>
+			<span class = "caption">Give your brain a workout!</span>
+		</div>
+		<div class = "item"> 
+			<img src = "./indexImages/mobileAbility.png"/>
+			<span class = "caption">You can take it anywhere!</span>
+		</div>
+		<div class = "item"> 
+			<img src = "./indexImages/friends-icon.png" height = "300px"/>
+			<span class = "caption">Go head to head with friends</span>
+		</div>
+	</div>
+	
 </body>
 </html>
