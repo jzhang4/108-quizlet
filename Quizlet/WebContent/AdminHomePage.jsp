@@ -11,9 +11,9 @@
 		<title> Administration Home</title>
 		<!--  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<link rel="stylesheet" href="common.css">
-		<link rel="stylesheet" href="03.css">
-		<link rel="stylesheet" href="HomePage.css">
+		<link rel="stylesheet" href="CSS/common.css">
+		<link rel="stylesheet" href="CSS/03.css">
+		<link rel="stylesheet" href="CSS/admin-formatting.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	</head>
@@ -34,9 +34,15 @@
 		});
 	</script>
 	<body>
-		<div id = "header">		<!-- Page header, CSS styles it with a solid colour background -->
-			<h1><b><font size = "20"> Administration</font></b></h1> 
-		</div>
+		<div id=header>
+		
+		<ul>
+			<li class="name"><a href="AdminHomePage.jsp">Quizzler</a></li>
+			<li><a href="HomepageLogin.html">Logout</a></li>
+		</ul>
+		<div id = "extra-large-inner-header">		<!-- Page header, CSS styles it with a solid colour background -->
+			<h1>Administration</h1> 
+		
 		<div class = "leftSide"> <!-- Group short quick actions into an accordion bar  -->
 			<h1>Quick Actions</h1>
 		<div class="container">
@@ -182,8 +188,8 @@
 		<div class ="barga" id = "asdasd">
 			<h2>Current Quiz</h2>
 		</div>
-			
+			</div>
 		<script src="animatedGraph.js"></script>
-		
+		</div>
 	</body>
 </html>

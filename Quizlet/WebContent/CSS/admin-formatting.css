@@ -53,15 +53,19 @@ li a:hover {
     
 }
 body{
-	background-image: url("tableBack.png");
-   	background-repeat: repeat-y;
+	background-image: url("colourTriangles.png");
+   	background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;  
-    background-size:  100% 800px;	
 }
 h1{
 	font-size:30px;
 }
+.leftSide h1{
+	font-size:30px;
+	text-align: center;
+}
+
 
 .sign_up{
 	color:#286090;
@@ -75,14 +79,31 @@ h3{
 	font-size:15px;
 }
 
-#innerHeaderLarge{
+
+.leftSide {
+	float:left
+}
+
+.panel-group{
+	width: 450px;
+	float: center;
+}
+.panel panel-default{
+	float:center;
+}
+.container{
+	width: 550px;
+	float: left;
+}
+
+
+#extra-large-inner-header{
 	position: absolute;
  	top: 50%; left: 50%;
   	transform: translate(-50%,-50%);
-  	width: 500px;
- 	height: 280px;
+  	width: 90%;
+ 	height: 80%;
   	border-radius: 25px;
-  	background: #e4a21a;
+  	background: white;
   	text-align: center;
 }
-

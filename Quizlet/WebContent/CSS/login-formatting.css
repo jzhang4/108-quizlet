@@ -57,7 +57,7 @@ body{
    	background-repeat: repeat-y;
     background-position: center;
     background-attachment: fixed;  
-    background-size:  100% 800px;	
+    background-size: 100%;	
 }
 h1{
 	font-size:30px;
@@ -82,19 +82,28 @@ h3{
   	width: 500px;
  	height: 270px;
   	border-radius: 25px;
-  	background: #e4a21a;
+  	background: white;
   	text-align: center;
 }
 
+.leftSide{
+	padding-right:20px;
+	padding-left:20px;
+	float:left;
+}
 
+.rightSide{
+	float:left;
+	padding-right:20px;
+}
 
 #extra-large-inner-header{
 	position: absolute;
  	top: 50%; left: 50%;
   	transform: translate(-50%,-50%);
-  	width: 500px;
- 	height: 250px;
+  	width: 90%;
+ 	height: 80%;
   	border-radius: 25px;
-  	background: #e4a21a;
+  	background: white;
   	text-align: center;
 }
