@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class = "header"> 
-		<h1>Welcome Home <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+		<h1>Welcome  <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
 	</div>
 
 
