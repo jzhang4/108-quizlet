@@ -55,7 +55,7 @@
 	     			</div>
 	      			<div id="collapse1" class="panel-collapse collapse in">
 	        			<div class="panel-body">
-	        				<form action ="${pageContext.request.contextPath}/quickActionServlet" method = post>
+	        				<form action ="./quickActionServlet" method = post>
 	        				 	<input type = "text" name = "username" placeholder = "Enter the name of the user" size = "40">
 	        				 	<input type = "submit" value = "Make Admin">
 	        				 	<%
@@ -80,7 +80,7 @@
 	     	 </div>
 	      	<div id="collapse2" class="panel-collapse collapse">
 	        	<div class="panel-body">
-		        	<form action ="${pageContext.request.contextPath}/quickActionServlet" method = post>
+		        	<form action ="./quickActionServlet" method = post>
 		        		Enter the text of the announcement and press 'Make Announcement':
 		        		<textarea name = "newAnnouncement" cols = "50" rows = "6" >
 		        		</textarea>
@@ -107,7 +107,7 @@
 	      		</div>
 	      	<div id="collapse3" class="panel-collapse collapse">
 	        	<div class="panel-body">
-	        	<form action ="${pageContext.request.contextPath}/quickActionServlet" method = post>
+	        	<form action ="./quickActionServlet" method = post>
 	        		<input type = "text" name = "userNameToRemove" placeholder = "Enter the name of the user" size = "40">
 	        		<input type = "submit" value = "Remove User">
 	        		<input name="quickActionSelected" type ="hidden" value ="remove">
@@ -185,11 +185,6 @@
 			<div class = "barGraph" id = "bar-graph">
 			</div>
 		</div>
-		<div class ="barga" id = "asdasd">
-			<h2>Current Quiz</h2>
-		</div>
-			</div>
 		<script src="animatedGraph.js"></script>
-		</div>
 	</body>
 </html>
