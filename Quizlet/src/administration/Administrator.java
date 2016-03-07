@@ -92,7 +92,7 @@ public class Administrator {
 		return 0;
 	}
 	public int logAnnounce(String text){
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();		// We time stamp each announcement so we need to get the current date 
 		String countQuery = "Select COUNT(*) FROM announcements;";
 		int numPresent = 0;
@@ -102,7 +102,7 @@ public class Administrator {
 			results.next();
 			numPresent = results.getInt(1);
 		}catch(Exception ex){}
-		if (numPresent > 5){		// if we have more than 5 elements before we 
+		if (numPresent > 4){		// if we have more than 5 elements before we 
 			try {					// add then clear everything!
 			Statement deleteStmt = con.createStatement();
 			deleteStmt.execute("DELETE FROM announcements;");
