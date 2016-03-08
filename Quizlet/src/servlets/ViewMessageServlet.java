@@ -1,11 +1,20 @@
 package servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import user.DBConnection;
+import user.Message;
+import java.sql.*;
+import user.AccountManager;
+import user.User;
 
 /**
  * Servlet implementation class ViewMessageServlet
@@ -26,8 +35,35 @@ public class ViewMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext sc = getServletContext();
+		DBConnection con = (DBConnection)sc.getAttribute("Connection");
+		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
+		
 		int id = Integer.valueOf(request.getParameter("id"));
-		System.out.println(id);
+		String currUser = request.getParameter("currUser");
+		User u = am.getAccount(currUser);
+		
+		
+		request.setAttribute("currUser", u);
+		request.setAttribute("user", u);
+		
+		try {
+			ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE id=" + id);
+			while (rs.next()) {
+				String type = rs.getString("type");
+				String sender = rs.getString("sender");
+				String recipient = rs.getString("recipient");
+				String subject = rs.getString("subject");
+				String message = rs.getString("message");
+				Message m = new Message(type, sender, recipient, message, subject, id);
+				request.setAttribute("Message", m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("MessagePage.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

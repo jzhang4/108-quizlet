@@ -44,6 +44,10 @@ public class Message {
 		return id;
 	}
 	
+	public String getType() {
+		return type;
+	}
+	
 	public String getSubject() {
 		return subject;
 	}

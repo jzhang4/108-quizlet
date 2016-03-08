@@ -1572,3 +1572,12 @@ Java Model Exception: Java Model Status [[Working copy] __2F_Quizlet_2F_WebConte
 
 !ENTRY org.eclipse.wst.server.core 4 0 2016-03-07 17:50:31.449
 !MESSAGE Server Tomcat v8.0 Server at localhost failed to start.
+
+!ENTRY org.eclipse.wst.server.discovery 1 0 2016-03-08 10:07:50.782
+!MESSAGE cacheFile=file:/Users/SerenaWong/Downloads/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
+
+!ENTRY org.eclipse.wst.server.discovery 1 0 2016-03-08 10:07:50.788
+!MESSAGE cacheFile=file:/Users/SerenaWong/Downloads/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
+
+!ENTRY org.eclipse.wst.server.discovery 1 0 2016-03-08 10:08:04.008
+!MESSAGE cacheFile=file:/Users/SerenaWong/Downloads/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
