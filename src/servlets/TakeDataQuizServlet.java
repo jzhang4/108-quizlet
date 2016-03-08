@@ -20,10 +20,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import quiz.DBConnection;
 import quiz.JSONCreator;
 import quiz.Quiz;
-import user.DBConnection;
-
 
 /**
  * Servlet implementation class TakeDataQuizServlet
@@ -57,11 +56,11 @@ public class TakeDataQuizServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
         
-        	String name = request.getParameter("quizname");
+        String name = request.getParameter("quizname");
         
-        	Statement stmt = connect.getStatement();
-        	String quizstr = "";
-        	try {
+        Statement stmt = connect.getStatement();
+        String quizstr = "";
+        try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
 			
 			while(rs.next()) {
@@ -74,6 +73,7 @@ public class TakeDataQuizServlet extends HttpServlet {
 					quizstr = new String(bdata);
 					taken++;
 					stmt.executeUpdate("UPDATE quizzes SET numtaken = "+taken+" WHERE name = \""+name+"\"");
+					
 				}
 			}
 		} catch (SQLException e) {
@@ -81,11 +81,11 @@ public class TakeDataQuizServlet extends HttpServlet {
 			e.printStackTrace();
 		}
         
-        	JSONParser parser = new JSONParser(); 
+        JSONParser parser = new JSONParser(); 
         
-        	Quiz quiz =null; 
+        Quiz quiz =null; 
         
-        	try {
+        try {
 			Object obj = parser.parse(quizstr);
 			JSONObject jobj = (JSONObject)obj;
 			quiz = JSONCreator.getQuiz(jobj);
@@ -95,10 +95,9 @@ public class TakeDataQuizServlet extends HttpServlet {
 			e.printStackTrace();
 		}
         
-        	session.setAttribute("quiz", quiz);
-        	RequestDispatcher dispatch = request.getRequestDispatcher("TakeQuizServlet");
+        session.setAttribute("quiz", quiz);
+        RequestDispatcher dispatch = request.getRequestDispatcher("TakeQuizServlet");
 		dispatch.forward(request, response);
-        
 	}
-
+	//JUST TRYNA COMMIT THIS COMMENT
 }
