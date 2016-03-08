@@ -45,9 +45,8 @@
 		<h1> What Others Have Been Saying ...</h1>
 		<blockquote>
 			Quizzlet really made the administration of tests SO much easier!
-			<cite>Patrick Young</cite>
+			<cite> Patrick Young </cite>
 		</blockquote>
-		
 		<blockquote id = "centralQuote">
 			One of the best applications we have seen in a decade. Quizzlet is
 			really revolutionising the way we train our brain.
