@@ -65,9 +65,9 @@ public class TakeDataQuizServlet extends HttpServlet {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
 			
 			while(rs.next()) {
-				String quizname = rs.getString("name");
+				String quizname = rs.getString(2);
 				if (quizname.equals(name)) {
-					Blob quizblob = rs.getBlob("quiz");
+					Blob quizblob = rs.getBlob(5);
 					byte[] bdata = quizblob.getBytes(1, (int)quizblob.length());
 					quizstr = new String(bdata);
 				}

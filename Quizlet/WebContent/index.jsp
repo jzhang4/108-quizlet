@@ -42,13 +42,24 @@
 		</div>
 	</div>
 	<div id = "recentComments">
-		<h1> What Others Have Been Saying</h1>
-		
+		<h1> What Others Have Been Saying ...</h1>
 		<blockquote>
 			Quizzlet really made the administration of tests SO much easier!
 			<cite>Patrick Young</cite>
 		</blockquote>
 		
+		<blockquote id = "centralQuote">
+			One of the best applications we have seen in a decade. Quizzlet is
+			really revolutionising the way we train our brain.
+			<cite>The New York Times</cite>
+		</blockquote>
+		<div class = "twitterbox">
+			<a class="twitter-timeline" href="https://twitter.com/hashtag/Quizzler" data-widget-id="707101829281124353">#Quizzler Tweets</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		</div>
+	</div>
+	<div id = "footer">
+		<p>Quizzler&reg; and its Associates are owned fully by CookieDevelopers</p>
+		<p> Copyright 1995 - 2016 </p>
 	</div>
 </body>
 </html>
