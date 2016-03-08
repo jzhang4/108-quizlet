@@ -1,8 +1,13 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import quiz.DBConnection;
+import quiz.JSONCreator;
 import quiz.Quiz;
 
 /**
@@ -45,12 +55,49 @@ public class TakeDataQuizServlet extends HttpServlet {
 		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 		
 		HttpSession session = request.getSession();
-        Quiz quiz = (Quiz)(session.getAttribute("quiz"));
         
         String name = request.getParameter("quizname");
         
         Statement stmt = connect.getStatement();
-        ResultSet rs = stmt.e
+        String quizstr = "";
+        try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+			
+			while(rs.next()) {
+				String quizname = rs.getString(2);
+				if (quizname.equals(name)) {
+					long taken = rs.getLong(3); 
+					
+					Blob quizblob = rs.getBlob(5);
+					byte[] bdata = quizblob.getBytes(1, (int)quizblob.length());
+					quizstr = new String(bdata);
+					taken++;
+					stmt.executeUpdate("UPDATE quizzes SET numtaken = "+taken+" WHERE name = \""+name+"\"");
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        JSONParser parser = new JSONParser(); 
+        
+        Quiz quiz =null; 
+        
+        try {
+			Object obj = parser.parse(quizstr);
+			JSONObject jobj = (JSONObject)obj;
+			quiz = JSONCreator.getQuiz(jobj);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        session.setAttribute("quiz", quiz);
+        RequestDispatcher dispatch = request.getRequestDispatcher("TakeQuizServlet");
+		dispatch.forward(request, response);
 	}
 
 }

@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import quiz.DBConnection;
 import quiz.Quiz;
 
 /**
@@ -41,6 +45,28 @@ public class QuizFormServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
+		
+		ServletContext context = getServletContext(); 
+		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+
+		Statement stmt = connect.getStatement(); 
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery("SELECT * FROM quizzes");
+			while (rs.next()) {
+				String name2 = rs.getString("name");
+				if (name.equals(name2)) {
+					RequestDispatcher dispatch = request.getRequestDispatcher("UsedQuizName.html");
+					dispatch.forward(request, response);
+					return; 
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		String description = request.getParameter("description");
 		Quiz quiz = new Quiz(name, description);
 		HttpSession session = request.getSession(); 

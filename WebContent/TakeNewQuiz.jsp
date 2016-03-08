@@ -23,12 +23,12 @@ Statement stmt = connect.getStatement();
 ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
 
 while (rs.next()) {
-	String name = rs.getString("name");
+	String name = rs.getString(2);
 	out.println("<input type=\"radio\" name=\"quizname\" value=\""+name+"\"> "+name +"<br>");
 }
 
 %>
-<input type="submit" value = "Create"/>
+<input type="submit" value = "Take quiz"/>
 </form>
 
 </body>

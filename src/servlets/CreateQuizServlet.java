@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -71,10 +72,15 @@ public class CreateQuizServlet extends HttpServlet {
 		String name = quiz.getName();
 		String username = "jaimiex";
 		
+		long time = System.currentTimeMillis();
+		
 		try {
 			pstmt.setString(1, username);
 			pstmt.setString(2, name);
-			pstmt.setBinaryStream(3, in);
+			pstmt.setLong(3, 0);
+			pstmt.setLong(4, time);
+			pstmt.setBinaryStream(5, in);
+			
 			pstmt.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
