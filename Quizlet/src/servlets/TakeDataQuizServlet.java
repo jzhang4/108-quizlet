@@ -22,7 +22,7 @@ import org.json.simple.parser.ParseException;
 
 import quiz.JSONCreator;
 import quiz.Quiz;
-import quiz.DBConnection;
+import user.DBConnection;
 
 
 /**

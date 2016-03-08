@@ -11,9 +11,9 @@
 		<title> Administration Home</title>
 		<!--  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<link rel="stylesheet" href="common.css">
-		<link rel="stylesheet" href="03.css">
-		<link rel="stylesheet" href ="HomePage.css">
+		<link rel="stylesheet" href="CSS/common.css">
+		<link rel="stylesheet" href="CSS/03.css">
+		<link rel="stylesheet" href="CSS/admin-formatting.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	</head>
@@ -34,9 +34,15 @@
 		});
 	</script>
 	<body>
-		<div id = "header">		<!-- Page header, CSS styles it with a solid colour background -->
-			<h1><b><font size = "20"> Administration</font></b></h1> 
-		</div>
+		<div id=header>
+		
+		<ul>
+			<li class="name"><a href="AdminHomePage.jsp">Quizzler</a></li>
+			<li><a href="HomepageLogin.html">Logout</a></li>
+		</ul>
+		<div id = "extra-large-inner-header">		<!-- Page header, CSS styles it with a solid colour background -->
+			<h1>Administration</h1> 
+		
 		<div class = "leftSide"> <!-- Group short quick actions into an accordion bar  -->
 			<h1>Quick Actions</h1>
 		<div class="container">
@@ -49,7 +55,7 @@
 	     			</div>
 	      			<div id="collapse1" class="panel-collapse collapse in">
 	        			<div class="panel-body">
-	        				<form action ="${pageContext.request.contextPath}/quickActionServlet" method = post>
+	        				<form action ="./quickActionServlet" method = post>
 	        				 	<input type = "text" name = "username" placeholder = "Enter the name of the user" size = "40">
 	        				 	<input type = "submit" value = "Make Admin">
 	        				 	<%
@@ -74,7 +80,7 @@
 	     	 </div>
 	      	<div id="collapse2" class="panel-collapse collapse">
 	        	<div class="panel-body">
-		        	<form action ="${pageContext.request.contextPath}/quickActionServlet" method = post>
+		        	<form action ="./quickActionServlet" method = post>
 		        		Enter the text of the announcement and press 'Make Announcement':
 		        		<textarea name = "newAnnouncement" cols = "50" rows = "6" >
 		        		</textarea>
@@ -101,7 +107,7 @@
 	      		</div>
 	      	<div id="collapse3" class="panel-collapse collapse">
 	        	<div class="panel-body">
-	        	<form action ="${pageContext.request.contextPath}/quickActionServlet" method = post>
+	        	<form action ="./quickActionServlet" method = post>
 	        		<input type = "text" name = "userNameToRemove" placeholder = "Enter the name of the user" size = "40">
 	        		<input type = "submit" value = "Remove User">
 	        		<input name="quickActionSelected" type ="hidden" value ="remove">
@@ -134,8 +140,8 @@
 				if (values != null) values.getVisitFreq();
 				if (values == null) System.out.println("VALUES IS NULL LIAM, STUFF WENT WRONG");
 			%>
-			<p> Current Number of Users: <span class = "purple"> <b> <%out.write(Integer.toString(values.getNumUsers())); %></b> </span> </p>
-			<p> Current Number Of Quizzes: <span class = "purple"> <b> 40000 </b> </span> </p>
+			<p> Current Number of Users: <span class = "purple">  <b> <%out.write(Integer.toString(values.getNumUsers())); %></b> </span> </p>
+			<p> Current Number Of Quizzes: <span class = "purple"><b> <% out.write(Integer.toString(values.getNumQuizzes())); %> </b> </span> </p>
 			<button id="showTable">Show Table View</button>			<!--  Buttons that control how the data -->
 			<button id="showBarGraph">Show BarGraph View</button>	<!--  is presented to the administrator -->
 			<button id="showBoth"> Show Both Views</button>
@@ -179,11 +185,6 @@
 			<div class = "barGraph" id = "bar-graph">
 			</div>
 		</div>
-		<div class ="barga" id = "asdasd">
-			<h2>Current Quiz</h2>
-		</div>
-			
 		<script src="animatedGraph.js"></script>
-		
 	</body>
 </html>

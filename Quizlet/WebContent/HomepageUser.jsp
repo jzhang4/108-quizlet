@@ -88,15 +88,36 @@
 			<input name="currUser" type="hidden" value="<% out.println(((User)request.getAttribute("user")).getUserName());%>"/>
 			</form>
 			
+			<h2>Friends</h2>
+			<ul>
+			<%
+				for (Integer ID : ((User)request.getAttribute("user")).getFriends()) {
+			
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					out.println("</li>");
+				}
+			%>
+			</ul>
+			
 			<h2>Sent requests</h2>
 			
 			<ul>
 			<%
 				for (Request r : ((User)request.getAttribute("user")).getSentRequests()) {
 					int ID = r.getRecipientID();
+					System.out.println("recipient ID " + ID);
+			
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					request.setAttribute("user", u);
+					request.setAttribute("currUser", (User)request.getAttribute("user"));
 					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
 					out.println(u.getUserName());
+					out.println("</a>");
 					out.println("</li>");
 				}
 			%>
@@ -110,7 +131,16 @@
 					int ID = r.getSenderID();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
 					out.println(u.getUserName());
+					out.println("</a>");
+					
+					
+					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
+					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
+					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
+					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("user")).getUserName() + "\"/>");
+					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
 					out.println("</li>");
 				}
 			%>
