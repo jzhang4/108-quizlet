@@ -9,9 +9,9 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
-	<link rel="stylesheet" href="CSS/UserHomePage.css">
+ 	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">
+	<link rel="stylesheet" href="CSS/login-formatting.css"> 
 </head>
 <body>
 	<div id=header>
@@ -35,7 +35,7 @@
 		<div class="leftSide">
 			<h1> Recent Announcements</h1>
 			
-<%-- 			<%	
+ 			<%	
 				Administrator values = (Administrator) session.getAttribute("currentStats");
 				ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 				announcements = values.getAnnounce();
@@ -77,7 +77,7 @@
 						out.write("<h1> Could Not Find The Requested User</h1>");
 					}
 				}
-			%> --%>
+			%> 
 		</div>
 		
 		<div class="rightSide">
@@ -165,6 +165,7 @@
 				}
 			%>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
