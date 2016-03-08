@@ -49,12 +49,7 @@ li a:hover {
 
 #header {
 	height: 750px;
-	width: 100%;
-	background-image: url("tableBack.png");
-   	background-repeat: repeat-y;
-    background-position: center;
-    background-attachment: fixed;  
-    background-size:  100% 800px;	
+	width: 100%;	
 }
 
 #information{
