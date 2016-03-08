@@ -11,6 +11,8 @@ public class User {
 	private HashSet<Integer> friends;
 	private HashSet<Request> receivedRequests;
 	private HashSet<Request> sentRequests;
+	private HashSet<Message> receivedMessages;
+	private HashSet<Message> sentMessages;
 	
 	public User(String username, byte[] password, Statement stmt) {
 		this.username = username;
@@ -18,6 +20,8 @@ public class User {
 		receivedRequests = new HashSet<Request>();
 		sentRequests = new HashSet<Request>();
 		friends = new HashSet<Integer>();
+		receivedMessages = new HashSet<Message>();
+		sentMessages = new HashSet<Message>();
 	}
 	
 	public String getPasswordHash() {
@@ -53,6 +57,14 @@ public class User {
 	
 	public HashSet<Request> getReceivedRequests() {
 		return receivedRequests;
+	}
+	
+	public HashSet<Message> getSentMessages() {
+		return sentMessages;
+	}
+	
+	public HashSet<Message> getReceivedMessages() {
+		return receivedMessages;
 	}
 	
 	public void setID(int ID) {
@@ -105,6 +117,36 @@ public class User {
 		}
 	}
 	
+	public void loadMessages(Statement stmt) {
+		try {
+			ResultSet rs1 = stmt.executeQuery("SELECT * FROM messages WHERE sender = \"" + username + "\"");
+			while(rs1.next()) {
+				String recipient = rs1.getString("recipient");
+				String message = rs1.getString("message");
+				String type = rs1.getString("type");
+				String subject = rs1.getString("subject");
+				int ID = rs1.getInt("id");
+				Message toAdd = new Message(type, username, recipient, message, subject, ID);
+				sentMessages.add(toAdd);
+			}
+			rs1.close();
+			ResultSet rs2 = stmt.executeQuery("SELECT * FROM messages WHERE recipient = \"" + username + "\"");
+			while(rs2.next()) {
+				String sender = rs2.getString("sender");
+				String message = rs2.getString("message");
+				String type = rs2.getString("type");
+				String subject = rs2.getString("subject");
+				int ID = rs2.getInt("id");
+				Message toAdd = new Message(type, sender, username, message, subject, ID);
+				receivedMessages.add(toAdd);
+			}
+			rs2.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void acceptRequest(User sender) {
 		friends.add(sender.getID());
 		
@@ -117,7 +159,6 @@ public class User {
 				it.remove();
 			}
 		}
-		
 	}
 	
 	public void acceptedRequest(User recipient) {
@@ -152,6 +193,14 @@ public class User {
 				it.remove();
 			}
 		}
+	}
+	
+	public void addSentMessage(Message m) {
+		sentMessages.add(m);
+	}
+	
+	public void addReceivedMessage(Message m) {
+		receivedMessages.add(m);
 	}
 	
 }

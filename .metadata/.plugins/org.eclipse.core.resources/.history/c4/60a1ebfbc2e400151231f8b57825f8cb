@@ -1,0 +1,18 @@
+package user;
+
+import java.util.*;
+import java.sql.*;
+
+public class Message {
+	String type;
+	String sender;
+	String recipient;
+	String message;
+	
+	public Message(String type, String sender, String recipient, String message, Statement stmt) {
+		this.type = type;
+		this.sender = sender;
+		this.recipient = recipient;
+		this.message = message;
+	}
+}

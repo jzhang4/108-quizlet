@@ -1,0 +1,28 @@
+package user;
+
+import java.util.*;
+import java.sql.*;
+
+public class Message {
+	String type;
+	String sender;
+	String recipient;
+	String message;
+	
+	public Message(String type, String sender, String recipient, String message) {
+		this.type = type;
+		this.sender = sender;
+		this.recipient = recipient;
+		if (type.equals("Request")) {
+			this.message = "Please accept my friend request!";
+		} else if (type.equals("Challenge")) {
+			this.message = "Try to beat my score!";
+		} else {
+			this.message = message;			
+		}
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+}
