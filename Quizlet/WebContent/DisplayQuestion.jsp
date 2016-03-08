@@ -21,7 +21,11 @@ Iterator<Question> it = (Iterator<Question>)(session.getAttribute("iterator"));
 Question q = it.next();
 String ques = q.getQuestion();
 int index = (int)(session.getAttribute("index"));
-out.println("<p>Question "+index + ": "+ques + "</p>");
+
+if (q.getType() == Question.PICTURE_RESPONSE) {
+	out.println("<p>Question "+index + "</p>");
+	out.println("<img src=\""+ques + "\" alt = \""+ques+"\" style = \"width:128px;height:128px;\">");
+} else out.println("<p>Question "+index + ": "+ques + "</p>");
 
 session.setAttribute("index", index+1);
 out.println("<form action=\"NextQuestionServlet\" method=\"post\">");

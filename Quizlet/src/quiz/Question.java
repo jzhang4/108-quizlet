@@ -50,4 +50,6 @@ public abstract class Question {
 	public int checkAnswer(String[] answer) {
 		return 0;
 	}
+	public void addAnswer(String answer) {
+	}
 }

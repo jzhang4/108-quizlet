@@ -1,0 +1,103 @@
+package user;
+import java.util.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
+
+public class User {
+	private String username;
+	private byte[] passwordHash;
+	private int ID;
+	private HashSet<Integer> friends;
+	private HashSet<Request> receivedRequests;
+	private HashSet<Request> sentRequests;
+	
+	public User(String username, byte[] password, Statement stmt) {
+		this.username = username;
+		this.passwordHash = password;
+		receivedRequests = new HashSet<Request>();
+		sentRequests = new HashSet<Request>();
+	}
+	
+	public String getPasswordHash() {
+		return hexToString(passwordHash);
+	}
+	
+	public static String hexToString(byte[] bytes) {
+		StringBuffer buff = new StringBuffer();
+		for (int i=0; i<bytes.length; i++) {
+			int val = bytes[i];
+			val = val & 0xff;  // remove higher bits, sign
+			if (val<16) buff.append('0'); // leading 0
+			buff.append(Integer.toString(val, 16));
+		}
+		return buff.toString();
+	}
+	
+	public String getUserName() {
+		return username;
+	}
+	
+	public int getID() {
+		return ID;
+	}
+	
+	public HashSet<Request> getSentRequests() {
+		return sentRequests;
+	}
+	
+	public HashSet<Request> getReceivedRequests() {
+		return receivedRequests;
+	}
+	
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	
+	public void addSentRequest(Request r) {
+		sentRequests.add(r);
+	}
+	
+	public void addReceivedRequest(Request r) {
+		receivedRequests.add(r);
+	}
+	
+	public void loadRequests(Statement stmt) {
+		try {
+			ResultSet rs1 = stmt.executeQuery("SELECT * FROM requests WHERE senderID = " + String.valueOf(ID));
+			while(rs1.next()) {
+				int recipientID = rs1.getInt("recipientID");
+				Request toAdd = new Request(ID, recipientID);
+				sentRequests.add(toAdd);
+			}
+			rs1.close();
+			ResultSet rs2 = stmt.executeQuery("SELECT * FROM requests WHERE recipientID = " + String.valueOf(ID));
+			while(rs2.next()) {
+				int senderID = rs2.getInt("senderID");
+				Request toAdd = new Request(senderID, ID);
+				receivedRequests.add(toAdd);
+			}
+			rs2.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void acceptRequest(User sender) {
+		friends.add(sender.getID());
+		Iterator it = receivedRequests.iterator();
+		for (Request r : receivedRequests) {
+			if (r.getSenderID()==sender.getID()) {
+				
+			}
+		}
+	}
+	
+	public void acceptedRequest(User recipient) {
+		
+	}
+	
+}
+
+

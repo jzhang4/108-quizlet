@@ -15,7 +15,7 @@
 			</div>
 			</br>
 			</br>
-			<form action ="${pageContext.request.contextPath}/achieveGetServlet" method = post>
+			<form action = "./achieveGetServlet" method = post>
 				<input type = "text" name = "userNameToLookUp" placeHolder = "Name of user to look up" size = "40">
 				<input type = "submit" value = "Submit">				
 			</form>

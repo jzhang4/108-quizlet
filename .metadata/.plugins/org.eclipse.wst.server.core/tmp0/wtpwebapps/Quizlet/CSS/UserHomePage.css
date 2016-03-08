@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+
+.header {
+	background: #35d7da;
+	padding: 2px;
+}
+.header h1{
+	 color:#fe0810;
+	 width:600px;
+	 textAlign:center;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}

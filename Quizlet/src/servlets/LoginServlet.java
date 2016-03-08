@@ -42,16 +42,23 @@ public class LoginServlet extends HttpServlet {
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
 		request.setAttribute("am", am);
 		
+		String typeOfLogin = request.getParameter("typeOfUser");
+		
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		if (am.accountExists(user)) {
-			if (am.passwordMatches(user, password)) {
+			if (am.passwordMatches(user, password) && typeOfLogin.equals("user")) {
 				request.setAttribute("user", am.getAccount(user));
+				request.setAttribute("currUser", am.getAccount(user));
 				RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 				rd.forward(request, response);
+			} else if (am.passwordMatches(user, password) && typeOfLogin.equals("admin")) {
+				RequestDispatcher rd = request.getRequestDispatcher("AdminHomePage.jsp");
+				rd.forward(request,response);
 			} else {
 				RequestDispatcher rd = request.getRequestDispatcher("try-again.html");
 				rd.forward(request, response);
+				
 			}
 		} else {
 			RequestDispatcher rd = request.getRequestDispatcher("try-again.html");

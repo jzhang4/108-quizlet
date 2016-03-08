@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.json.simple.JSONObject;
+
 public class MAQuestion extends Question{
 	
 	private int numanswers; 
@@ -15,11 +17,11 @@ public class MAQuestion extends Question{
 		this.ordered = ordered; 
 		this.answer = new Answer(); 
 	}
+	@Override
 	public void addAnswer(String answer) {
 		this.answer.addAnswer(answer);
 	}
 	
-
 	@Override
 	public int checkAnswer(String[] answers) {
 		if (answers.length != numanswers) return -1;
@@ -66,6 +68,8 @@ public class MAQuestion extends Question{
 		q.addAnswer("b");
 		q.addAnswer("c");
 		q.addAnswer("d");
+		JSONObject obj = JSONCreator.jsonQuestion(q);
+		System.out.print(obj);
 		String[] answers = new String[3];
 		answers[0] = "a";
 		answers[1] = "c";

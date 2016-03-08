@@ -27,6 +27,8 @@ public class AccountManager {
 			rs.close();
 			for (User u : accounts) {
 				u.loadRequests(stmt);
+				u.loadFriends(stmt);
+				u.loadMessages(stmt);
 			}
 			
 		} catch (SQLException e) {
@@ -48,7 +50,7 @@ public class AccountManager {
 			User toCheck = new User(user, generate(password), stmt);
 			accounts.add(toCheck);
 			try {
-				stmt.executeUpdate("INSERT INTO users (username, passwordHash) VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\");");
+				stmt.executeUpdate("INSERT INTO users (username, passwordHash, admin) VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\", 0);");
 				ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \"" + user + "\";");
 				while (rs.next()) {
 					ID = rs.getInt("id");

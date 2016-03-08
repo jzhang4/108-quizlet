@@ -16,7 +16,6 @@ public class Achievements {
 	public ArrayList<Integer> fetchAchievemnt(String userName){
 		ArrayList<Integer> achievements = new ArrayList<Integer>();
 		String query = "SELECT * FROM achievements WHERE userName = " + "\"" + userName + "\"" + ";";
-		System.out.println(query);
 		try{
 			Statement temp = achieveCon.createStatement();
 			ResultSet results = temp.executeQuery(query);
