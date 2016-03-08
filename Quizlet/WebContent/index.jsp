@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div id = "footer">
-		<p>Quizzler&reg; and it's associates are owned fully by CookieDevelopers</p>
+		<p>Quizzler&reg; and its Associates are owned fully by CookieDevelopers</p>
 		<p> Copyright 1995 - 2016 </p>
 	</div>
 </body>
