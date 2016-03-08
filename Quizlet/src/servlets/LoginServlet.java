@@ -49,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 		if (am.accountExists(user)) {
 			if (am.passwordMatches(user, password) && typeOfLogin.equals("user")) {
 				request.setAttribute("user", am.getAccount(user));
+				request.setAttribute("currUser", am.getAccount(user));
 				RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 				rd.forward(request, response);
 			} else if (am.passwordMatches(user, password) && typeOfLogin.equals("admin")) {

@@ -2,45 +2,78 @@
 #recentComments{
 	position: relative;
 	width: 100%;
-	height: 500px;
+	height: 450px;
 	background-color: #e17c20;
 	padding: 20px;
-	top: 500px;
+	top: 520px;
 }
+#footer{
+	position: relative;
+	top: 550px;
+	width: 100%;
+	height: 50px;
+	background-color: #75726b;
+}
+#socialMedia h1{
+	display: inline-block;
+	left: -40%;
+}
+.twitterbox {
+    width:400px;
+    float:right;
+    position:relative;
+    display: inline-block;
+    top: -300px;
+}
+
+
+
 #recentComments h1{
 	color: white;
 	font-size: 40px;
 	text-align: center;
 }
+body{
+	background-image: url("tableBack.png");
+   	background-repeat: repeat-y;
+    background-position: center;
+    background-attachment: fixed;  
+    background-size:  100% 800px;
+}
 
 blockquote {
-font-family: Georgia, serif;
-font-size: 18px;
-font-style: italic;
-width: 500px;
-margin: 0.25em 0;
-padding: 0.35em 40px;
-line-height: 1.45;
-position: relative;
-color: #383838;
+	font-family: Georgia, serif;
+	font-size: 24px;
+	font-style: italic;
+	width: 500px;
+	margin: 0.25em 0;
+	padding: 0.35em 40px;
+	line-height: 1.45;
+	position: relative;
+	color: #383838;
+	left: 2%;
 }
 
 blockquote:before {
-display: block;
-padding-left: 10px;
-content: "\201C";
-font-size: 80px;
-position: absolute;
-left: -20px;
-top: -20px;
-color: #7a7a7a;
+	display: block;
+	padding-left: 10px;
+	content: "\201C";
+	font-size: 80px;
+	position: absolute;
+	left: -20px;
+	top: -20px;
+	color: #7a7a7a;
 }
 
 blockquote cite {
-color: #999999;
-font-size: 14px;
-display: block;
-margin-top: 5px;
+	color: #110e87;
+	font-size: 14px;
+	display: block;
+	margin-top: 5px;
+}
+#centralQuote{
+	left: 20%;
+	dispaly: inline-block;
 }
  
 blockquote cite:before {

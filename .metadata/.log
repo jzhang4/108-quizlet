@@ -1569,3 +1569,6 @@ Java Model Exception: Java Model Status [[Working copy] __2F_Quizlet_2F_WebConte
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
 !SUBENTRY 1 org.eclipse.jdt.core 4 969 2016-03-06 15:54:14.552
 !MESSAGE [Working copy] __2F_Quizlet_2F_WebContent_2F_DisplaySingle_2E_jsp.java [in <default> [in src [in Quizlet]]] does not exist
+
+!ENTRY org.eclipse.wst.server.core 4 0 2016-03-07 17:50:31.449
+!MESSAGE Server Tomcat v8.0 Server at localhost failed to start.

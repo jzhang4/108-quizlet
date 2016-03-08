@@ -46,15 +46,17 @@ li a:hover {
   	background: #e4a21a;
   	text-align: center;
 }
-
-#header {
-	height: 750px;
-	width: 100%;
+body{
 	background-image: url("tableBack.png");
    	background-repeat: repeat-y;
     background-position: center;
     background-attachment: fixed;  
-    background-size:  100% 800px;	
+    background-size:  100% 800px;
+}
+
+#header {
+	height: 750px;
+	width: 100%;	
 }
 
 #information{

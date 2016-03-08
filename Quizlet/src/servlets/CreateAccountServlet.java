@@ -50,6 +50,7 @@ public class CreateAccountServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		if (am.accountExists(user)) {
 			request.setAttribute("user", user);
+			request.setAttribute("currUser", am.getAccount(user));
 			RequestDispatcher rd = request.getRequestDispatcher("username-taken.jsp");
 			rd.forward(request, response);
 		} else {

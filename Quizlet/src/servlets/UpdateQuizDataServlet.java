@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
-import quiz.DBConnection;
+import user.DBConnection;
 import quiz.JSONCreator;
 import quiz.Question;
 import quiz.Quiz;
