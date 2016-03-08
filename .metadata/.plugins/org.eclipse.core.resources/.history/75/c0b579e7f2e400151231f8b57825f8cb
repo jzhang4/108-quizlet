@@ -1,0 +1,171 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ page import="user.User, java.util.*, user.Request, user.AccountManager, user.Message" %>
+<%@ page import = "administration.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
+ 	<link rel="stylesheet" href="CSS/UserHomePage.css">
+	<link rel="stylesheet" href="CSS/common.css">
+	<link rel="stylesheet" href="CSS/login-formatting.css"> 
+</head>
+<body>
+	<div id=header>
+	
+	<ul>
+		<li class="name"><a>Quizzler</a></li>
+		<li><a href="HomepageLogin.html">Logout</a></li>
+		<li><a href="/Quizzes">Quizzes</a></li>
+		<li><a href="HomepageUser.jsp">Profile</a></li>
+	</ul>
+	<div id="extra-large-inner-header">
+		<div> 
+			<h1>Welcome  <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+		</div>
+		<p>
+		<% 
+			if(request.getAttribute("error") != null)
+				out.println(request.getAttribute("error") + " does not exist");
+		%>
+		</p>
+		<div class="leftSide">
+			<h1> Recent Announcements</h1>
+			
+ 			<%	
+				Administrator values = (Administrator) session.getAttribute("currentStats");
+				ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+				announcements = values.getAnnounce();
+				out.write("<table style = \"width:100%\">");
+				out.write("<tr>");
+				out.write("<th>Announcement</th>");
+				out.write("<th>Date</th>");
+				out.write("<tr>");
+				for (int i = 0; i < announcements.size(); i++){
+					Announcement temp = announcements.get(i);
+					out.write("<tr>");
+					out.write("<td>" + temp.getText() + "</td>");
+					out.write("<td>" + temp.getDate() + "</td>");
+					out.write("</tr>");
+				}
+				out.write("</table>");
+			%>
+			
+			<h1>Achievements</h1>
+			<p> Click here to view all your achievements </p>
+			<%  
+				Achievements achieveContainer = (Achievements)session.getAttribute("achieveLookUp");
+				ArrayList<Integer> achHolder = new ArrayList<Integer>();
+				String userName = ((User)request.getAttribute("user")).getUserName();
+				achHolder = achieveContainer.fetchAchievemnt(userName);
+				if(achHolder != null){
+					int numTotalAchieve = 0;
+					if (achHolder.size() > 0){
+						for (int i = 0; i < achHolder.size(); i++){
+							String location = "./AchievementImages/Achieve";
+							if (achHolder.get(i) == 1 && numTotalAchieve < 2){
+								numTotalAchieve += 1;
+								out.write("<div class=\"floated_img\">");
+								out.write("<img src=\"" + location + Integer.toString(i+1) + ".png\">");
+								out.write("</div>");
+							}
+						}
+					} else {
+						out.write("<h1> Could Not Find The Requested User</h1>");
+					}
+				}
+			%> 
+		</div>
+		
+		<div class="rightSide">
+			<h1> Social Connections </h1>
+			<form action="SearchUserServlet" method="post">
+			<input type="text" name="user"/>
+			<input type="submit" value="Search for User"/>
+			<input name="currUser" type="hidden" value="<% out.println(((User)request.getAttribute("user")).getUserName());%>"/>
+			</form>
+			
+			<h2>Friends</h2>
+			<ul>
+			<%
+				for (Integer ID : ((User)request.getAttribute("user")).getFriends()) {
+			
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					out.println("</li>");
+				}
+			%>
+			</ul>
+			
+			<h2>Sent requests</h2>
+			
+			<ul>
+			<%
+				for (Request r : ((User)request.getAttribute("user")).getSentRequests()) {
+					int ID = r.getRecipientID();
+			
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					request.setAttribute("user", u);
+					request.setAttribute("currUser", (User)request.getAttribute("user"));
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					out.println("</li>");
+				}
+			%>
+			</ul>
+			
+			<h2>Received requests</h2>
+			
+			<ul>
+			<%
+				for (Request r : ((User)request.getAttribute("user")).getReceivedRequests()) {
+					int ID = r.getSenderID();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					
+					
+					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
+					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
+					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
+					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("user")).getUserName() + "\"/>");
+					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
+					out.println("</li>");
+				}
+			%>
+			</ul>	
+			
+			<h2>Sent Messages</h2>	
+<%-- 			<%
+				for (Message m : ((User)request.getAttribute("user")).getSentMessages()) {
+					String recipient = m.getSender();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					
+					
+					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
+					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
+					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
+					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("user")).getUserName() + "\"/>");
+					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
+					out.println("</li>");
+				}
+			%> --%>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

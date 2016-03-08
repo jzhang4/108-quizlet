@@ -16,6 +16,7 @@ import user.AccountManager;
 import user.DBConnection;
 import user.User;
 import user.Request;
+import user.Message;
 import java.sql.*;
 
 /**
@@ -50,16 +51,31 @@ public class FriendRequestServlet extends HttpServlet {
 			currUser = currUser.trim();
 			User cu = am.getAccount(currUser);
 			Request r = new Request(cu.getID(), u.getID());
+			Message m = new Message("Request", cu.getUserName(), u.getUserName(), null, null, -1);
 			try {
 				con.getStatement().executeUpdate("INSERT INTO requests VALUES(" + cu.getID() + ", " + u.getID() + ", \"false\");");
+				con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message) VALUES(\"Request\", \"" + cu.getUserName() + "\", \"" + u.getUserName() + "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\");");
+				ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE sender = \"" + cu.getUserName() + "\" AND recipient=\"" + u.getUserName() + "\" AND message= \"" + m.getMessage() + "\";");
+				if (rs.next()) {
+					int ID = rs.getInt("id");
+					m.setID(ID);
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			cu.addSentRequest(r);
 			u.addReceivedRequest(r);
+			cu.addSentMessage(m);
+			u.addReceivedMessage(m);
+			
+			request.setAttribute("user", cu);
+			request.setAttribute("currUser", cu);
+
+			System.out.println("currUser's received requests: " + cu.getReceivedRequests());
+			
 		}
 		
-		request.setAttribute("user", u);
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
 		rd.forward(request, response);

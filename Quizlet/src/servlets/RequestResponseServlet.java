@@ -78,6 +78,8 @@ public class RequestResponseServlet extends HttpServlet {
 		}
 		
 		request.setAttribute("user", am.getAccount(user));
+		request.setAttribute("currUser", am.getAccount(user));
+		request.setAttribute("am", am);
 		RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 		rd.forward(request, response);
 		
