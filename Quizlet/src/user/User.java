@@ -150,9 +150,6 @@ public class User {
 	public void acceptRequest(User sender) {
 		friends.add(sender.getID());
 		
-		for (Integer i : friends) {
-			System.out.println(username + " friends with " + i);
-		}
 		Iterator it = receivedRequests.iterator();
 		while (it.hasNext()) {
 			if (((Request)it.next()).getSenderID() == sender.getID()) {
@@ -162,12 +159,7 @@ public class User {
 	}
 	
 	public void acceptedRequest(User recipient) {
-		friends.add(recipient.getID());
-		for (Integer i : friends) {
-			System.out.println(username + " friends with " + i);
-		}
-		
-		
+		friends.add(recipient.getID());		
 		Iterator it = sentRequests.iterator();
 		while (it.hasNext()) {
 			if (((Request)it.next()).getRecipientID() == recipient.getID()) {

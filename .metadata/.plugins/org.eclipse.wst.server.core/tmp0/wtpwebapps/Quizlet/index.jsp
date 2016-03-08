@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/common.css">
 	<link rel="stylesheet" href="CSS/nav-bar.css">
-	
+	<link rel="stylesheet" href="CSS/index.css">
 </head>
 
 <body>
@@ -41,6 +41,14 @@
 			<span class = "caption">Go head to head with friends</span>
 		</div>
 	</div>
-	
+	<div id = "recentComments">
+		<h1> What Others Have Been Saying</h1>
+		
+		<blockquote>
+			Quizzlet really made the administration of tests SO much easier!
+			<cite>Patrick Young</cite>
+		</blockquote>
+		
+	</div>
 </body>
 </html>

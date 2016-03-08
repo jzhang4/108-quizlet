@@ -68,9 +68,14 @@ public class FriendRequestServlet extends HttpServlet {
 			cu.addSentMessage(m);
 			u.addReceivedMessage(m);
 			
+			request.setAttribute("user", cu);
+			request.setAttribute("currUser", cu);
+
+			System.out.println("currUser's received requests: " + cu.getReceivedRequests());
+			
 		}
 		
-		request.setAttribute("user", u);
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
 		rd.forward(request, response);
