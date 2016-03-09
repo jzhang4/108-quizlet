@@ -77,6 +77,8 @@ public class RequestResponseServlet extends HttpServlet {
 			}
 		}
 		
+		
+		
 		request.setAttribute("user", am.getAccount(user));
 		request.setAttribute("currUser", am.getAccount(user));
 		request.setAttribute("am", am);

@@ -57,11 +57,11 @@ public class TakeDataQuizServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
         
-        	String name = request.getParameter("quizname");
+        String name = request.getParameter("quizname");
         
-        	Statement stmt = connect.getStatement();
-        	String quizstr = "";
-        	try {
+        Statement stmt = connect.getStatement();
+        String quizstr = "";
+        try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
 			
 			while(rs.next()) {
@@ -74,6 +74,8 @@ public class TakeDataQuizServlet extends HttpServlet {
 					quizstr = new String(bdata);
 					taken++;
 					stmt.executeUpdate("UPDATE quizzes SET numtaken = "+taken+" WHERE name = \""+name+"\"");
+					
+					break; 
 				}
 			}
 		} catch (SQLException e) {

@@ -11,7 +11,7 @@
 	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
 <!--  	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">  -->
+	<link rel="stylesheet" href="CSS/login-formatting.css">   -->
 </head>
 <body>
 	<div id=header>
@@ -35,7 +35,7 @@
 		<div class="leftSide">
 			<h1> Recent Announcements</h1>
 			
- 			<%-- <%	
+<%--  			<%	
 				Administrator values = (Administrator) session.getAttribute("currentStats");
 				ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 				announcements = values.getAnnounce();
@@ -102,7 +102,7 @@
 			%>
 			</ul>
 			
-			<h2>Received requests</h2>
+			<h2>Received requests from:</h2>
 			
 			<ul>
 			<%
@@ -128,7 +128,7 @@
 			%>
 			</ul>	
 			
-			<h2>Sent requests</h2>
+			<h2>Sent requests to:</h2>
 			
 			<ul>
 			<%
@@ -146,16 +146,34 @@
 
 			%>
 			</ul>
-		
+
+			<h2>Received messages from:</h2>	
+  			<%
+
+				for (Message m : ((User)request.getAttribute("user")).getReceivedMessages()) {
+					String sender = m.getSender();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(sender);
+					out.println("<li>");
+					if (!m.isRead()) {
+						out.println("<b>");
+					}
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					if (!m.isRead()) {
+						out.println("</b>");
+					}
+				}
+			%>  		
 			
-			<h2>Sent Messages</h2>	
+			<h2>Sent messages to:</h2>	
   			<%
 
 				for (Message m : ((User)request.getAttribute("user")).getSentMessages()) {
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 				}

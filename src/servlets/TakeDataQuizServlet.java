@@ -73,7 +73,7 @@ public class TakeDataQuizServlet extends HttpServlet {
 					quizstr = new String(bdata);
 					taken++;
 					stmt.executeUpdate("UPDATE quizzes SET numtaken = "+taken+" WHERE name = \""+name+"\"");
-					
+					break; 
 				}
 			}
 		} catch (SQLException e) {
