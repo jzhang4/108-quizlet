@@ -52,7 +52,8 @@ CREATE TABLE quizzes (
 	numtaken BIGINT,
 	timecreated BIGINT,
 	quiz LONGBLOB,
-	highscore BIGINT
+	highscore BIGINT,
+	userscores MEDIUMBLOB
 );
 
 CREATE TABLE messages(
