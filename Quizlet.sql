@@ -47,11 +47,12 @@ INSERT INTO friends VALUES
 	(1, 3);
 
 CREATE TABLE quizzes (
-    username CHAR(64),
-    name CHAR(64),
-    numtaken BIGINT,
-    timecreated BIGINT,
-    quiz LONGBLOB
+	username CHAR(64),
+	name CHAR(64),
+	numtaken BIGINT,
+	timecreated BIGINT,
+	quiz LONGBLOB,
+	highscore BIGINT
 );
 
 CREATE TABLE messages(
