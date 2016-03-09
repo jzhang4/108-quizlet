@@ -137,7 +137,6 @@ public class User {
 				String type = rs2.getString("type");
 				String subject = rs2.getString("subject");
 				Boolean read = (rs2.getInt("recipientRead") == 0) ? false : true;
-				System.out.println(read);
 				int ID = rs2.getInt("id");
 				Message toAdd = new Message(type, sender, username, message, subject, ID, read);
 				receivedMessages.add(toAdd);

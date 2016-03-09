@@ -1581,3 +1581,6 @@ Java Model Exception: Java Model Status [[Working copy] __2F_Quizlet_2F_WebConte
 
 !ENTRY org.eclipse.wst.server.discovery 1 0 2016-03-08 10:08:04.008
 !MESSAGE cacheFile=file:/Users/SerenaWong/Downloads/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
+
+!ENTRY org.eclipse.wst.server.discovery 1 0 2016-03-09 15:34:14.635
+!MESSAGE cacheFile=file:/Users/SerenaWong/Downloads/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.wst.server.discovery/serverAdapterSitesDetails.xml
