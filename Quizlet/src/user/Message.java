@@ -9,9 +9,10 @@ public class Message {
 	String recipient;
 	String message;
 	String subject;
+	boolean recipientRead;
 	int id;
 	
-	public Message(String type, String sender, String recipient, String message, String subject, int id) {
+	public Message(String type, String sender, String recipient, String message, String subject, int id, Boolean read) {
 		this.type = type;
 		this.sender = sender;
 		this.recipient = recipient;
@@ -26,7 +27,21 @@ public class Message {
 			this.message = message;	
 			this.subject = subject;
 		}
+		if (read != null) {
+			this.recipientRead = read;
+		} else {
+			this.recipientRead = false;
+		}
 	}
+	
+	public void setRead() {
+		recipientRead = true;
+	}
+	
+	public boolean isRead() {
+		return recipientRead;
+	}
+
 	
 	public String getMessage() {
 		return message;
@@ -42,6 +57,10 @@ public class Message {
 	
 	public int getID() {
 		return id;
+	}
+	
+	public String getType() {
+		return type;
 	}
 	
 	public String getSubject() {
