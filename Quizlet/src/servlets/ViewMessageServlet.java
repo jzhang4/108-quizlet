@@ -46,18 +46,28 @@ public class ViewMessageServlet extends HttpServlet {
 		
 		request.setAttribute("currUser", u);
 		request.setAttribute("user", u);
+		String sender = "";
 		
 		try {
 			ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE id=" + id);
 			while (rs.next()) {
 				String type = rs.getString("type");
-				String sender = rs.getString("sender");
+				sender = rs.getString("sender");
 				String recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				String message = rs.getString("message");
-				Message m = new Message(type, sender, recipient, message, subject, id);
+				Boolean read = (rs.getInt("recipientRead") == 0) ? false : true;
+				System.out.println("read in viewMessageServelt" + read);
+				Message m = new Message(type, sender, recipient, message, subject, id, read);
+				m.setRead();
+				System.out.println("read in viewMessageServelt after setRead" + read);
+
 				request.setAttribute("Message", m);
 			}
+			
+			if (!u.getUserName().equals(sender)) {
+				con.getStatement().executeUpdate("UPDATE messages SET recipientRead=1 WHERE id=" + id);
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

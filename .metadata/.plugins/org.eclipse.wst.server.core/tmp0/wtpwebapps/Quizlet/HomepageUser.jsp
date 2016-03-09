@@ -102,7 +102,7 @@
 			%>
 			</ul>
 			
-			<h2>Received requests</h2>
+			<h2>Received requests from:</h2>
 			
 			<ul>
 			<%
@@ -128,7 +128,7 @@
 			%>
 			</ul>	
 			
-			<h2>Sent requests</h2>
+			<h2>Sent requests to:</h2>
 			
 			<ul>
 			<%
@@ -146,9 +146,27 @@
 
 			%>
 			</ul>
-		
+
+			<h2>Received messages from:</h2>	
+  			<%
+
+				for (Message m : ((User)request.getAttribute("user")).getReceivedMessages()) {
+					String sender = m.getSender();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(sender);
+					out.println("<li>");
+					if (!m.isRead()) {
+						out.println("<b>");
+					}
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					if (!m.isRead()) {
+						out.println("</b>");
+					}
+				}
+			%>  		
 			
-			<h2>Sent Messages To:</h2>	
+			<h2>Sent messages to:</h2>	
   			<%
 
 				for (Message m : ((User)request.getAttribute("user")).getSentMessages()) {

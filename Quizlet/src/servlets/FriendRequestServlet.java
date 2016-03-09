@@ -51,7 +51,7 @@ public class FriendRequestServlet extends HttpServlet {
 			currUser = currUser.trim();
 			User cu = am.getAccount(currUser);
 			Request r = new Request(cu.getID(), u.getID());
-			Message m = new Message("Request", cu.getUserName(), u.getUserName(), null, null, -1);
+			Message m = new Message("Request", cu.getUserName(), u.getUserName(), null, null, -1, null);
 			try {
 				con.getStatement().executeUpdate("INSERT INTO requests VALUES(" + cu.getID() + ", " + u.getID() + ", \"false\");");
 				con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message) VALUES(\"Request\", \"" + cu.getUserName() + "\", \"" + u.getUserName() + "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\");");
@@ -68,7 +68,7 @@ public class FriendRequestServlet extends HttpServlet {
 			cu.addSentMessage(m);
 			u.addReceivedMessage(m);
 			
-			request.setAttribute("user", cu);
+			request.setAttribute("user", u);
 			request.setAttribute("currUser", cu);
 
 			
