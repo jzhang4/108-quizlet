@@ -133,7 +133,7 @@
 			<div id="wrapper">
 				<h1> Site Statistics</h1>
 				<% 
-					Administrator adminLink = (Administrator) session.getAttribute("currentStats");
+					Administrator adminLink = (Administrator) (request.getServletContext()).getAttribute("currentStats");
 					if (adminLink != null) adminLink.getVisitFreq();
 					if (adminLink == null) System.out.println("VALUES IS NULL LIAM, STUFF WENT WRONG");
 				%>
