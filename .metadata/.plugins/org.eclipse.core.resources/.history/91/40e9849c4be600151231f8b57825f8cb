@@ -197,19 +197,6 @@ public class User {
 		receivedMessages.add(m);
 	}
 	
-	public void markRead(Message m) {
-		Iterator it = receivedMessages.iterator();
-		while (it.hasNext()) {
-			Message curr = (Message)it.next();
-			if (isSame(curr, m)) {
-				curr.setRead();
-			}
-		}
-	}
-	
-	public boolean isSame(Message m1, Message m2) {
-		return (m1.getMessage().equals(m2.getMessage()) && m1.getSender().equals(m2.getSender()) && m1.getRecipient().equals(m2.getRecipient()));
-	}
 }
 
 

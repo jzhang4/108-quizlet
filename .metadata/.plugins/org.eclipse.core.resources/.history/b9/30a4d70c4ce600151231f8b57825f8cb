@@ -206,10 +206,6 @@ public class User {
 			}
 		}
 	}
-	
-	public boolean isSame(Message m1, Message m2) {
-		return (m1.getMessage().equals(m2.getMessage()) && m1.getSender().equals(m2.getSender()) && m1.getRecipient().equals(m2.getRecipient()));
-	}
 }
 
 
