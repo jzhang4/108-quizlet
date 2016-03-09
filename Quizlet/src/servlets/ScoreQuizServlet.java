@@ -1,8 +1,13 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import quiz.Question;
 import quiz.Quiz;
+import user.DBConnection;
 
 /**
  * Servlet implementation class ScoreQuizServlet
@@ -50,6 +56,31 @@ public class ScoreQuizServlet extends HttpServlet {
     		int score = (int)session.getAttribute("score");
     		session.setAttribute("score", score + points);
         }
+        
+        ServletContext context = getServletContext(); 
+		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+
+        
+        String name = quiz.getName();
+        int score = (int)session.getAttribute("score");
+        
+        Statement stmt = connect.getStatement();
+
+        try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+			
+			while(rs.next()) {
+				String quizname = rs.getString(2);
+				if (quizname.equals(name)) {
+					long bestscore = rs.getLong(6); 
+					if (score > bestscore) stmt.executeUpdate("UPDATE quizzes SET highscore = "+score+" WHERE name = \""+name+"\"");
+					break; 
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         RequestDispatcher dispatch = request.getRequestDispatcher("DisplayScore.jsp");
 		dispatch.forward(request, response);
