@@ -81,7 +81,9 @@ h3{
 
 
 .leftSide {
-	float:left
+	float:left;
+	width: 20%;
+	
 }
 
 .panel-group{
@@ -95,15 +97,39 @@ h3{
 	width: 550px;
 	float: left;
 }
-
-
 #extra-large-inner-header{
 	position: absolute;
- 	top: 50%; left: 50%;
+ 	top: 75%; left: 50%;
   	transform: translate(-50%,-50%);
   	width: 90%;
- 	height: 80%;
+ 	height: 900px;
   	border-radius: 25px;
   	background: white;
   	text-align: center;
+}
+
+#data-table {
+	border: none; /* Turn off all borders */
+	border-top: 1px solid #ccc;
+	width: 540px;
+}
+#data-table caption {
+	color: #545454;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 20px;
+	margin: 0 0 20px 0;
+	padding: 0;
+	text-align: center;
+}
+#data-table thead {
+	background: #f0f0f0;
+}
+#data-table th, 
+#data-table td {
+	border: none; /* Turn off all borders */
+	border-bottom: 1px solid #ccc;
+	margin: 0;
+	padding: 10px;
+	text-align: left;	
 }

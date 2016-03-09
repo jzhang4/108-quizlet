@@ -23,11 +23,11 @@ public class AdministratorListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0)  { 
-    	siteStats = new Administrator();
-    	achieve = new Achievements(siteStats.passConnection());
-        HttpSession session = arg0.getSession();	
-    	session.setAttribute("currentStats", siteStats);
-    	session.setAttribute("achieveLookUp", achieve);
+//    	siteStats = new Administrator();
+//    	achieve = new Achievements(siteStats.passConnection());
+//        HttpSession session = arg0.getSession();	
+//    	session.setAttribute("currentStats", siteStats);
+//    	session.setAttribute("achieveLookUp", achieve);
     }
 
 	/**

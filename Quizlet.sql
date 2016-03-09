@@ -3,7 +3,10 @@ DROP TABLE IF EXISTS siteVisits;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS announcements;
 DROP TABLE IF EXISTS achievements;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS friends;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS requests;
+DROP TABLE IF EXISTS quizzes;
 
 CREATE TABLE siteVisits(
 	pageName CHAR(64),
@@ -21,7 +24,7 @@ INSERT INTO siteVisits VALUES
 
 
 CREATE TABLE users(
-	id BIGINT,
+	id BIGINT AUTO_INCREMENT,
 	username Char(64),
 	passwordHash char(64),
 	admin BIGINT,
@@ -43,19 +46,32 @@ INSERT INTO friends VALUES
 	(1, 2),
 	(1, 3);
 
-CREATE TABLE quizzes(
-	username char(64),
-	name char(64),
-	quiz LONGBLOB
+CREATE TABLE quizzes (
+	username CHAR(64),
+	name CHAR(64),
+	numtaken BIGINT,
+	timecreated BIGINT,
+	quiz LONGBLOB,
+	highscore BIGINT,
+	userscores MEDIUMBLOB
 );
 
 CREATE TABLE messages(
+	id BIGINT AUTO_INCREMENT,
 	type char(64),
 	sender char(64),
 	recipient char(64),
-	message LONGTEXT
+	subject char (128),
+	message LONGTEXT,
+	recipientRead TINYINT DEFAULT 0,
+	PRIMARY KEY (id)
 );
 
+CREATE TABLE requests(
+	senderID BIGINT,
+	recipientID BIGINT,
+	accepted char(64)
+);
 
 CREATE TABLE announcements(
 	textOfNotice text,
@@ -79,6 +95,8 @@ CREATE TABLE achievements(
 	achieve9 BIGINT,
 	achieve10 BIGINT
 );
+
 INSERT INTO achievements VALUES
 ("liamNeath",1,0,0,0,0,0,0,0,0,1),
-("jessicaZhang",1,0,0,0,0,0,0,0,0,1);
+("jessicaZhang",1,0,0,0,0,0,0,0,0,1),
+("Molly",1,0,0,0,0,0,0,0,0,1);

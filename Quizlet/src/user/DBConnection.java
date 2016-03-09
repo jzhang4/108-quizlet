@@ -25,7 +25,7 @@ public class DBConnection {
 	
 	public PreparedStatement getPreparedStatement() {
 		try {
-			pstmt = con.prepareStatement("INSERT INTO quizzes VALUES (?, ?, ?)");
+			pstmt = con.prepareStatement("INSERT INTO quizzes VALUES (?, ?, ?, ?, ?, ?)");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

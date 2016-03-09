@@ -13,8 +13,7 @@
 		<ul>
 		  <li class="name"><a href="index.jsp">Quizzler</a></li>
 		  <li><a href="TheTeam.html">Meet the Team</a></li>
-		  <li><a href="AdminLogin.html">Admin Login</a></li>
-		  <li><a href="HomepageLogin.html">User Login</a></li>
+		  <li><a href="HomepageLogin.html">Login</a></li>
 		</ul>
 		<form action="LoginServlet" method="post">
 		<div id="innerHeaderLarge">
@@ -23,6 +22,8 @@
 			<div>
 				<h2>Username: <input type="text" name="user" /></h2>
 				<h2>Password: <input type="text" name="password" /></h2>
+				<p>User: <input type = "radio" name ="typeOfUser" value ="user" checked />
+				Administrator: <input type = "radio" name ="typeOfUser" value ="admin" /></p>
 			</div>
 			<input type="submit" class="btn btn-primary" value="Login"/>
 			<h3>Don't have an account? 	<a href="/Quizlet/CreateNewAccount.html" class="sign_up">Sign up here!</a>

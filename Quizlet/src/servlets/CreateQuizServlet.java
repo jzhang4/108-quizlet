@@ -79,6 +79,7 @@ public class CreateQuizServlet extends HttpServlet {
 			pstmt.setLong(3, 0);
 			pstmt.setLong(4, time);
 			pstmt.setBinaryStream(5, in);
+			pstmt.setLong(6, 0);
 			
 			pstmt.execute();
 		} catch (SQLException e) {

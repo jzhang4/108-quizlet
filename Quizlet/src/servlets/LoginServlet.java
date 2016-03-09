@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
@@ -39,6 +40,9 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc = getServletContext();
+		
+		HttpSession session = request.getSession();
+		
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
 		request.setAttribute("am", am);
 		
@@ -50,9 +54,17 @@ public class LoginServlet extends HttpServlet {
 			if (am.passwordMatches(user, password) && typeOfLogin.equals("user")) {
 				request.setAttribute("user", am.getAccount(user));
 				request.setAttribute("currUser", am.getAccount(user));
+				
+				//I'm saving the username onto the session so we can
+				//keep track of the user's activities -Jaimie
+				session.setAttribute("user", user);
+				
 				RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 				rd.forward(request, response);
 			} else if (am.passwordMatches(user, password) && typeOfLogin.equals("admin")) {
+				
+				session.setAttribute("user", user);
+				
 				RequestDispatcher rd = request.getRequestDispatcher("AdminHomePage.jsp");
 				rd.forward(request,response);
 			} else {

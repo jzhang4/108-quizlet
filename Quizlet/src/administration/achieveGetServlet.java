@@ -36,8 +36,7 @@ public class achieveGetServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Achievements achieveContainer = (Achievements)session.getAttribute("achieveLookUp");
+		Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 		ArrayList<Integer> values = new ArrayList<Integer>();
 		values = achieveContainer.fetchAchievemnt((String) request.getParameter("userNameToLookUp"));
 		request.setAttribute("userAchievements", values);

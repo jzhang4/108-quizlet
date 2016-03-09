@@ -4,7 +4,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 
+import administration.Achievements;
+import administration.Administrator;
 import user.AccountManager;
 import user.DBConnection;
 import user.MyDBInfo;
@@ -41,8 +44,12 @@ public class ContextLIstener implements ServletContextListener {
     	ServletContext sc = arg0.getServletContext();
     	sc.setAttribute("Connection", con);
         AccountManager am = new AccountManager(con.getStatement());
-        
         sc.setAttribute("AccountManager", am);
+        
+        Administrator siteStats = new Administrator();
+    	Achievements achieve = new Achievements(siteStats.passConnection());
+    	sc.setAttribute("currentStats", siteStats);
+    	sc.setAttribute("achieveLookUp", achieve); 
     }
 	
 }
