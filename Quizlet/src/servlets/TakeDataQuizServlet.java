@@ -66,9 +66,10 @@ public class TakeDataQuizServlet extends HttpServlet {
 			
 			while(rs.next()) {
 				String quizname = rs.getString(2);
+		
 				if (quizname.equals(name)) {
 					long taken = rs.getLong(3); 
-					
+
 					Blob quizblob = rs.getBlob(5);
 					byte[] bdata = quizblob.getBytes(1, (int)quizblob.length());
 					quizstr = new String(bdata);

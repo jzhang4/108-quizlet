@@ -42,6 +42,7 @@ public class LoginServlet extends HttpServlet {
 		ServletContext sc = getServletContext();
 		
 		HttpSession session = request.getSession();
+		sc.setAttribute("loginTime", session.getCreationTime());
 		
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
 		request.setAttribute("am", am);
