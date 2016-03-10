@@ -59,24 +59,27 @@
 			<h1>Achievements</h1>
 			<p> Click here to view all your achievements </p>
 			<%  
+			
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
-				ArrayList<Integer> achHolder = new ArrayList<Integer>();
-				String userName = ((User)request.getAttribute("user")).getUserName();
-				achHolder = achieveContainer.fetchAchievemnt(userName);
-				if(achHolder != null){
-					int numTotalAchieve = 0;
-					if (achHolder.size() > 0){
-						for (int i = 0; i < achHolder.size(); i++){
-							String location = "./AchievementImages/Achieve";
-							if (achHolder.get(i) == 1 && numTotalAchieve < 2){
-								numTotalAchieve += 1;
-								out.write("<div class=\"floated_img\">");
-								out.write("<img src=\"" + location + Integer.toString(i+1) + ".png\">");
-								out.write("</div>");
+				if (achieveContainer != null){
+					ArrayList<Integer> achHolder = new ArrayList<Integer>();
+					String userName = ((User)request.getAttribute("user")).getUserName();
+					achHolder = achieveContainer.fetchAchievemnt(userName);
+					if(achHolder != null){
+						int numTotalAchieve = 0;
+						if (achHolder.size() > 0){
+							for (int i = 0; i < achHolder.size(); i++){
+								String location = "./AchievementImages/Achieve";
+								if (achHolder.get(i) == 1 && numTotalAchieve < 2){
+									numTotalAchieve += 1;
+									out.write("<div class=\"floated_img\">");
+									out.write("<img src=\"" + location + Integer.toString(i+1) + ".png\">");
+									out.write("</div>");
+								}
 							}
+						} else {
+							out.write("<h1> Could Not Find The Requested User</h1>");
 						}
-					} else {
-						out.write("<h1> Could Not Find The Requested User</h1>");
 					}
 				}
 			%>  
