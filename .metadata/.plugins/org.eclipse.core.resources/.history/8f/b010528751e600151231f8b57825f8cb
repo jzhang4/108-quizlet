@@ -38,7 +38,7 @@
 				out.println("</p>");
 			}
 		}  else {
-			out.println("<p>Responded to request!</p>");
+			out.println("<p>Already responded to request!</p>");
 		}
 	}
 %>

@@ -211,6 +211,7 @@ public class User {
 	}
 	
 	public boolean isFriends(int ID) {
+		System.out.println("in is friends");
 		return friends.contains(ID);
 	}
 }

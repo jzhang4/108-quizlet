@@ -54,7 +54,7 @@ public class SearchUserServlet extends HttpServlet {
 				userExists = true;
 				request.setAttribute("user", u);
 				request.setAttribute("currUser", currUser);
-				if (cu.isFriends(u.getID()) || user.equals(currUser)) {
+				if (cu.isFriends(u.getID())) {// || user.equals(currUser)) {
 					request.setAttribute("friends", true);
 				}
 				

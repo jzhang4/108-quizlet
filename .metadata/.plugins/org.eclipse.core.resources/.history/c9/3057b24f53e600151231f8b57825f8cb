@@ -47,6 +47,7 @@ public class SearchUserServlet extends HttpServlet {
 		boolean userExists = false;
 		
 		String currUser = (String) session.getAttribute("user");
+		System.out.println(currUser);
 		User cu = am.getAccount(currUser);
 		String user = request.getParameter("user");
 		for (User u : am.accounts) {
@@ -54,7 +55,7 @@ public class SearchUserServlet extends HttpServlet {
 				userExists = true;
 				request.setAttribute("user", u);
 				request.setAttribute("currUser", currUser);
-				if (cu.isFriends(u.getID()) || user.equals(currUser)) {
+				if (cu.isFriends(u.getID())) {// || user.equals(currUser)) {
 					request.setAttribute("friends", true);
 				}
 				
