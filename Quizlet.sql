@@ -10,17 +10,20 @@ DROP TABLE IF EXISTS requests;
 
 CREATE TABLE siteVisits(
 	pageName CHAR(64),
-	visitsMonth1 BIGINT,
-	visitsMonth2 BIGINT,
-	visitsMonth3 BIGINT,
-	visitsMonth4 BIGINT,
-	visitsMonth5 BIGINT
+	day1 BIGINT,
+	day2 BIGINT,
+	day3 BIGINT,
+	day4 BIGINT,
+	day5 BIGINT,
+	day6 BIGINT,
+	day7 BIGINT
 );
 
 INSERT INTO siteVisits VALUES
-	("Home Page",4080,6080,	6240,3520,2240),
-	("Terms and Conditions",5680,6880,6240,5120,2640),
-	("About Us",1040,1760,2880,4720,7520);
+	("Home Page",0,3,4,0,2,2,9),
+	("Terms and Conditions",5,8,10,12,8,4,7),
+	("About Us",1,7,9,2,3,2,0);
+
 
 
 CREATE TABLE users(
@@ -28,14 +31,16 @@ CREATE TABLE users(
 	username Char(64),
 	passwordHash char(64),
 	admin BIGINT,
+	picKey BIGINT,
 	PRIMARY KEY (id)
 );
 
 INSERT INTO users VALUES
-	(1,"liamNeath","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",1),
-	(2,"jessicaZhang","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0),
-	(3,"Molly","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0),
-	(4,"HBU","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0);
+	(1,"liamNeath","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",1,0),
+	(2,"jessicaZhang","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,3),
+	(3,"Molly","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,3),
+	(4,"HBU","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,4);
+
 
 CREATE TABLE friends(
 	user1 BIGINT,
