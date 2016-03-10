@@ -8,20 +8,20 @@ public class User {
 	private String username;
 	private byte[] passwordHash;
 	private int ID;
-	private HashSet<Integer> friends;
-	private HashSet<Request> receivedRequests;
-	private HashSet<Request> sentRequests;
-	private HashSet<Message> receivedMessages;
-	private HashSet<Message> sentMessages;
+	private List<Integer> friends;
+	private List<Request> receivedRequests;
+	private List<Request> sentRequests;
+	private List<Message> receivedMessages;
+	private List<Message> sentMessages;
 	
 	public User(String username, byte[] password, Statement stmt) {
 		this.username = username;
 		this.passwordHash = password;
-		receivedRequests = new HashSet<Request>();
-		sentRequests = new HashSet<Request>();
-		friends = new HashSet<Integer>();
-		receivedMessages = new HashSet<Message>();
-		sentMessages = new HashSet<Message>();
+		receivedRequests = new ArrayList<Request>();
+		sentRequests = new ArrayList<Request>();
+		friends = new ArrayList<Integer>();
+		receivedMessages = new ArrayList<Message>();
+		sentMessages = new ArrayList<Message>();
 	}
 	
 	public String getPasswordHash() {
@@ -47,23 +47,23 @@ public class User {
 		return ID;
 	}
 	
-	public HashSet<Integer> getFriends() {
+	public List<Integer> getFriends() {
 		return friends;
 	}
 	
-	public HashSet<Request> getSentRequests() {
+	public List<Request> getSentRequests() {
 		return sentRequests;
 	}
 	
-	public HashSet<Request> getReceivedRequests() {
+	public List<Request> getReceivedRequests() {
 		return receivedRequests;
 	}
 	
-	public HashSet<Message> getSentMessages() {
+	public List<Message> getSentMessages() {
 		return sentMessages;
 	}
 	
-	public HashSet<Message> getReceivedMessages() {
+	public List<Message> getReceivedMessages() {
 		return receivedMessages;
 	}
 	
