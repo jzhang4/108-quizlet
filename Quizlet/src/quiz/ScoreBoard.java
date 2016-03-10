@@ -8,6 +8,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -32,7 +33,7 @@ public class ScoreBoard {
 	}
 	
 	public ScoreBoard(Blob blob) {
-		JSONObject jobj = null; 
+		JSONArray jarr = null; 
 		this.users = new ArrayList<UserScorePair>(); 
 		try {
 			byte[] bdata = blob.getBytes(1, (int)blob.length());
@@ -40,17 +41,20 @@ public class ScoreBoard {
 			
 			JSONParser parser = new JSONParser(); 
 			Object obj = parser.parse(boardstr);
-			jobj = (JSONObject)obj;
+			jarr = (JSONArray)obj;
 			
 		} catch (SQLException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Object key: jobj.keySet()) {
-			long score1 = (long)jobj.get(key);
-			int score = (int)score1;
-			UserScorePair pair = new UserScorePair((String)key, score);
-			this.users.add(pair);
+		for (Object obj: jarr) {
+			JSONObject jobj = (JSONObject)obj; 
+			for (Object key : jobj.keySet()) {
+				long score1 = (long)jobj.get(key);
+				int score = (int)score1;
+				UserScorePair pair = new UserScorePair((String)key, score);
+				this.users.add(pair);
+			}
 		}
 	}
 	
@@ -60,13 +64,15 @@ public class ScoreBoard {
 	}
 	
 	public byte[] boardToBytes() {
-		JSONObject obj = new JSONObject();
+		JSONArray jarr = new JSONArray(); 
 		for (UserScorePair pair : users) {
+			JSONObject obj = new JSONObject();
 			obj.put(pair.user, pair.score);
+			jarr.add(obj);
 		}
 		StringWriter out = new StringWriter(); 
 		try {
-			obj.writeJSONString(out);
+			jarr.writeJSONString(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,6 +81,7 @@ public class ScoreBoard {
 		String jsonText = out.toString();
 		return jsonText.getBytes();
 	}
+	
 	public String toString() {
 		JSONObject obj = new JSONObject();
 		for (UserScorePair pair : users) {
