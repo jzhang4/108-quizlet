@@ -21,8 +21,8 @@
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
-			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
-			<li><a>Profile</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
+			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 			<h1>Display Quiz</h1>
@@ -71,21 +71,19 @@
 			
 			%>
 			
-			<form action="TakeQuizServlet" method="post">
-			  <input type="submit" value = "Take Quiz"/>
-			</form>
 			
 			<form action="RemoveQuestionServlet" method="post">
 			  <p>Remove question number: <input type="text" name="num" />
-			  <input type="submit" value = "Remove"/>
+			  <input type="submit" class="btn btn-primary" value = "Remove"/>
 			</form>
 			
 			<form action="AddQuestionServlet" method="post">
-			  <input type="submit" value = "Add new question."/>
+			  <input type="submit" class="btn btn-primary" value = "Add Additional Questions"/>
 			</form>
 			
+			<p>Done making the quiz?</p>
 			<form action="CreateQuizServlet" method="post">
-			  <input type="submit" value = "Create quiz"/>
+			  <input type="submit" class="btn btn-primary" value = "Save Quiz"/>
 			</form>
 	 	</div>
 	</div>

@@ -11,6 +11,8 @@ import administration.Administrator;
 import user.AccountManager;
 import user.DBConnection;
 import user.MyDBInfo;
+import userPhotos.UserPhoto;
+
 import java.sql.*;
 
 /**
@@ -48,6 +50,9 @@ public class ContextLIstener implements ServletContextListener {
         
         Administrator siteStats = new Administrator();
     	Achievements achieve = new Achievements(siteStats.passConnection());
+    	UserPhoto page = new UserPhoto(con.passConnnection());
+    	
+    	sc.setAttribute("photoAssign", page);
     	sc.setAttribute("currentStats", siteStats);
     	sc.setAttribute("achieveLookUp", achieve); 
     }

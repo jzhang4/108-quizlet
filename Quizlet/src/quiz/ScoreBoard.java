@@ -15,26 +15,34 @@ import org.json.simple.parser.ParseException;
 
 public class ScoreBoard {
 	
-	ArrayList<UserScorePair> users; 
+	ArrayList<Score> users; 
 		
-	public class UserScorePair {
+	public class Score {
 		public String user; 
-		public int score; 
+		public long score; 
+		public long timescore; 
+		public long timetaken; 
 		
-		public UserScorePair(String user, int score) {
+		public Score(String user, long score, long timescore, long timetaken) {
 			this.user = user; 
 			this.score = score; 
+			this.timescore = timescore; 
+			this.timetaken = timetaken; 
 		}
 		
 	}
 	
 	public ScoreBoard() {
-		this.users = new ArrayList<UserScorePair>(); 
+		this.users = new ArrayList<Score>(); 
+	}
+	
+	public ArrayList<Score> getUsers() {
+		return this.users; 
 	}
 	
 	public ScoreBoard(Blob blob) {
 		JSONArray jarr = null; 
-		this.users = new ArrayList<UserScorePair>(); 
+		this.users = new ArrayList<Score>(); 
 		try {
 			byte[] bdata = blob.getBytes(1, (int)blob.length());
 			String boardstr = new String(bdata);
@@ -49,25 +57,28 @@ public class ScoreBoard {
 		}
 		for (Object obj: jarr) {
 			JSONObject jobj = (JSONObject)obj; 
-			for (Object key : jobj.keySet()) {
-				long score1 = (long)jobj.get(key);
-				int score = (int)score1;
-				UserScorePair pair = new UserScorePair((String)key, score);
-				this.users.add(pair);
-			}
+			String user = (String)jobj.get("user");
+			long score = (long)jobj.get("score");
+			long timescore = (long)jobj.get("timescore");
+			long timetaken = (long)jobj.get("timetaken");
+			Score sc = new Score(user, score, timescore, timetaken);
+			this.users.add(sc);
 		}
 	}
 	
-	public void addScore(String user, int score) {
-		UserScorePair pair = new UserScorePair(user, score);
-		users.add(pair);
+	public void addScore(String user, int score, long timescore, long timetaken) {
+		Score sc = new Score(user, score, timescore, timetaken);
+		users.add(sc);
 	}
 	
 	public byte[] boardToBytes() {
 		JSONArray jarr = new JSONArray(); 
-		for (UserScorePair pair : users) {
+		for (Score sc : users) {
 			JSONObject obj = new JSONObject();
-			obj.put(pair.user, pair.score);
+			obj.put("user", sc.user);
+			obj.put("score", sc.score);
+			obj.put("timescore", sc.timescore);
+			obj.put("timetaken", sc.timetaken);
 			jarr.add(obj);
 		}
 		StringWriter out = new StringWriter(); 
@@ -84,8 +95,8 @@ public class ScoreBoard {
 	
 	public String toString() {
 		JSONObject obj = new JSONObject();
-		for (UserScorePair pair : users) {
-			obj.put(pair.user, pair.score);
+		for (Score sc : users) {
+			obj.put(sc.user, sc.score);
 		}
 		StringWriter out = new StringWriter(); 
 		try {

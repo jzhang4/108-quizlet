@@ -15,8 +15,8 @@
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
-			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
-			<li><a>Profile</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
+			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 			<h1>Score: <%= session.getAttribute("score")%></h1>
@@ -27,7 +27,7 @@
 			%>
 			
 			<h1>Time: <%= time%> seconds</h1>
-			<form action="DisplayQuizServlet" method="post">
+			<form action="DisplayAnswersServlet" method="post">
 				<input type="submit" class="btn btn-primary" value = "Get Answers"/>
 			</form>
 		</div>

@@ -81,7 +81,11 @@ public class ScoreQuizServlet extends HttpServlet {
 				if (quizname.equals(name)) {
 					Blob boardblob = rs.getBlob(7);
 					ScoreBoard sb = new ScoreBoard(boardblob);
-					sb.addScore(username, score);
+					long newtime = System.currentTimeMillis(); 
+					long time = newtime - (long)session.getAttribute("time");
+					time /= 1000; 
+					
+					sb.addScore(username, score, time, newtime);
 					byte[] sbytes = sb.boardToBytes();
 					
 					pstmt.setBytes(1, sbytes);

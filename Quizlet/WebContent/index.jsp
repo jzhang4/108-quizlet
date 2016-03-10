@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import ="administration.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,16 +19,19 @@
 		<ul>
 		  <li class="name"><a href="index.jsp">Quizzler</a></li>
 		  <li><a href="TheTeam.html">Meet the Team</a></li>
-		  <li><a href="HomepageLogin.html">User Login</a></li>
+		  <li><a href="HomepageLogin.html">Login</a></li>
 		</ul>
-		
+		<%
+		Administrator adminLink = (Administrator) (request.getServletContext()).getAttribute("currentStats");
+		adminLink.incrementCount("index.jsp");
+		%>
 		<div id="innerHeader">
 			<h1>Ready To Get Those Neurons Firing?</h1>
 			<h2><a href="CreateNewAccount.html" class="sign_up">Sign Up</a> and see what it's all about!</h2>
 		</div>
 	</div>
 	<div id = "information">
-		<h1> Why Quizzle? </h1>
+		<h1> Why Quizzler? </h1>
 		<div class = "item"> 
 			<img src = "./indexImages/BrainLoves.png"/>
 			<span class = "caption">Give your brain a workout!</span>
@@ -44,11 +48,11 @@
 	<div id = "recentComments">
 		<h1> What Others Have Been Saying ...</h1>
 		<blockquote>
-			Quizzlet really made the administration of tests SO much easier!
+			Quizzler really made the administration of tests SO much easier!
 			<cite> Patrick Young </cite>
 		</blockquote>
 		<blockquote id = "centralQuote">
-			One of the best applications we have seen in a decade. Quizzlet is
+			One of the best applications we have seen in a decade. Quizzler is
 			really revolutionising the way we train our brain.
 			<cite>The New York Times</cite>
 		</blockquote>

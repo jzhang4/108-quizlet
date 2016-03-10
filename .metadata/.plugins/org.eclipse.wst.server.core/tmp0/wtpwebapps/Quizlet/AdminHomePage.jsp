@@ -171,7 +171,7 @@
 									PageInfo temp = pagesToDisplay.get(i);
 									out.write("<tr>");
 									out.write("<th scope = \"row\">" + temp.pageName + "</th>");
-									int numMonths = 5;
+									int numMonths = 7;
 									String tempSite ="";
 									for (int j = 0; j < numMonths; j++){
 										out.write("<td>" + temp.fetchFreq(j) + "</td>");
@@ -198,8 +198,8 @@
 				<script>
 				<%
 					ArrayList<Integer> values43 = new ArrayList<Integer>();
-					out.write("new Chartist.Line('.ct-chart', {");
-					out.write("labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],");
+					out.write("new Chartist.Bar('.ct-chart', {");
+					out.write("labels: ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Satuday'],");
 					
 					out.write("series: [");
 					out.write("[" + firstSite + "],");

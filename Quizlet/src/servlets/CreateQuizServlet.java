@@ -95,7 +95,7 @@ public class CreateQuizServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		in.close();
-		RequestDispatcher dispatch = request.getRequestDispatcher("NewQuizForm.html");
+		RequestDispatcher dispatch = request.getRequestDispatcher("QuizSummmaryPage.jsp");
 		dispatch.forward(request, response);
 	}
 
