@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS friends;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS requests;
-DROP TABLE IF EXISTS quizzes;
+
 
 CREATE TABLE siteVisits(
 	pageName CHAR(64),
@@ -46,15 +46,6 @@ INSERT INTO friends VALUES
 	(1, 2),
 	(1, 3);
 
-CREATE TABLE quizzes (
-	username CHAR(64),
-	name CHAR(64),
-	numtaken BIGINT,
-	timecreated BIGINT,
-	quiz LONGBLOB,
-	highscore BIGINT,
-	userscores MEDIUMBLOB
-);
 
 CREATE TABLE messages(
 	id BIGINT AUTO_INCREMENT,
