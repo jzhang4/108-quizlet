@@ -9,18 +9,18 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
-<!--   	<link rel="stylesheet" href="CSS/UserHomePage.css">
+   	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">    -->
+	<link rel="stylesheet" href="CSS/login-formatting.css">    
 </head>
 <body>
 	<div id=header>
 	
 	<ul>
 		<li class="name"><a>Quizzler</a></li>
-		<li><a href="HomepageLogin.html">Logout</a></li>
-		<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
-		<li><a>Profile</a></li>
+		<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
+		<li><a href="ListQuizzes.jsp">Quizzes</a></li>
+		<li><a href="HomepageUser.jsp">Profile</a></li>
 	</ul>
 	<div id="extra-large-inner-header">
 		<div> 
@@ -106,7 +106,9 @@
 			
 			<ul>
 			<%
-				for (Request r : ((User)request.getAttribute("currUser")).getReceivedRequests()) {
+				List<Request> receivedRequests = ((User)request.getAttribute("currUser")).getReceivedRequests();
+				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
+					Request r = receivedRequests.get(i);
 					int ID = r.getSenderID();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
 					if (u.getUserName().equals(((User)request.getAttribute("currUser")).getUserName().trim())) {
@@ -132,8 +134,9 @@
 			
 			<ul>
 			<%
-
-				for (Request r : ((User)request.getAttribute("user")).getSentRequests()) {
+				List<Request> sentRequests = ((User)request.getAttribute("currUser")).getSentRequests();
+				for (int i = sentRequests.size() - 1; i >= 0; i--) {
+					Request r = sentRequests.get(i);
 					int ID = r.getRecipientID();
 			
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
@@ -146,11 +149,15 @@
 
 			%>
 			</ul>
+			
+			<h2><a href="/Quizlet/SendMessage.jsp">Send a new message</a></h2>
+			
 
 			<h2>Received messages from:</h2>	
   			<%
-
-				for (Message m : ((User)request.getAttribute("user")).getReceivedMessages()) {
+  				List<Message> receivedMessages = ((User)request.getAttribute("user")).getReceivedMessages();
+  				for (int i = receivedMessages.size() - 1; i >=0; i--) {
+  					Message m = receivedMessages.get(i);
 					String sender = m.getSender();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(sender);
 					out.println("<li>");
@@ -160,6 +167,7 @@
 					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
+					out.println(m.getSubject());
 					if (!m.isRead()) {
 						out.println("</b>");
 					}
@@ -168,8 +176,8 @@
 			
 			<h2>Sent messages to:</h2>	
   			<%
-
-				for (Message m : ((User)request.getAttribute("user")).getSentMessages()) {
+				for (int i = receivedMessages.size() - 1; i >=0; i--) {
+					Message m = receivedMessages.get(i);
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");

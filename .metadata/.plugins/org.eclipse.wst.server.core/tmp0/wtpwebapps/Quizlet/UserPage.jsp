@@ -24,10 +24,11 @@
 		out.println("<input type=\"hidden\" name=\"currUser\" value=\"" + request.getAttribute("currUser") + "\"/>");
 		out.println("</form>");
 	}
+	System.out.println(request.getAttribute("friends"));
 %>
 </p>
 
-<a href="/Quizlet/HomepageLogin.html">Logout</a>
+<a href="/Quizlet/LogoutServlet">Logout</a>
 
 
 </body>
