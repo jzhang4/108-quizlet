@@ -15,9 +15,9 @@
 
 <p>
 <% 
-	if(request.getAttribute("requestStatus") != null)
+	if(request.getAttribute("requestStatus") != null) {
 		out.println("Request sent to " + request.getAttribute("requestStatus"));
-	else {
+	} else if (request.getAttribute("friends") == null) {
 		out.println("<form action=\"FriendRequestServlet\" method=\"post\">");
 		out.println("<input name=\"user\" type=\"hidden\" value=\""+ ((User)request.getAttribute("user")).getUserName() + "\"/>");
 		out.println("<input type=\"submit\" value=\"Send Friend Request\"/>");

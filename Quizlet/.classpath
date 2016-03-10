@@ -10,6 +10,13 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/jaimiexie/Downloads/json-simple-1.1.1.jar"/>
+=======
+	<classpathentry kind="lib" path="/Applications/apache-tomcat-8.0.32/lib/mysql-connector-java-5.1.38-bin.jar"/>
+	<classpathentry kind="lib" path="/Applications/apache-tomcat-8.0.32/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Applications/apache-tomcat-8.0.32/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="/Applications/apache-tomcat-8.0.32/lib/json-simple-1.1.1.jar"/>
+>>>>>>> 6cdb7e387d16d447ff3872e32081e99bb9f7c6c6
 	<classpathentry kind="output" path="bin"/>
 </classpath>

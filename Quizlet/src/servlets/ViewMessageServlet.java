@@ -35,6 +35,7 @@ public class ViewMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		ServletContext sc = getServletContext();
 		DBConnection con = (DBConnection)sc.getAttribute("Connection");
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
@@ -47,23 +48,36 @@ public class ViewMessageServlet extends HttpServlet {
 		request.setAttribute("currUser", u);
 		request.setAttribute("user", u);
 		String sender = "";
+		String type = "";
+		String recipient = "";
+
 		
 		try {
 			ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE id=" + id);
 			while (rs.next()) {
-				String type = rs.getString("type");
+				type = rs.getString("type");
+
 				sender = rs.getString("sender");
-				String recipient = rs.getString("recipient");
+				recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				String message = rs.getString("message");
-				Boolean read = (rs.getInt("recipientRead") == 0) ? false : true;
-				System.out.println("read in viewMessageServelt" + read);
-				Message m = new Message(type, sender, recipient, message, subject, id, read);
-				m.setRead();
-				System.out.println("read in viewMessageServelt after setRead" + read);
-
+				Message m = new Message(type, sender, recipient, message, subject, id, true);
+				
+				User recipientUser = am.getAccount(recipient);
+				recipientUser.markRead(m);
+				
 				request.setAttribute("Message", m);
 			}
+			if (type.equals("Request")) {
+				int recipientID = am.getAccount(recipient).getID();
+				int senderID = am.getAccount(sender).getID();
+								
+				rs = con.getStatement().executeQuery("SELECT * FROM requests WHERE senderID=" + senderID + " AND recipientID=" + recipientID);
+				if (rs.next()) {
+					request.setAttribute("Request", true);
+				}
+			}
+			
 			
 			if (!u.getUserName().equals(sender)) {
 				con.getStatement().executeUpdate("UPDATE messages SET recipientRead=1 WHERE id=" + id);

@@ -1,22 +1,9 @@
 @CHARSET "UTF-8";
-#topBar{
-	height:100px;
-	width: 99%;
-	float:left;
-	position:absolute;
-	background: #601830;
+.team_images{
+	padding-top: 40px;
 }
-#topBar h1{
-	color: white;
-	font-size: 45px;
-}
-img{
-	height: auto; 
-    width: 100%; 
-    max-width: 200px; 
-    max-height: 200px;
-}
-teamMember{
-	clear: left;
-	clear:both;
+
+.image_caption{
+	padding-left:10px;
+	padding-right:10px;
 }

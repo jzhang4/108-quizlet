@@ -28,15 +28,18 @@
 		out.println(m.getSender() + "'s");
 		out.println("</a> Page");
 		
-		out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
-		if (!m.getSender().equals(((User)request.getAttribute("currUser")).getUserName())) {
-			out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
-
+		if (request.getAttribute("Request") != null) {
+			out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
+			if (!m.getSender().equals(((User)request.getAttribute("currUser")).getUserName())) {
+				out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
+				out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
+				out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("currUser")).getUserName() + "\"/>");
+				out.println("<input name=\"sender\" type=\"hidden\" value=\"" + m.getSender() + "\"/>");
+				out.println("</p>");
+			}
+		}  else {
+			out.println("<p>Responded to request!</p>");
 		}
-		out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
-		out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("currUser")).getUserName() + "\"/>");
-		out.println("<input name=\"sender\" type=\"hidden\" value=\"" + m.getSender() + "\"/>");
-		out.println("</p>");
 	}
 %>
 
