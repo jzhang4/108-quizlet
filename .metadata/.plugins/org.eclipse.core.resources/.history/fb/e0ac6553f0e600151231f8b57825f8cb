@@ -157,7 +157,7 @@
 
 			<h2>Received messages from:</h2>	
   			<%
-  				List<Message> receivedMessages = cu.getReceivedMessages();
+  				List<Message> receivedMessages = ((User)request.getAttribute("user")).getReceivedMessages();
   				for (int i = receivedMessages.size() - 1; i >=0; i--) {
   					Message m = receivedMessages.get(i);
 					String sender = m.getSender();
@@ -166,7 +166,7 @@
 					if (!m.isRead()) {
 						out.println("<b>");
 					}
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println(m.getSubject());
@@ -183,7 +183,7 @@
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 				}
