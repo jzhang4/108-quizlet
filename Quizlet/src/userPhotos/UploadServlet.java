@@ -56,8 +56,9 @@ public class UploadServlet extends HttpServlet {
 	    FileOutputStream outStream = new FileOutputStream(targetFile);
 	    outStream.write(buffer);
 	    outStream.close();
-	    String nextJSP = "/HomepageUser.jsp";
+	   /* String nextJSP = "/HomepageUser.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request,response);
+		dispatcher.forward(request,response);*/
+	    doGet(request,response);
 	}
 }
