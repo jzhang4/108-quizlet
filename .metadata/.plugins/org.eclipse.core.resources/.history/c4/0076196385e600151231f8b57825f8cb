@@ -38,7 +38,7 @@
 		<div id=header>	
 			<ul>				<!-- Blue bar at the top of the admin page, height is set in the CSS styling -->
 				<li class="name"><a href="AdminHomePage.jsp">Quizzler</a></li>
-				<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
+				<li><a href="HomepageLogin.html">Logout</a></li>
 			</ul>
 			<div id = "extra-large-inner-header">		<!-- Page header, CSS styles it with a solid colour background -->
 				<h1>Administration</h1> 
