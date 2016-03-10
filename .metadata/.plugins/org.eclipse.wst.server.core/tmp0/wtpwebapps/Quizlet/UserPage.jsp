@@ -28,7 +28,7 @@
 %>
 </p>
 
-<a href="/Quizlet/HomepageLogin.html">Logout</a>
+<a href="/Quizlet/LogoutServlet">Logout</a>
 
 
 </body>
