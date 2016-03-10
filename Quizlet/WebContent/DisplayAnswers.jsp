@@ -13,7 +13,9 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/common.css">
 	<link rel="stylesheet" href="CSS/login-formatting.css">
-	
+	<%
+		Quiz quiz = (Quiz)(session.getAttribute("quiz"));
+	%>
 </head>
 <body>
 	<div id=header>
@@ -21,16 +23,15 @@
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="HomepageLogin.html">Logout</a></li>
-			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
 			<li><a>Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
-			<h1>Display Quiz</h1>
+			<h1>Answers for <strong><%quiz.getName();%></strong></h1>
 			<%
 			
-			Quiz quiz = (Quiz)(session.getAttribute("quiz"));
-			out.println("<h2>"+quiz.getName()+ "</h2>");
-			out.println("<p>"+quiz.getDescription()+"<p>");
+			out.println("<p>Description:"+quiz.getDescription()+"</p>");
+			out.println("<h2>Questions and Answers:</h2>");
 			Iterator<Question> it = quiz.iterator();
 			int index = 1;
 			while (it.hasNext()) {
@@ -71,19 +72,10 @@
 			
 			%>
 			
-			
-			<form action="RemoveQuestionServlet" method="post">
-			  <p>Remove question number: <input type="text" name="num" />
-			  <input type="submit" class="btn btn-primary" value = "Remove"/>
+			<form action="ListQuizzes.jsp">
+			  <input type="submit" class="btn btn-primary" value = "Back to Quizzes"/>
 			</form>
 			
-			<form action="AddQuestionServlet" method="post">
-			  <input type="submit" class="btn btn-primary" value = "Add new question."/>
-			</form>
-			
-			<form action="CreateQuizServlet" method="post">
-			  <input type="submit" class="btn btn-primary" value = "Create quiz"/>
-			</form>
 	 	</div>
 	</div>
 

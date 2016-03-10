@@ -44,7 +44,9 @@
 			}
 			
 			%>
-			<input type="submit" class="btn btn-primary" value = "Take quiz"/>
+			</form>
+			<form action="NewQuizForm.html">
+			  <input type="submit" class="btn btn-primary" value = "Create New Quiz"/>
 			</form>
 		</div>
 	</div>

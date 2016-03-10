@@ -27,7 +27,7 @@
 			%>
 			
 			<h1>Time: <%= time%> seconds</h1>
-			<form action="DisplayQuizServlet" method="post">
+			<form action="DisplayAnswersServlet" method="post">
 				<input type="submit" class="btn btn-primary" value = "Get Answers"/>
 			</form>
 		</div>

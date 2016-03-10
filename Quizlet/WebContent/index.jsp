@@ -18,7 +18,7 @@
 		<ul>
 		  <li class="name"><a href="index.jsp">Quizzler</a></li>
 		  <li><a href="TheTeam.html">Meet the Team</a></li>
-		  <li><a href="HomepageLogin.html">User Login</a></li>
+		  <li><a href="HomepageLogin.html">Login</a></li>
 		</ul>
 		
 		<div id="innerHeader">
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div id = "information">
-		<h1> Why Quizzle? </h1>
+		<h1> Why Quizzler? </h1>
 		<div class = "item"> 
 			<img src = "./indexImages/BrainLoves.png"/>
 			<span class = "caption">Give your brain a workout!</span>
@@ -44,11 +44,11 @@
 	<div id = "recentComments">
 		<h1> What Others Have Been Saying ...</h1>
 		<blockquote>
-			Quizzlet really made the administration of tests SO much easier!
+			Quizzler really made the administration of tests SO much easier!
 			<cite> Patrick Young </cite>
 		</blockquote>
 		<blockquote id = "centralQuote">
-			One of the best applications we have seen in a decade. Quizzlet is
+			One of the best applications we have seen in a decade. Quizzler is
 			really revolutionising the way we train our brain.
 			<cite>The New York Times</cite>
 		</blockquote>
