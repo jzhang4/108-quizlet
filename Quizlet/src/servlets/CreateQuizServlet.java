@@ -25,6 +25,7 @@ import com.mysql.jdbc.Statement;
 import user.DBConnection;
 import quiz.JSONCreator;
 import quiz.Quiz;
+import quiz.ScoreBoard;
 
 /**
  * Servlet implementation class CreateQuizServlet
@@ -56,6 +57,9 @@ public class CreateQuizServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Quiz quiz = (Quiz)(session.getAttribute("quiz"));
 		
+		//take out this line once we integrate with users
+        session.setAttribute("username", "jaimiex");
+        
 		ServletContext context = getServletContext(); 
 		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 		
@@ -69,9 +73,12 @@ public class CreateQuizServlet extends HttpServlet {
 		String jsonText = out.toString();
 		InputStream in = new ByteArrayInputStream(jsonText.getBytes());
 		String name = quiz.getName();
-		String username = "jaimiex";
+		String username = (String)session.getAttribute("username");
 		
 		long time = System.currentTimeMillis();
+		
+		ScoreBoard sb = new ScoreBoard(); 
+		byte[] sbytes = sb.boardToBytes();
 		
 		try {
 			pstmt.setString(1, username);
@@ -80,6 +87,7 @@ public class CreateQuizServlet extends HttpServlet {
 			pstmt.setLong(4, time);
 			pstmt.setBinaryStream(5, in);
 			pstmt.setLong(6, 0);
+			pstmt.setBytes(7, sbytes);
 			
 			pstmt.execute();
 		} catch (SQLException e) {

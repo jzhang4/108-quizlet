@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Blob;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import quiz.Question;
 import quiz.Quiz;
+import quiz.ScoreBoard;
 import user.DBConnection;
 
 /**
@@ -49,6 +51,9 @@ public class ScoreQuizServlet extends HttpServlet {
 		HttpSession session = request.getSession();
         Quiz quiz = (Quiz)(session.getAttribute("quiz"));
         
+        //take out this line once we integrate with users
+        session.setAttribute("username", "jaimiex");
+        
         for (int i = 1; i <= quiz.getSize(); i++) {
         	Question q = quiz.getQuestion(i);
         	int points = q.checkAnswer(request.getParameterValues("answer"+i));
@@ -62,16 +67,27 @@ public class ScoreQuizServlet extends HttpServlet {
 
         
         String name = quiz.getName();
+        String username = (String)session.getAttribute("username");
         int score = (int)session.getAttribute("score");
         
         Statement stmt = connect.getStatement();
-
+        PreparedStatement pstmt = connect.getPreparedStatement2();
+        
         try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
 			
 			while(rs.next()) {
 				String quizname = rs.getString(2);
 				if (quizname.equals(name)) {
+					Blob boardblob = rs.getBlob(7);
+					ScoreBoard sb = new ScoreBoard(boardblob);
+					sb.addScore(username, score);
+					byte[] sbytes = sb.boardToBytes();
+					
+					pstmt.setBytes(1, sbytes);
+					pstmt.setString(2, name);
+					pstmt.execute();
+					
 					long bestscore = rs.getLong(6); 
 					if (score > bestscore) stmt.executeUpdate("UPDATE quizzes SET highscore = "+score+" WHERE name = \""+name+"\"");
 					break; 

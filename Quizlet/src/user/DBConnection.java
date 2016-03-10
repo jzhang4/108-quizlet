@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class DBConnection {
 	private Connection con;
 	private PreparedStatement pstmt; 
+	private PreparedStatement pstmt2; 
 	Statement stmt;
 	
 	public DBConnection() {
@@ -25,12 +26,22 @@ public class DBConnection {
 	
 	public PreparedStatement getPreparedStatement() {
 		try {
-			pstmt = con.prepareStatement("INSERT INTO quizzes VALUES (?, ?, ?, ?, ?, ?)");
+			pstmt = con.prepareStatement("INSERT INTO quizzes VALUES (?, ?, ?, ?, ?, ?, ?)");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return pstmt;
+	}
+	
+	public PreparedStatement getPreparedStatement2() {
+		try {
+			pstmt2 = con.prepareStatement("UPDATE quizzes SET userscores = ? WHERE name = ?");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pstmt2;
 	}
 	
 	public Statement getStatement() {
