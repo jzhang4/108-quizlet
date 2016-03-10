@@ -8,7 +8,6 @@ public class UserPhoto {
 	private static Connection con;
 	public UserPhoto(Connection cn) {
 		con = cn;
-		System.out.println("CREATED");
 	}
 	public Integer getPhotoName(String userName){
 		int value = 0;
@@ -27,6 +26,5 @@ public class UserPhoto {
 	public static void main(String[]args){
 		DBConnection connect = new DBConnection();
 		UserPhoto photo = new UserPhoto(connect.passConnnection());
-		System.out.println(photo.getPhotoName("liamNeath"));
 	}
 }

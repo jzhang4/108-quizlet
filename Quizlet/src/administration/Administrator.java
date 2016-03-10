@@ -4,7 +4,9 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 public class Administrator {
 	static String account = MyDBInfo.MYSQL_USERNAME;	// Variables taken from the MyDBInfo 
 	static String password = MyDBInfo.MYSQL_PASSWORD;	// storage class.
@@ -18,9 +20,7 @@ public class Administrator {
 	public Connection passConnection(){
 		return con;
 	}
-	
-	
-	
+
 	public Administrator(){
 		pageStats = new ArrayList<PageInfo>();
 		nameOfMonths = new ArrayList<String>();
@@ -38,11 +38,13 @@ public class Administrator {
 	public void getVisitFreq(){
 		pageStats.clear();
 		nameOfMonths.clear();
-		nameOfMonths.add("September");
-		nameOfMonths.add("October");
-		nameOfMonths.add("Novemeber");
-		nameOfMonths.add("December");
-		nameOfMonths.add("January");
+		nameOfMonths.add("Sunday");
+		nameOfMonths.add("Monday");
+		nameOfMonths.add("Tuesday");
+		nameOfMonths.add("Wednesday");
+		nameOfMonths.add("Thursday");
+		nameOfMonths.add("Friday");
+		nameOfMonths.add("Saturday");
 		
 		String query = "Select * from siteVisits";
 		try {
@@ -53,22 +55,61 @@ public class Administrator {
 			e.printStackTrace();
 		}
 	}
+	
+	// extracting the search results and storing them in a table
+		public void extractSearchResults(ResultSet results){
+			if (results != null){
+				try{
+					while (results.next()){
+						PageInfo temp = new PageInfo(results.getString(1),results.getInt(2),results.getInt(3),results.getInt(4),results.getInt(5),results.getInt(6),results.getInt(7),results.getInt(8));
+						pageStats.add(temp);
+					}
+				} catch (Exception ex){}
+			}
+		}
+	public ArrayList<PageInfo> getPages(){
+		return pageStats;
+	}
+	
+	public void incrementCell(String pageName, int dayOfWeek){
+		String query = "SELECT * FROM siteVisits WHERE pageName = \"" + pageName + "\";";
+		int currentNumber = 0;
+		try {
+			Statement stmt = con.createStatement();			// statement created and result set fetched
+			ResultSet results = stmt.executeQuery(query);	// allowing us to execute the query  and pull out
+			results.next();									// the visit value stored in the SQL table.
+			currentNumber = results.getInt(dayOfWeek + 1);
+		} catch (Exception ex){
+			ex.printStackTrace();
+		}
+		currentNumber += 1;	// incrementing the value
+		try {
+			String insertQuery = "UPDATE siteVisits SET day" + Integer.toString(dayOfWeek) + " = \"" + Integer.toString(currentNumber) + "\" WHERE pageName = \"" + pageName + "\";";
+			Statement insertStmt = con.createStatement();
+			insertStmt.execute(insertQuery);
+		} catch (Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	public void incrementCount(String page){
+		Calendar c = Calendar.getInstance();			// Fetching the day of the week so that 
+		c.setTimeInMillis(System.currentTimeMillis());	// we know which cell in the table we should
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);	// increment!
+		if (page.equals("index.jsp")){
+			incrementCell("Home Page",dayOfWeek);
+		} else if (page.equals("TheTeam.jsp")){			// incrementing the counter on the about us page
+			incrementCell("About Us",dayOfWeek);
+		} else {
+			incrementCell("Terms and Conditions",dayOfWeek);
+		}
+	}
+	
 	public int getNumUsers(){
 		return countNumElements("users");
 	}
+	
 	public int getNumQuizzes(){
 		return countNumElements("quizzes");
-	}
-	// extracting the search results and storing them in a table
-	public void extractSearchResults(ResultSet results){
-		if (results != null){
-			try{
-				while (results.next()){
-					PageInfo temp = new PageInfo(results.getString(1),results.getInt(2),results.getInt(3),results.getInt(4),results.getInt(5),results.getInt(6));
-					pageStats.add(temp);
-				}
-			} catch (Exception ex){}
-		}
 	}
 	public int makeAdminUpdate(String userName){
 		String query = "Select COUNT(*) FROM users WHERE userName= \""+ userName + "\"";
@@ -163,9 +204,12 @@ public class Administrator {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<PageInfo> getPages(){
-		return pageStats;
-	}
+	
+	
+	
+	
+	
+	
 	public ArrayList<Announcement> getAnnounce(){
 		ArrayList<Announcement> notices = new ArrayList<Announcement>();
 		String query = "SELECT * FROM announcements;";
@@ -179,13 +223,12 @@ public class Administrator {
 		} catch (Exception ex){}
 		return notices;	
 	}
+	
+	
 	// This is just for testing to make sure that everything is working correctly!
 	public static void main (String[] args){
-		Administrator newStats = new Administrator();
-		//newStats.getVisitFreq();
-		//newStats.closeConnection();  // Don't forget to close the connection
-		System.out.println(newStats.getNumUsers());
-		newStats.makeAdminUpdate("jessicaZhang");
+		Administrator adminLink = new Administrator();
+		adminLink.incrementCount("index.jsp");
 	}
 	
 }

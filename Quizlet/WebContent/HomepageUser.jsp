@@ -195,7 +195,6 @@
 		<%
 			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
 			String userCurrently = ((User)request.getAttribute("user")).getUserName();
-			System.out.println("THE USER CURRENTLY IS  " + userCurrently);
 			int photoValue = photoLoader.getPhotoName(userCurrently);
 			if (photoValue != 0){
 				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
@@ -209,7 +208,6 @@
 		    <input type="file" name="file" />
 		    <%
 		    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
-		    	System.out.println(htmlCodeForForm);
 		    	out.write(htmlCodeForForm);
 		    %>
 		    <input type="submit" value ="Change Profile Photo"/>
