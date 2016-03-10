@@ -78,11 +78,12 @@
 			</form>
 			
 			<form action="AddQuestionServlet" method="post">
-			  <input type="submit" class="btn btn-primary" value = "Add new question."/>
+			  <input type="submit" class="btn btn-primary" value = "Add Additional Questions"/>
 			</form>
 			
+			<p>Done making the quiz?</p>
 			<form action="CreateQuizServlet" method="post">
-			  <input type="submit" class="btn btn-primary" value = "Create quiz"/>
+			  <input type="submit" class="btn btn-primary" value = "Save Quiz"/>
 			</form>
 	 	</div>
 	</div>

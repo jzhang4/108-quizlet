@@ -28,23 +28,24 @@
 		</ul>
 		<div id="extra-large-inner-header">
 	
-	
 			<h1>Choose a Quiz to Take! </h1>
-			<form action="TakeDataQuizServlet" method="post">
-			<%
-			ServletContext context = getServletContext(); 
-			DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
-			
-			Statement stmt = connect.getStatement(); 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
-			
-			while (rs.next()) {
-				String name = rs.getString(2);
-				out.println("<a href=\"Display\">"+name+"</a>");
-			}
-			
-			%>
+			<form action="QuizSummaryServlet" method="post">
+				<%
+				ServletContext context = getServletContext(); 
+				DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+				
+				Statement stmt = connect.getStatement(); 
+				ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+				
+				while (rs.next()) {
+					String name = rs.getString(2);
+					out.println("<input type=\"radio\" name=\"quizname\" value=\""+name+"\"> "+name +"<br>");
+				}
+				
+				%>
+			<input type="submit" class="btn btn-primary" value = "View Quiz Summary"/>
 			</form>
+			
 			<form action="NewQuizForm.html">
 			  <input type="submit" class="btn btn-primary" value = "Create New Quiz"/>
 			</form>
