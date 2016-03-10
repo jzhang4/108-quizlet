@@ -9,5 +9,5 @@
 	<classpathentry kind="lib" path="/Users/liamneath/Downloads/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/Users/liamneath/Downloads/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar"/>
 	<classpathentry kind="lib" path="/Users/liamneath/Documents/workspace/Quizzlet/json-simple-1.1.1.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="build/classes"/>
 </classpath>
