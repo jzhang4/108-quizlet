@@ -208,3 +208,4 @@
 0:0:0:0:0:0:0:1 - - [09/Mar/2016:22:04:11 -0800] "GET /Quizlet/AchievementImages/Achieve1.png HTTP/1.1" 200 1148
 0:0:0:0:0:0:0:1 - - [09/Mar/2016:22:04:11 -0800] "GET /Quizlet/AchievementImages/Achieve10.png HTTP/1.1" 200 1076
 0:0:0:0:0:0:0:1 - - [09/Mar/2016:22:04:11 -0800] "GET /Quizlet/CSS/colourTriangles.png HTTP/1.1" 200 752522
+0:0:0:0:0:0:0:1 - - [09/Mar/2016:22:12:46 -0800] "POST /Quizlet/SearchUserServlet HTTP/1.1" 200 547

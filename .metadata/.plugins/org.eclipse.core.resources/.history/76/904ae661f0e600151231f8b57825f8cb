@@ -1,0 +1,195 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ page import="user.User, java.util.*, user.Request, user.AccountManager, user.Message" %>
+<%@ page import = "administration.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Welcome <% out.println(session.getAttribute("user"));%> - Quizzler</title>
+   	<link rel="stylesheet" href="CSS/UserHomePage.css">
+	<link rel="stylesheet" href="CSS/common.css">
+	<link rel="stylesheet" href="CSS/login-formatting.css">    
+</head>
+<body>
+	<div id=header>
+	
+	<ul>
+		<li class="name"><a>Quizzler</a></li>
+		<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
+		<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
+		<li><a>Profile</a></li>
+	</ul>
+	<div id="extra-large-inner-header">
+		<div> 
+			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
+		</div>
+		<p>
+		<% 
+			if(request.getAttribute("error") != null)
+				out.println(request.getAttribute("error") + " does not exist");
+		%>
+		</p>
+		<div class="leftSide">
+			<h1> Recent Announcements</h1>
+			
+  			<%	
+  				Administrator values = (Administrator)(request.getServletContext()).getAttribute("currentStats");
+				ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+				announcements = values.getAnnounce();
+				out.write("<table style = \"width:100%\">");
+				out.write("<tr>");
+				out.write("<th>Announcement</th>");
+				out.write("<th>Date</th>");
+				out.write("<tr>");
+				for (int i = 0; i < announcements.size(); i++){
+					Announcement temp = announcements.get(i);
+					out.write("<tr>");
+					out.write("<td>" + temp.getText() + "</td>");
+					out.write("<td>" + temp.getDate() + "</td>");
+					out.write("</tr>");
+				}
+				out.write("</table>");
+			%>
+			
+			<h1>Achievements</h1>
+			<p> Click here to view all your achievements </p>
+			<%  
+				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
+				ArrayList<Integer> achHolder = new ArrayList<Integer>();
+				String userName = ((User)request.getAttribute("user")).getUserName();
+				achHolder = achieveContainer.fetchAchievemnt(userName);
+				if(achHolder != null){
+					int numTotalAchieve = 0;
+					if (achHolder.size() > 0){
+						for (int i = 0; i < achHolder.size(); i++){
+							String location = "./AchievementImages/Achieve";
+							if (achHolder.get(i) == 1 && numTotalAchieve < 2){
+								numTotalAchieve += 1;
+								out.write("<div class=\"floated_img\">");
+								out.write("<img src=\"" + location + Integer.toString(i+1) + ".png\">");
+								out.write("</div>");
+							}
+						}
+					} else {
+						out.write("<h1> Could Not Find The Requested User</h1>");
+					}
+				}
+			%>  
+		</div>
+		
+		<div class="rightSide">
+			<h1> Social Connections </h1>
+			<form action="SearchUserServlet" method="post">
+			<input type="text" name="user"/>
+			<input type="submit" value="Search for User"/>
+			<input name="currUser" type="hidden" value="<% out.println(session.getAttribute("user"));;%>"/>
+			</form>
+			
+			<h2>Friends</h2>
+			<ul>
+			<%
+				User cu = ((AccountManager)request.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+				for (Integer ID : cu.getFriends()) {
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					out.println("</li>");
+				}
+			%>
+			</ul>
+			
+			<h2>Received requests from:</h2>
+			
+			<ul>
+			<%
+				List<Request> receivedRequests = cu.getReceivedRequests();
+				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
+					Request r = receivedRequests.get(i);
+					int ID = r.getSenderID();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					if (u.getUserName().equals(cu.getUserName().trim())) {
+						break;
+					}
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					
+					
+					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
+					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
+					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
+					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + cu.getUserName() + "\"/>");
+					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
+					out.println("</li>");
+				}
+			%>
+			</ul>	
+			
+			<h2>Sent requests to:</h2>
+			
+			<ul>
+			<%
+				List<Request> sentRequests = cu.getSentRequests();
+				for (int i = sentRequests.size() - 1; i >= 0; i--) {
+					Request r = sentRequests.get(i);
+					int ID = r.getRecipientID();
+			
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					out.println("</li>");
+				}
+
+			%>
+			</ul>
+			
+			<h2><a href="/Quizlet/SendMessage.jsp">Send a new message</a></h2>
+			
+
+			<h2>Received messages from:</h2>	
+  			<%
+  				List<Message> receivedMessages = cu.getReceivedMessages();
+  				for (int i = receivedMessages.size() - 1; i >=0; i--) {
+  					Message m = receivedMessages.get(i);
+					String sender = m.getSender();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(sender);
+					out.println("<li>");
+					if (!m.isRead()) {
+						out.println("<b>");
+					}
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+					out.println(m.getSubject());
+					if (!m.isRead()) {
+						out.println("</b>");
+					}
+				}
+			%>  		
+			
+			<h2>Sent messages to:</h2>	
+  			<%
+				for (int i = receivedMessages.size() - 1; i >=0; i--) {
+					Message m = receivedMessages.get(i);
+					String recipient = m.getRecipient();
+					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
+					out.println("<li>");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println(u.getUserName());
+					out.println("</a>");
+				}
+			%>  
+		</div>
+	</div>
+	</div>
+</body>
+</html>

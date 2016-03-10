@@ -7,10 +7,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
-  	<link rel="stylesheet" href="CSS/UserHomePage.css">
+	<title>Welcome <% out.println(session.getAttribute("user"));%> - Quizzler</title>
+   	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
 	 <!--   <link rel="stylesheet" href="CSS/login-formatting.css">    -->
 </head>
@@ -25,7 +26,7 @@
 	</ul>
 	<div id="extra-large-inner-header">
 		<div> 
-			<h1>Welcome  <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
 		</div>
 		<p>
 		<% 
@@ -86,16 +87,17 @@
 			<form action="SearchUserServlet" method="post">
 			<input type="text" name="user"/>
 			<input type="submit" value="Search for User"/>
-			<input name="currUser" type="hidden" value="<% out.println(((User)request.getAttribute("user")).getUserName());%>"/>
+			<input name="currUser" type="hidden" value="<% out.println(session.getAttribute("user"));;%>"/>
 			</form>
 			
 			<h2>Friends</h2>
 			<ul>
 			<%
-				for (Integer ID : ((User)request.getAttribute("user")).getFriends()) {
+				User cu = ((AccountManager)request.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+				for (Integer ID : cu.getFriends()) {
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println("</li>");
@@ -107,16 +109,16 @@
 			
 			<ul>
 			<%
-				List<Request> receivedRequests = ((User)request.getAttribute("currUser")).getReceivedRequests();
+				List<Request> receivedRequests = cu.getReceivedRequests();
 				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
 					Request r = receivedRequests.get(i);
 					int ID = r.getSenderID();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
-					if (u.getUserName().equals(((User)request.getAttribute("currUser")).getUserName().trim())) {
+					if (u.getUserName().equals(cu.getUserName().trim())) {
 						break;
 					}
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("currUser")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					
@@ -124,7 +126,7 @@
 					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
 					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
 					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
-					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("currUser")).getUserName() + "\"/>");
+					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + cu.getUserName() + "\"/>");
 					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
 					out.println("</li>");
 				}
@@ -135,14 +137,14 @@
 			
 			<ul>
 			<%
-				List<Request> sentRequests = ((User)request.getAttribute("currUser")).getSentRequests();
+				List<Request> sentRequests = cu.getSentRequests();
 				for (int i = sentRequests.size() - 1; i >= 0; i--) {
 					Request r = sentRequests.get(i);
 					int ID = r.getRecipientID();
 			
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println("</li>");
@@ -156,7 +158,7 @@
 
 			<h2>Received messages from:</h2>	
   			<%
-  				List<Message> receivedMessages = ((User)request.getAttribute("user")).getReceivedMessages();
+  				List<Message> receivedMessages = cu.getReceivedMessages();
   				for (int i = receivedMessages.size() - 1; i >=0; i--) {
   					Message m = receivedMessages.get(i);
 					String sender = m.getSender();
@@ -165,7 +167,7 @@
 					if (!m.isRead()) {
 						out.println("<b>");
 					}
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println(m.getSubject());
@@ -182,7 +184,7 @@
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 				}
