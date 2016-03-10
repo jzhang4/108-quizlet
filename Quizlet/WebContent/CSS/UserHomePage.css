@@ -28,3 +28,12 @@ th {
     background-color: #4CAF50;
     color: white;
 }
+#userPicture{
+	height:200px;
+	width: 300px;	
+}
+#userPicture img{
+	width:  250px;
+	height:  250px;
+	border-style: solid;
+}

@@ -3,15 +3,16 @@
     
 <%@ page import="user.User, java.util.*, user.Request, user.AccountManager, user.Message" %>
 <%@ page import = "administration.*" %>
+<%@ page import = "userPhotos.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
-   	<link rel="stylesheet" href="CSS/UserHomePage.css">
+  	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">    
+	 <!--   <link rel="stylesheet" href="CSS/login-formatting.css">    -->
 </head>
 <body>
 	<div id=header>
@@ -188,6 +189,31 @@
 			%>  
 		</div>
 	</div>
+	</div>
+	<div id = "userPicture">
+		<h1> Your Current Picture</h1>
+		<%
+			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
+			String userCurrently = ((User)request.getAttribute("user")).getUserName();
+			System.out.println("THE USER CURRENTLY IS  " + userCurrently);
+			int photoValue = photoLoader.getPhotoName(userCurrently);
+			if (photoValue != 0){
+				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
+				out.write(htmlCode);
+			} else {	// we need to pull the image file from an area outside the project space
+				String path22 = request.getContextPath();
+				out.write("<img src =\"" + path22 + "/image/" + userCurrently +".jpg" +"\"" + "/>");
+			}
+		%>
+		<form action="UploadServlet" method="post" enctype="multipart/form-data">
+		    <input type="file" name="file" />
+		    <%
+		    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
+		    	System.out.println(htmlCodeForForm);
+		    	out.write(htmlCodeForForm);
+		    %>
+		    <input type="submit" value ="Change Profile Photo"/>
+		</form>		
 	</div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,7 @@ import org.omg.CORBA.portable.OutputStream;
 @WebServlet("/UploadServlet")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
+	private static final String path = "/Users/liamneath/Downloads/ImageStorage/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -44,15 +46,18 @@ public class UploadServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 	    Part filePart = request.getPart("file"); 				  // Retrieves <input type="file" name="file">
-	    String fileName = filePart.getSubmittedFileName();
 	    InputStream fileContent = filePart.getInputStream();
 	    byte[] buffer = new byte [fileContent.available()];
 	    fileContent.read(buffer);
-	    File targetFile = new File("/Users/liamneath/Downloads/apache-tomcat-8.0.32/webapps/photos/Pam.jpeg");
+	    String newFile = path + request.getParameter("imageName") + ".jpg";
+	    System.out.println(newFile);
+	    File targetFile = new File(newFile);
 	    FileOutputStream outStream = new FileOutputStream(targetFile);
 	    outStream.write(buffer);
-	    outStream.close();	    
+	    outStream.close();
+	    String nextJSP = "/HomepageUser.jsp";
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		dispatcher.forward(request,response);
 	}
 }
