@@ -7,6 +7,9 @@ import java.io.StringWriter;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,10 +17,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class ScoreBoard {
+	private static final int MINUTES_PASSED = 15; 
+	
 	
 	ArrayList<Score> users; 
 		
-	public class Score {
+	public class Score implements Comparable<Score>{
 		public String user; 
 		public long score; 
 		public long timescore; 
@@ -30,6 +35,25 @@ public class ScoreBoard {
 			this.timetaken = timetaken; 
 		}
 		
+		public String timeToString() {
+			long millis = timetaken;
+			long second = (millis / 1000) % 60;
+			long minute = (millis / (1000 * 60)) % 60;
+			long hour = (millis / (1000 * 60 * 60)) % 24;
+				
+			return String.format("%02d:%02d:%02d", hour, minute, second);
+		}
+		
+		@Override
+		public int compareTo(Score sc) {
+			int dif = (int)(sc.score - this.score);
+			if (dif == 0) {
+				return (int)(this.timescore - sc.timescore);
+			} else return dif; 
+		}
+
+
+		
 	}
 	
 	public ScoreBoard() {
@@ -38,6 +62,52 @@ public class ScoreBoard {
 	
 	public ArrayList<Score> getUsers() {
 		return this.users; 
+	}
+	
+	public ArrayList<Score> getTopPerformers() {
+		ArrayList<Score> top = new ArrayList<Score>();
+		Collections.sort(users);
+		for (int i = 0; i < 3; i++) {
+			if (i < users.size()) top.add(users.get(i));
+		}
+		return top;
+	}
+	public ArrayList<Score> getTopRecentPerformers() {
+		ArrayList<Score> top = new ArrayList<Score>();
+		Collections.sort(users);
+		int index = 0;
+		long curtime = System.currentTimeMillis();
+		
+		for (int i = 0; i < 3; i++) {
+			while(index < users.size()) {
+				long timepassed = curtime - users.get(index).timetaken;
+				long minutes = (timepassed / (1000 * 60)) % 60;
+				if (minutes < MINUTES_PASSED) {
+					top.add(users.get(index));
+					index++;
+					break;
+				}
+				else index++;
+			}
+		}
+		return top;
+	}
+	public ArrayList<Score> getRecentPerformers() {
+		ArrayList<Score> recent = new ArrayList<Score>();
+		Collections.sort(users);
+		int index = 0;
+		long curtime = System.currentTimeMillis();
+
+		while(index < users.size()) {			
+			long timepassed = curtime - users.get(index).timetaken;				
+			long minutes = (timepassed / (1000 * 60)) % 60;
+				
+			if (minutes < MINUTES_PASSED) {				
+				recent.add(users.get(index));										
+			}			
+			index++;	
+		}
+		return recent;
 	}
 	
 	public ScoreBoard(Blob blob) {

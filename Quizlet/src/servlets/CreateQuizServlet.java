@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -20,8 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.json.simple.JSONObject;
 
-import com.mysql.jdbc.Statement;
-
+import user.AccountManager;
 import user.DBConnection;
 import quiz.JSONCreator;
 import quiz.Quiz;
@@ -58,13 +58,14 @@ public class CreateQuizServlet extends HttpServlet {
 		Quiz quiz = (Quiz)(session.getAttribute("quiz"));
 		
 		//take out this line once we integrate with users
-        session.setAttribute("username", "jaimiex");
+        session.setAttribute("user", "jaimiex");
         
 		ServletContext context = getServletContext(); 
 		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 		
 		PreparedStatement pstmt = connect.getPreparedStatement();
 		
+		Statement stmt = connect.getStatement();
 		
 		JSONObject obj = JSONCreator.jsonQuiz(quiz);
 		StringWriter out = new StringWriter(); 
@@ -73,7 +74,7 @@ public class CreateQuizServlet extends HttpServlet {
 		String jsonText = out.toString();
 		InputStream in = new ByteArrayInputStream(jsonText.getBytes());
 		String name = quiz.getName();
-		String username = (String)session.getAttribute("username");
+		String username = (String)session.getAttribute("user");
 		
 		long time = System.currentTimeMillis();
 		
@@ -81,6 +82,7 @@ public class CreateQuizServlet extends HttpServlet {
 		byte[] sbytes = sb.boardToBytes();
 		
 		try {
+			stmt.executeUpdate("DELETE FROM quizzes WHERE name = \"" + name +"\"");
 			pstmt.setString(1, username);
 			pstmt.setString(2, name);
 			pstmt.setLong(3, 0);
@@ -95,7 +97,8 @@ public class CreateQuizServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		in.close();
-		RequestDispatcher dispatch = request.getRequestDispatcher("QuizSummmaryPage.jsp");
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("HomepageUser.jsp");
 		dispatch.forward(request, response);
 	}
 

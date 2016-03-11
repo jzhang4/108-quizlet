@@ -4,6 +4,7 @@
 <%@ page import= "quiz.Question"%>
 <%@ page import= "quiz.MAQuestion"%>
 <%@ page import= "java.util.*"%>
+<%@ page import= "java.util.Date"%>
 <%@ page import= "user.*"%>
 
 <%@ page import= "java.util.*"%>    
@@ -19,9 +20,11 @@
 ServletContext context = getServletContext(); 
 DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
-session.setAttribute("username", "jaimiex");
+session.setAttribute("user", "jaimiex");
 
-String username = (String)session.getAttribute("username");
+String currentuser = (String)session.getAttribute("user");
+
+String username = "";
 
 String name = request.getParameter("quizname");
 
@@ -100,20 +103,47 @@ try {
 			
 			out.println("<p>Creator: "+username+"</p>");
 			
-			out.println("<p>Past Performance: </p>");
+			out.println("<p>Your Past Performance: </p>");
+			
 			for (Score sc : board.getUsers()) {
 				if (sc.user.equals(username)){
-					long millis = sc.timetaken;
-					long second = (millis / 1000) % 60;
-					long minute = (millis / (1000 * 60)) % 60;
-					long hour = (millis / (1000 * 60 * 60)) % 24;
-
-					String time = String.format("%02d:%02d:%02d", hour, minute, second);
-					
-					out.println("<p>Taken at: "+ time+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+					Date dt = new Date(sc.timetaken);
+					out.println("<p>Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
 				}
 			}
+			out.println("<p>Top Performers of all time: </p>");
+			ArrayList<Score> top = board.getTopPerformers();
+			for (Score sc : top) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+				
+			}
 			
+			out.println("<p>Top Performers in last 15 minutes: </p>");
+			ArrayList<Score> recent = board.getTopRecentPerformers();
+			for (Score sc : recent) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+				
+			}
+			out.println("<p>All recent test takers(last 15 minutes): </p>");
+			ArrayList<Score> recentall = board.getRecentPerformers();
+			for (Score sc : recentall) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+				
+			}
+			out.println("<p>All test takers: </p>");
+			for (Score sc : board.getUsers()) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");			
+			}
+			
+			if (username.equals(currentuser)) {
+				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
+				out.println("<input type=\"submit\" value = \"Edit Quiz\"/>");
+				out.println("</form>"); 
+			}
 			%>
 			
 			<form action="TakeQuizServlet" method="post">
