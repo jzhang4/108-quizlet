@@ -116,7 +116,7 @@
 				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
 					Request r = receivedRequests.get(i);
 					int ID = r.getSenderID();
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 					if (u.getUserName().equals(cu.getUserName().trim())) {
 						break;
 					}
@@ -145,7 +145,7 @@
 					Request r = sentRequests.get(i);
 					int ID = r.getRecipientID();
 			
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
 					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
@@ -165,7 +165,7 @@
   				for (int i = receivedMessages.size() - 1; i >=0; i--) {
   					Message m = receivedMessages.get(i);
 					String sender = m.getSender();
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(sender);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(sender);
 					out.println("<li>");
 					if (!m.isRead()) {
 						out.println("<b>");
@@ -186,7 +186,7 @@
 				for (int i = sentMessages.size() - 1; i >=0; i--) {
 					Message m = sentMessages.get(i);
 					String recipient = m.getRecipient();
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
 					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());

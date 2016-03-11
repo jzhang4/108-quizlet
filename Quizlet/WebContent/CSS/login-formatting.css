@@ -107,4 +107,5 @@ h3{
   	border-radius: 25px;
   	background: white;
   	text-align: center;
+  	overflow-y:scroll;
 }
