@@ -85,7 +85,7 @@
 			<h1>Achievements</h1>
 			<p><a href="AchievementViewer.jsp">Click here</a> to view all your achievements</p>
 			<%  
-			
+
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 				if (achieveContainer != null){
 					ArrayList<Integer> achHolder = new ArrayList<Integer>();
