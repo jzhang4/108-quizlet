@@ -94,6 +94,7 @@ try {
 		</ul>
 		<div id="extra-large-inner-header">
 			<h1>Summary: <%=quiz.getName() %></h1>
+			<div>
 			<%
 			
 			out.println("<p><strong>Quiz Name:</strong> "+quiz.getName()+ "</p>");
@@ -115,8 +116,9 @@ try {
 				}
 			}			
 			out.write("</table>");
-
-			
+			out.write("</div>");
+	
+			out.write("<div>");
 			out.println("<p><strong>Top Performers of all time:</strong> </p>");
 			ArrayList<Score> top = board.getTopPerformers();
 			out.write("<table>");
@@ -130,7 +132,9 @@ try {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			out.write("</div>");
 			
+			out.write("<div>");
 			out.println("<p><strong>Top Performers in last 15 minutes:</strong> </p>");
 			ArrayList<Score> recent = board.getTopRecentPerformers();
 			out.write("<table>");
@@ -144,7 +148,9 @@ try {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			out.write("</div>");
 			
+			out.write("<div>");
 			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
 			out.write("<table>");
 			out.write("<tr>");
@@ -158,7 +164,9 @@ try {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			out.write("</div>");
 			
+			out.write("<div>");
 			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
 			out.write("<table>");
 			out.write("<tr>");
@@ -172,6 +180,7 @@ try {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			out.write("</div>");
 			
 			if (username.equals(currentuser)) {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
