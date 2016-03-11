@@ -36,10 +36,15 @@
 				
 				Statement stmt = connect.getStatement(); 
 				ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
-				
+				int count = 0;
 				while (rs.next()) {
 					String name = rs.getString(2);
-					out.println("<input type=\"radio\" name=\"quizname\" value=\""+name+"\"> "+name +"<br>");
+					if(count == 0){
+						out.println("<input type=\"radio\" name=\"quizname\" checked=\"checked\" value=\""+name+"\"> "+name +"<br>");
+					}else{
+						out.println("<input type=\"radio\" name=\"quizname\" value=\""+name+"\"> "+name +"<br>");
+					}
+					count++;
 				}
 				
 				%>
