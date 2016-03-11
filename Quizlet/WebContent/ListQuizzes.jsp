@@ -29,7 +29,7 @@
 		<div id="extra-large-inner-header">
 	
 			<h1>Choose a Quiz to Take! </h1>
-			<form action="QuizSummaryServlet" method="post">
+			<form action="QuizSummaryPage.jsp" method="post">
 				<%
 				ServletContext context = getServletContext(); 
 				DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
