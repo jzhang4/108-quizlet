@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		sc.setAttribute("loginTime", session.getCreationTime());
 		
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
-		request.setAttribute("am", am);
+		session.setAttribute("am", am);
 		
 		String typeOfLogin = request.getParameter("typeOfUser");
 		

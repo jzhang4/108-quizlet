@@ -22,7 +22,11 @@ import org.omg.CORBA.portable.OutputStream;
 @WebServlet("/UploadServlet")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
+<<<<<<< HEAD
+	private static final String path = "/Downloads/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
+=======
 	private static final String path = "/Users/jzhang/Downloads/ImageStorage/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
+>>>>>>> 241cf374b75e41bd3ae1c522512773073e677652
 	private static final long serialVersionUID = 1L;
        
     /**
