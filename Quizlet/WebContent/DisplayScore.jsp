@@ -32,17 +32,14 @@
 			time /= 1000; 
 
 	        Quiz quiz = (Quiz)(session.getAttribute("quiz"));
-	        
-	        //take out this line once we integrate with users
-	        session.setAttribute("username", "jaimiex");
-	        
+	        	        
 	        
 	        ServletContext context = getServletContext(); 
 			DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
 	        
 	        String name = quiz.getName();
-	        String username = (String)session.getAttribute("username");
+	        String username = (String)session.getAttribute("user");
 	        int score = (int)session.getAttribute("score");
 	        
 	        Statement stmt = connect.getStatement();
