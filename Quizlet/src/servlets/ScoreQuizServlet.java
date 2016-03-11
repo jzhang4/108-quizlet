@@ -60,46 +60,6 @@ public class ScoreQuizServlet extends HttpServlet {
     		session.setAttribute("score", score + points);
         }
         
-        ServletContext context = getServletContext(); 
-		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
-
-        
-        String name = quiz.getName();
-        String username = (String)session.getAttribute("user");
-        int score = (int)session.getAttribute("score");
-        
-        Statement stmt = connect.getStatement();
-        PreparedStatement pstmt = connect.getPreparedStatement2();
-        
-        try {
-			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
-			
-			while(rs.next()) {
-				String quizname = rs.getString(2);
-				if (quizname.equals(name)) {
-					Blob boardblob = rs.getBlob(7);
-					ScoreBoard sb = new ScoreBoard(boardblob);
-					long newtime = System.currentTimeMillis(); 
-					long time = newtime - (long)session.getAttribute("time");
-					time /= 1000; 
-					
-					sb.addScore(username, score, time, newtime);
-					byte[] sbytes = sb.boardToBytes();
-					
-					pstmt.setBytes(1, sbytes);
-					pstmt.setString(2, name);
-					pstmt.execute();
-					
-					long bestscore = rs.getLong(6); 
-					if (score > bestscore) stmt.executeUpdate("UPDATE quizzes SET highscore = "+score+" WHERE name = \""+name+"\"");
-					break; 
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
         RequestDispatcher dispatch = request.getRequestDispatcher("DisplayScore.jsp");
 		dispatch.forward(request, response);
 	}
