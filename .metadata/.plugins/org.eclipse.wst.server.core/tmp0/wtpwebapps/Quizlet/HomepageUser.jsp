@@ -138,6 +138,10 @@
 						out.write("<th>Friends</th>");
 						out.write("<tr>");
 						User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+						if (cu.getFriends().size() >= 10){		// Number of friends achievmeent!
+							String userName = (String)session.getAttribute("user");
+							if (achieveContainer != null)achieveContainer.doUpdate("Friendly Quizzer", userName);		
+						}
 						if(cu.getFriends().size() == 0){
 							out.write("<tr>");
 							out.write("<td> ");
@@ -347,6 +351,51 @@
 					Date dt = new Date(time);
 					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
 				}
+			}
+			%>
+			
+			<h2>Friends activity:</h2>	
+  			<%
+  			ArrayList<Long> times = new ArrayList<Long>(); 
+  			
+  			for (Integer ID : cu.getFriends()) {
+				User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
+				rs.beforeFirst();
+				while (rs.next()) {
+					long time = rs.getLong(4);
+					if (rs.getString(1).equals(u.getUserName())) times.add(time);
+				}
+				
+			
+			}
+  			Collections.sort(times); 
+			Collections.reverse(times);
+			
+			if (times.size() < 3) {
+				timecutoff = 0;
+			} else timecutoff = times.get(2);
+			
+			for (Integer ID : cu.getFriends()) {
+				User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
+				String usern = u.getUserName();
+				rs.beforeFirst();
+				while (rs.next()) {
+					long time = rs.getLong(4);
+					if (time >= timecutoff && rs.getString(1).equals(usern)) {
+						String name = rs.getString(2);
+						Date dt = new Date(time);
+						out.println("<p>"+usern+" created <a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> on "+dt.toString()+"</p>");
+						
+					}
+					Blob boardblob = rs.getBlob(7);
+ 					board = new ScoreBoard(boardblob);
+ 					ArrayList<Score> recentScores = board.getRecentTaken(usern);
+ 					String quizname = rs.getString(2);
+ 					for (Score sc : recentScores) {
+ 						Date dt = new Date(sc.timetaken);
+ 						out.println("<p>"+usern+" took "+quizname +" at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+ 					}
+				}					
 			}
 			%>
 			

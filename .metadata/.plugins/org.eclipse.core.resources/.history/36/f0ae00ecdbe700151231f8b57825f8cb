@@ -45,7 +45,15 @@
 						String path22 = request.getContextPath();
 						out.write("<img src =\"" + path22 + "/image/" + userCurrently +".jpg" +"\"" + "/>");
 					}
-				%>	
+				%>
+				<form action="UploadServlet" method="post" enctype="multipart/form-data">
+				    <input type="file" name="file" />
+				    <%
+				    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
+				    	out.write(htmlCodeForForm);
+				    %>
+				    <input type="submit" value ="Change Profile Photo"/>
+				</form>		
 					
 			</div>
 			

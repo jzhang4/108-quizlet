@@ -128,6 +128,26 @@
 		  		</div>
 				<div class = "quizRemove">	
 					<h1>Remove Quiz</h1>
+					<form action = "./quickActionServlet" method = post>
+						<input type = "text" name = "quizToRemove" placeholder = "Enter the name of the quiz to delete" size = "40">
+						<input type = "submit" value = "Remove Quiz">
+						<input name="quickActionSelected" type ="hidden" value ="removeQuiz">
+					</form>
+					<%
+					   if (request.getAttribute("successRemoveQuiz") != null){
+					        if ((int) request.getAttribute("successRemoveQuiz") == 1){
+					        		out.write("<p>"+(String)request.getParameter("quizToRemove") + " was succesfully removed" + "</p>");
+					        } else if ((int) request.getAttribute("successRemoveQuiz") == 0){
+					        		out.write("<p>"+(String)request.getParameter("quizToRemove") + " could not be found or removed" + "</p>");
+					        }
+					   }
+					%>
+					<h1> Remove Quiz History</h1>
+					<form action = "./quickActionServlet" method = post>
+						<input type = "text" name = "quizToClear" placeholder = "Enter the name of the quiz to clear" size = "40">
+						<input type = "submit" value = "Remove Quiz History">
+						<input name = "quickActionSelected" type = "hidden" value = "removeQuizHistory">
+					</form>
 				</div>
 			</div>	
 			<div id="wrapper">
