@@ -20,7 +20,8 @@
 				<input type = "submit" value = "Submit">				
 			</form>
 			<%  
-				if(request.getAttribute("userAchievements") != null){
+				if(request.getAttribute("userAchievements") != null){	// check for the state of achievements when we first generate the page 
+						
 					ArrayList<Integer> values = (ArrayList<Integer>) request.getAttribute("userAchievements");
 					if (values.size() > 0){
 						out.write("<h1> Displaying " + (String)request.getAttribute("nameOfUser") + "'s Achievements</h1>" );
