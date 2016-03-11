@@ -21,6 +21,7 @@
 			<li><a href="HomepageLogin.html">Logout</a></li>
 			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<li><a href="HistorySummaryPage.jsp">History</a></li>
 		</ul>
 		<div id="innerHeaderLarge">
 			<h1><% out.println(((User)request.getAttribute("user")).getUserName());%>'s Page</h1>
