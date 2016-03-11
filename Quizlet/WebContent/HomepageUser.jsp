@@ -4,6 +4,9 @@
 <%@ page import="user.User, java.util.*, user.Request, user.AccountManager, user.Message" %>
 <%@ page import = "administration.*" %>
 <%@ page import = "userPhotos.*" %>
+<%@ page import = "user.*" %>
+<%@ page import = "java.sql.*" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -192,7 +195,38 @@
 					out.println(u.getUserName());
 					out.println("</a>");
 				}
-			%>  
+			%> 
+			<h2>Popular Quizzes:</h2>	
+]  			<%
+  			ServletContext context = getServletContext(); 
+			DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+			
+			Statement stmt = connect.getStatement(); 
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+			
+			ArrayList<Long> takenlist = new ArrayList<Long>();
+			
+		
+			while (rs.next()) {
+				long taken = rs.getLong(3);
+				takenlist.add(taken);
+			}
+			Collections.sort(takenlist); 
+			Collections.reverse(takenlist);
+			long cutoff;
+			if (takenlist.size() < 3) {
+				cutoff = 0;
+			} else cutoff = takenlist.get(2);
+			rs.beforeFirst();
+			while (rs.next()) {
+				long taken = rs.getLong(3);
+				if (taken >= cutoff) {
+					String name = rs.getString(2);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a></p>");
+				}
+			}
+			%>
+ 
 		</div>
 	</div>
 	</div>
@@ -220,7 +254,7 @@
 		</form>		
 		
 		<form action="NewQuizForm.html" method="post">
-			  <input type="submit" value = "Take Quiz"/>
+			  <input type="submit" value = "Create Quiz"/>
 			</form>
 			
 	</div>
