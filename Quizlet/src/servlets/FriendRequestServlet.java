@@ -51,7 +51,7 @@ public class FriendRequestServlet extends HttpServlet {
 			currUser = currUser.trim();
 			User cu = am.getAccount(currUser);
 			Request r = new Request(cu.getID(), u.getID());
-			Message m = new Message("Request", cu.getUserName(), u.getUserName(), null, null, -1, null);
+			Message m = new Message("Request", cu.getUserName(), u.getUserName(), null, null, -1, null, null, -1);
 			try {
 				con.getStatement().executeUpdate("INSERT INTO requests VALUES(" + cu.getID() + ", " + u.getID() + ", \"false\");");
 				con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message) VALUES(\"Request\", \"" + cu.getUserName() + "\", \"" + u.getUserName() + "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\");");
@@ -71,11 +71,7 @@ public class FriendRequestServlet extends HttpServlet {
 			request.setAttribute("user", u);
 			request.setAttribute("currUser", cu);
 
-			
-		}
-		
-		
-		
+		}	
 		RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
 		rd.forward(request, response);
 	}

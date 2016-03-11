@@ -125,8 +125,10 @@ public class User {
 				String message = rs1.getString("message");
 				String type = rs1.getString("type");
 				String subject = rs1.getString("subject");
+				String quiz = rs1.getString("quiz");
+				long score = rs1.getLong("score");
 				int ID = rs1.getInt("id");
-				Message toAdd = new Message(type, username, recipient, message, subject, ID, null);
+				Message toAdd = new Message(type, username, recipient, message, subject, ID, null, quiz, ID);
 				sentMessages.add(toAdd);
 			}
 			rs1.close();
@@ -138,7 +140,16 @@ public class User {
 				String subject = rs2.getString("subject");
 				Boolean read = (rs2.getInt("recipientRead") == 0) ? false : true;
 				int ID = rs2.getInt("id");
-				Message toAdd = new Message(type, sender, username, message, subject, ID, read);
+				String quiz = rs2.getString("quiz");
+				long score = rs2.getLong("score");
+				
+				
+				System.out.println("in load messages");
+				System.out.println(ID);
+				System.out.println(quiz);
+				System.out.println(score);
+				
+				Message toAdd = new Message(type, sender, username, message, subject, ID, read, quiz, score);
 				receivedMessages.add(toAdd);
 			}
 			rs2.close();
@@ -189,6 +200,11 @@ public class User {
 	}
 	
 	public void addSentMessage(Message m) {
+		System.out.println("in addSentMessage");
+		System.out.println(m.getID());
+		System.out.println(m.getQuiz());
+		System.out.println(m.getScore());
+		System.out.println(m.getMessage());
 		sentMessages.add(m);
 	}
 	

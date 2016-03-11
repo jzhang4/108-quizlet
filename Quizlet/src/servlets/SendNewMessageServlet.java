@@ -48,7 +48,7 @@ public class SendNewMessageServlet extends HttpServlet {
 		
 		User u = am.getAccount(recipient);
 		
-		Message m = new Message("Note", currUser, recipient, message, subject, -1, null);	
+		Message m = new Message("Note", currUser, recipient, message, subject, -1, null, null, -1);	
 		try {
 			con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message) VALUES (\"Note\", \"" 
 					+ currUser + "\", \"" + recipient + "\", \"" +  subject + "\", \"" + message + "\")" );

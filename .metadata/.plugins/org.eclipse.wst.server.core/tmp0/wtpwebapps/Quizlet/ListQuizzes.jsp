@@ -24,22 +24,27 @@
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="HomepageLogin.html">Logout</a></li>
 			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
-			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<li><a href="HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 	
 			<h1>Choose a Quiz to Take! </h1>
-			<form action="QuizSummaryServlet" method="post">
+			<form action="QuizSummaryPage.jsp" method="post">
 				<%
 				ServletContext context = getServletContext(); 
 				DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 				
 				Statement stmt = connect.getStatement(); 
 				ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
-				
+				int count = 0;
 				while (rs.next()) {
 					String name = rs.getString(2);
-					out.println("<input type=\"radio\" name=\"quizname\" value=\""+name+"\"> "+name +"<br>");
+					if(count == 0){
+						out.println("<input type=\"radio\" name=\"quizname\" checked=\"checked\" value=\""+name+"\"> "+name +"<br>");
+					}else{
+						out.println("<input type=\"radio\" name=\"quizname\" value=\""+name+"\"> "+name +"<br>");
+					}
+					count++;
 				}
 				
 				%>

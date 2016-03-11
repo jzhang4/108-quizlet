@@ -59,6 +59,8 @@ CREATE TABLE messages(
 	recipient char(64),
 	subject char (128),
 	message LONGTEXT,
+	quiz char(64),
+	score MEDIUMINT,
 	recipientRead TINYINT DEFAULT 0,
 	PRIMARY KEY (id)
 );
