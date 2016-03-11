@@ -80,3 +80,14 @@
 0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:52:42 -0800] "GET /Quizlet/ListQuizzes.jsp HTTP/1.1" 200 2166
 0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:52:45 -0800] "POST /Quizlet/QuizSummaryPage.jsp HTTP/1.1" 500 2392
 0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:53:19 -0800] "POST /Quizlet/QuizSummaryPage.jsp HTTP/1.1" 500 2392
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:56:46 -0800] "GET /Quizlet/HomepageUser.jsp HTTP/1.1" 500 2904
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:57:55 -0800] "GET /Quizlet/HomepageUser.jsp HTTP/1.1" 500 2904
+127.0.0.1 - - [10/Mar/2016:20:58:07 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:58:12 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 500 2882
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:22 -0800] "GET /Quizlet/TheTeam.html HTTP/1.1" 200 1121
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:22 -0800] "GET /Quizlet/CSS/TheTeam.css HTTP/1.1" 200 114
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:22 -0800] "GET /Quizlet/theTeamMembers/liamNeath.jpg HTTP/1.1" 200 84406
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:22 -0800] "GET /Quizlet/theTeamMembers/jessicaZhang.png HTTP/1.1" 200 751271
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:22 -0800] "GET /Quizlet/theTeamMembers/serena.jpg HTTP/1.1" 200 108844
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:22 -0800] "GET /Quizlet/theTeamMembers/jaimiexiecs108.jpg HTTP/1.1" 200 80156
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:20:59:31 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 500 2882
