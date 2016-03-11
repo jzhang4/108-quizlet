@@ -24,7 +24,7 @@
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="HomepageLogin.html">Logout</a></li>
 			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
-			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<li><a href="HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 	

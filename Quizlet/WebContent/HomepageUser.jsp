@@ -96,9 +96,9 @@
 			<h2>Friends</h2>
 			<ul>
 			<%
-				User cu = ((AccountManager)request.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+				User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
 				for (Integer ID : cu.getFriends()) {
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
 					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
@@ -199,7 +199,7 @@
 		<h1> Your Current Picture</h1>
 		<%
 			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
-			String userCurrently = ((User)request.getAttribute("user")).getUserName();
+			String userCurrently = ((String)session.getAttribute("user"));
 			int photoValue = photoLoader.getPhotoName(userCurrently);
 			if (photoValue != 0){
 				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
