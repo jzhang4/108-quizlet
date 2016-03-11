@@ -85,6 +85,10 @@
 			<form action="CreateQuizServlet" method="post">
 			  <input type="submit" class="btn btn-primary" value = "Save Quiz"/>
 			</form>
+			
+			<form action="ListQuizzes.jsp" method="post">
+			  <input type="submit" class="btn btn-primary" value = "Cancel"/>
+			</form>
 	 	</div>
 	</div>
 

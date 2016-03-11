@@ -96,6 +96,9 @@ h3{
 	float:left;
 	padding-right:20px;
 }
+.btn{
+	padding-top:10px;
+}
 
 #extra-large-inner-header{
 	position: absolute;

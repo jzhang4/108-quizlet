@@ -27,10 +27,10 @@
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
-			<h1>Answers for <strong><%quiz.getName();%></strong></h1>
-			<%
 			
-			out.println("<p>Description:"+quiz.getDescription()+"</p>");
+			<%
+			out.println("<h1>Answers for <strong>"+ quiz.getName() + "</strong></h1>");
+			out.println("<p><strong>Description: </strong>"+quiz.getDescription()+"</p>");
 			out.println("<h2>Questions and Answers:</h2>");
 			Iterator<Question> it = quiz.iterator();
 			int index = 1;
