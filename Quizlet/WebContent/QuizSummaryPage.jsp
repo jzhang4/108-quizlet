@@ -101,7 +101,12 @@ try {
 			out.println("<p><strong>Quiz Description:</strong> "+quiz.getDescription()+"</p>");
 			
 			out.println("<p><strong>Creator:</strong> "+"<a href =\"/Quizlet/SearchUserServlet?user=" + username + "\">" + username +"</a></p>");
+			%>
 			
+			<form action="TakeQuizServlet" method="post">
+				  <input type="submit" class="btn btn-primary" value = "Take Quiz"/>
+			</form>
+			<%
 			out.println("<p><strong>Your Past Performance:</strong> </p>");
 			out.write("<table>");
 			out.write("<tr>");
