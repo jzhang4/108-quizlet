@@ -22,10 +22,7 @@
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
     <link rel="stylesheet" href="CSS/login-formatting.css">    
-<<<<<<< HEAD
 
-=======
->>>>>>> 50c82a11908631a8ab17da60d9aa056b6390e50d
 </head>
 <body>
 	<div id=header>
@@ -279,7 +276,7 @@
 			}
 			%>
 			
-			<h2>Your Recently Created Quizzes:</h2>	
+			<h2>Recently Created Quizzes:</h2>	
   			<%
   			
 			ArrayList<Long> timelist = new ArrayList<Long>();
@@ -301,7 +298,8 @@
 				if (time >= timecutoff) {
 					String name = rs.getString(2);
 					Date dt = new Date(time);
-					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
+					String user = rs.getString(1);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+", by "+user+"</p>");
 				}
 			}
 			%>
@@ -329,12 +327,35 @@
   				e.printStackTrace();
   			}
 			%>
+			<h2>Your Recently Created Quizzes:</h2>	
+  			<%
+  			
+			ArrayList<Long> yourquiz = new ArrayList<Long>();
+
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (rs.getString(1).equals(username)) yourquiz.add(time);
+			}
+			Collections.sort(yourquiz); 
+			Collections.reverse(yourquiz);
+			
+			if (yourquiz.size() < 3) {
+				timecutoff = 0;
+			} else timecutoff = yourquiz.get(2);
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (time >= timecutoff && rs.getString(1).equals(username)) {
+					String name = rs.getString(2);
+					Date dt = new Date(time);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
+				}
+			}
+			%>
 			
 		</div>
 	</div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 50c82a11908631a8ab17da60d9aa056b6390e50d
 </body>
 </html>
