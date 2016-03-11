@@ -14,9 +14,14 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Welcome <% out.println(session.getAttribute("user"));%> - Quizzler</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
+<<<<<<< HEAD
     <link rel="stylesheet" href="CSS/login-formatting.css">    
+=======
+	<link rel="stylesheet" href="CSS/login-formatting.css">
+>>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 </head>
 <body>
 	<div id=header>
@@ -31,38 +36,60 @@
 		<div> 
 			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
 		</div>
-		<p>
-		<% 
-			if(request.getAttribute("error") != null)
-				out.println(request.getAttribute("error") + " does not exist");
-		%>
-		</p>
+		
+		
 		<div class="leftSide">
-			<h1> Recent Announcements</h1>
-			
-  			<%	
-  				Administrator values = (Administrator)(request.getServletContext()).getAttribute("currentStats");
-				ArrayList<Announcement> announcements = new ArrayList<Announcement>();
-				announcements = values.getAnnounce();
-				out.write("<table style = \"width:100%\">");
-				out.write("<tr>");
-				out.write("<th>Announcement</th>");
-				out.write("<th>Date</th>");
-				out.write("<tr>");
-				for (int i = 0; i < announcements.size(); i++){
-					Announcement temp = announcements.get(i);
+		
+			<div id = "userPicture">
+				<%
+					UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
+					String userCurrently = ((String)session.getAttribute("user"));
+					int photoValue = photoLoader.getPhotoName(userCurrently);
+					if (photoValue != 0){
+						String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
+						out.write(htmlCode);
+					} else {	// we need to pull the image file from an area outside the project space
+						String path22 = request.getContextPath();
+						out.write("<img src =\"" + path22 + "/image/" + userCurrently +".jpg" +"\"" + "/>");
+					}
+				%>
+				<form action="UploadServlet" method="post" enctype="multipart/form-data">
+				    <input type="file" name="file" />
+				    <%
+				    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
+				    	out.write(htmlCodeForForm);
+				    %>
+				    <input type="submit" value ="Change Profile Photo"/>
+				</form>		
+					
+			</div>
+			<div class="divclass">
+				<h1> Recent Announcements</h1>
+				
+	  			<%	
+	  				Administrator values = (Administrator)(request.getServletContext()).getAttribute("currentStats");
+					ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+					announcements = values.getAnnounce();
+					out.write("<table style = \"width:100%\">");
 					out.write("<tr>");
-					out.write("<td>" + temp.getText() + "</td>");
-					out.write("<td>" + temp.getDate() + "</td>");
-					out.write("</tr>");
-				}
-				out.write("</table>");
-			%>
+					out.write("<th>Announcement</th>");
+					out.write("<th>Date</th>");
+					out.write("<tr>");
+					for (int i = 0; i < announcements.size(); i++){
+						Announcement temp = announcements.get(i);
+						out.write("<tr>");
+						out.write("<td>" + temp.getText() + "</td>");
+						out.write("<td>" + temp.getDate() + "</td>");
+						out.write("</tr>");
+					}
+					out.write("</table>");
+				%>
+			</div>
 			
 			<h1>Achievements</h1>
-			<p> Click here to view all your achievements </p>
+			<p><a href="AchievementViewer.jsp">Click here</a> to view all your achievements</p>
 			<%  
-			
+
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 				if (achieveContainer != null){
 					ArrayList<Integer> achHolder = new ArrayList<Integer>();
@@ -81,7 +108,7 @@
 								}
 							}
 						} else {
-							out.write("<h1> Could Not Find The Requested User</h1>");
+							out.write("<p>No achievements yet! Go take some quizzes and earn some!</p>");
 						}
 					}
 				}
@@ -92,72 +119,92 @@
 			<h1> Social Connections </h1>
 			<form action="SearchUserServlet" method="post">
 			<input type="text" name="user"/>
-			<input type="submit" value="Search for User"/>
+			<input type="submit" class="btn btn-primary" value="Search for User"/>
 			<input name="currUser" type="hidden" value="<% out.println(session.getAttribute("user"));;%>"/>
+			<p>
+				<% 
+					if(request.getAttribute("error") != null)
+						out.println("User" + request.getAttribute("error") + " does not exist");
+				%>
+			</p>
 			</form>
-			
-			<h2>Friends</h2>
-			<ul>
-			<%
-				User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
-				for (Integer ID : cu.getFriends()) {
-					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
-					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
-					out.println(u.getUserName());
-					out.println("</a>");
-					out.println("</li>");
-				}
-			%>
-			</ul>
-			
-			<h2>Received requests from:</h2>
-			
-			<ul>
-			<%
-				List<Request> receivedRequests = cu.getReceivedRequests();
-				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
-					Request r = receivedRequests.get(i);
-					int ID = r.getSenderID();
-					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
-					if (u.getUserName().equals(cu.getUserName().trim())) {
-						break;
-					}
-					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
-					out.println(u.getUserName());
-					out.println("</a>");
-					
-					
-					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
-					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
-					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
-					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + cu.getUserName() + "\"/>");
-					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
-					out.println("</li>");
-				}
-			%>
-			</ul>	
-			
-			<h2>Sent requests to:</h2>
-			
-			<ul>
-			<%
-				List<Request> sentRequests = cu.getSentRequests();
-				for (int i = sentRequests.size() - 1; i >= 0; i--) {
-					Request r = sentRequests.get(i);
-					int ID = r.getRecipientID();
-			
-					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
-					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
-					out.println(u.getUserName());
-					out.println("</a>");
-					out.println("</li>");
-				}
+			<div class="friendstables">
+				<h2>Friends</h2>
+					<%
+						out.write("<table style = \"width:100%\">");
+						out.write("<tr>");
+						out.write("<th>Friends</th>");
+						out.write("<tr>");
+						User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+						if(cu.getFriends().size() == 0){
+							out.write("<tr>");
+							out.write("<td> ");
+							out.write("</td>");
+							out.write("</tr>");
+						}
+						for (Integer ID : cu.getFriends()) {
+							User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
+							out.write("<tr>");
+							out.write("<td>");
+							out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+							out.println(u.getUserName());
+							out.println("</a>");
+							out.write("</td>");
+							out.write("</tr>");
+						}
+						out.write("</table>");
 
-			%>
-			</ul>
+					%>
+				
+				<h2>Received requests from:</h2>
+				
+				<ul>
+				<%
+					List<Request> receivedRequests = cu.getReceivedRequests();
+					for (int i = receivedRequests.size() - 1; i >= 0; i--) {
+						Request r = receivedRequests.get(i);
+						int ID = r.getSenderID();
+						User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
+						if (u.getUserName().equals(cu.getUserName().trim())) {
+							break;
+						}
+						out.println("<li>");
+						out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+						out.println(u.getUserName());
+						out.println("</a>");
+						
+						
+						out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
+						out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
+						out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
+						out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + cu.getUserName() + "\"/>");
+						out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
+						out.println("</li>");
+					}
+				%>
+				</ul>	
+				
+				<h2>Sent requests to:</h2>
+				
+				<ul>
+				<%
+					List<Request> sentRequests = cu.getSentRequests();
+					for (int i = sentRequests.size() - 1; i >= 0; i--) {
+						Request r = sentRequests.get(i);
+						int ID = r.getRecipientID();
+				
+						User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
+						out.println("<li>");
+						out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+						out.println(u.getUserName());
+						out.println("</a>");
+						out.println("</li>");
+					}
+	
+				%>
+				</ul>
+			</div>
+			
 			
 			<h2><a href="/Quizlet/SendMessage.jsp">Send a new message</a></h2>
 			
@@ -228,35 +275,6 @@
 			%>
  
 		</div>
-	</div>
-	</div>
-	<div id = "userPicture">
-		<h1> Your Current Picture</h1>
-		<%
-			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
-			String userCurrently = ((String)session.getAttribute("user"));
-			int photoValue = photoLoader.getPhotoName(userCurrently);
-			if (photoValue != 0){
-				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
-				out.write(htmlCode);
-			} else {	// we need to pull the image file from an area outside the project space
-				String path22 = request.getContextPath();
-				out.write("<img src =\"" + path22 + "/image/" + userCurrently +".jpg" +"\"" + "/>");
-			}
-		%>
-		<form action="UploadServlet" method="post" enctype="multipart/form-data">
-		    <input type="file" name="file" />
-		    <%
-		    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
-		    	out.write(htmlCodeForForm);
-		    %>
-		    <input type="submit" value ="Change Profile Photo"/>
-		</form>		
-		
-		<form action="NewQuizForm.html" method="post">
-			  <input type="submit" value = "Create Quiz"/>
-			</form>
-			
 	</div>
 </body>
 </html>

@@ -88,13 +88,10 @@ CREATE TABLE achievements(
 	achieve4 BIGINT,
 	achieve5 BIGINT,
 	achieve6 BIGINT,
-	achieve7 BIGINT,
-	achieve8 BIGINT,
-	achieve9 BIGINT,
-	achieve10 BIGINT
+	achieve7 BIGINT
 );
 
 INSERT INTO achievements VALUES
-("liamNeath",1,0,0,0,0,0,0,0,0,1),
-("jessicaZhang",1,0,0,0,0,0,0,0,0,1),
-("Molly",1,0,0,0,0,0,0,0,0,1);
+("liamNeath",1,0,0,0,0,0,0),
+("jessicaZhang",1,0,0,0,0,0,0),
+("Molly",1,0,0,0,0,0,0);

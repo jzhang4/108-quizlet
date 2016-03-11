@@ -44,8 +44,9 @@ public class CreateAccountServlet extends HttpServlet {
 		ServletContext sc = getServletContext();
 		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
 		DBConnection con = (DBConnection) sc.getAttribute("Connection");
-		
-		request.setAttribute("am", am);
+		HttpSession session = request.getSession();
+
+		session.setAttribute("am", am);
 		
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
@@ -56,9 +57,11 @@ public class CreateAccountServlet extends HttpServlet {
 			rd.forward(request, response);
 		} else {
 			am.newAccount(user, password, con.getStatement());
-			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
+<<<<<<< HEAD
 			session.setAttribute("am", am);
+=======
+>>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 			request.setAttribute("currUser", am.getAccount(user));
 			RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 			rd.forward(request, response);
