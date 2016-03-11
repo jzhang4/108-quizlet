@@ -21,11 +21,8 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-<<<<<<< HEAD
     <link rel="stylesheet" href="CSS/login-formatting.css">    
-=======
-	<link rel="stylesheet" href="CSS/login-formatting.css">
->>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
+
 </head>
 <body>
 	<div id=header>
@@ -332,34 +329,6 @@
 			
 		</div>
 	</div>
-<<<<<<< HEAD
-	</div>
-	<div id = "userPicture">
-		<h1> Your Current Picture</h1>
-		<%
-			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
-			String userCurrently = ((String)session.getAttribute("user"));
-			int photoValue = photoLoader.getPhotoName(userCurrently);
-			if (photoValue != 0){
-				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
-				out.write(htmlCode);
-			} else {	// we need to pull the image file from an area outside the project space
-				String path22 = request.getContextPath();
-				out.write("<img src =\"" + path22 + "/image/" + userCurrently +".jpg" +"\"" + "/>");
-			}
-		%>
-		<form action="UploadServlet" method="post" enctype="multipart/form-data">
-		    <input type="file" name="file" />
-		    <%
-		    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
-		    	out.write(htmlCodeForForm);
-		    %>
-		    <input type="submit" value ="Change Profile Photo"/>
-		</form>		
-		
-			
-	</div>
-=======
->>>>>>> 46d96fdfc20f9554bd812ba440744226f8958bc8
+
 </body>
 </html>
