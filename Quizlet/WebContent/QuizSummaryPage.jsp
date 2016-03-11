@@ -93,15 +93,11 @@ try {
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
-<<<<<<< HEAD
 
 			<h1><%=quiz.getName() %>: Summary</h1>
- 			<%
-=======
 			<h1>Summary: <%=quiz.getName() %></h1>
 			<div>
 			<%
->>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 			
 
  			if (request.getAttribute("error") != null) {
@@ -117,6 +113,7 @@ try {
 			<form action="TakeQuizServlet" method="post">
 				  <input type="submit" class="btn btn-primary" value = "Take Quiz"/>
 			</form>
+			
 			<%
 			out.println("<p><strong>Your Past Performance:</strong> </p>");
 			out.write("<table>");
@@ -130,16 +127,12 @@ try {
 					out.println("<td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 					out.println("</tr>");
 				}
-<<<<<<< HEAD
 			}
 
-=======
-			}			
 			out.write("</table>");
 			out.write("</div>");
 	
 			out.write("<div>");
->>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 			out.println("<p><strong>Top Performers of all time:</strong> </p>");
 
 			ArrayList<Score> top = board.getTopPerformers();
