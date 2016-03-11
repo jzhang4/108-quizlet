@@ -22,7 +22,10 @@
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
     <link rel="stylesheet" href="CSS/login-formatting.css">    
+<<<<<<< HEAD
 
+=======
+>>>>>>> 50c82a11908631a8ab17da60d9aa056b6390e50d
 </head>
 <body>
 	<div id=header>
@@ -329,6 +332,9 @@
 			
 		</div>
 	</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 50c82a11908631a8ab17da60d9aa056b6390e50d
 </body>
 </html>
