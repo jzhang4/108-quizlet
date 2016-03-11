@@ -137,6 +137,10 @@
 						out.write("<th>Friends</th>");
 						out.write("<tr>");
 						User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+						if (cu.getFriends().size() >= 10){		// Number of friends achievmeent!
+							String userName = (String)session.getAttribute("user");
+							if (achieveContainer != null)achieveContainer.doUpdate("Friendly Quizzer", userName);		
+						}
 						if(cu.getFriends().size() == 0){
 							out.write("<tr>");
 							out.write("<td> ");

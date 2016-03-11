@@ -31,13 +31,13 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("RUNNING DO GET");
+		//System.out.println("RUNNING DO GET");
 		ServletContext sc = getServletContext();
 
 		long loginTime = ((long)sc.getAttribute("loginTime"));
 		long logoutTime = System.currentTimeMillis();
 		long timeDiffForAchievement = 0;//1*10^7;
-		System.out.println(timeDiffForAchievement);
+		//System.out.println(timeDiffForAchievement);
 		if (logoutTime - loginTime >= timeDiffForAchievement){
 			Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 			if (achieveContainer != null){

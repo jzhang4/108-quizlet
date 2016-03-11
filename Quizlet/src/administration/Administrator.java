@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import quiz.ScoreBoard;
 public class Administrator {
 	static String account = MyDBInfo.MYSQL_USERNAME;	// Variables taken from the MyDBInfo 
 	static String password = MyDBInfo.MYSQL_PASSWORD;	// storage class.
@@ -70,7 +72,27 @@ public class Administrator {
 	public ArrayList<PageInfo> getPages(){
 		return pageStats;
 	}
-	
+	private void tryToClear(){
+		String query = "SELECT * FROM siteVisits WHERE pageName = \"Home Page\";";
+		int numLastLogged = 0;
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet results = stmt.executeQuery(query);
+			results.next();
+			numLastLogged = results.getInt(8);
+		} catch (Exception ex){}
+		if (numLastLogged != 0){
+			for (int i = 2; i < 8; i++ ){
+				String updateQuery = "UPDATE siteVisits SET day" + Integer.toString(i) + "=" + "\"0\";";
+				try {
+					Statement stmt = con.createStatement();
+					stmt.execute(updateQuery);		
+				} catch (Exception ex){
+					ex.printStackTrace();	
+				}
+			}
+		}
+	}
 	public void incrementCell(String pageName, int dayOfWeek){
 		String query = "SELECT * FROM siteVisits WHERE pageName = \"" + pageName + "\";";
 		int currentNumber = 0;
@@ -87,6 +109,9 @@ public class Administrator {
 			String insertQuery = "UPDATE siteVisits SET day" + Integer.toString(dayOfWeek) + " = \"" + Integer.toString(currentNumber) + "\" WHERE pageName = \"" + pageName + "\";";
 			Statement insertStmt = con.createStatement();
 			insertStmt.execute(insertQuery);
+			if (dayOfWeek == 1){		// we always try to clear on a Sunday!
+				tryToClear();
+			}
 		} catch (Exception ex){
 			ex.printStackTrace();
 		}
@@ -163,7 +188,7 @@ public class Administrator {
 		int origNumElements = countNumElements("users");
 		String deleteQuery = "DELETE FROM users WHERE userName=" + "\"" + userName + "\"" + ";";
 		String deleteQuery2 ="DELETE FROM achievements WHERE userName=" + "\"" + userName + "\"" + ";";
-		System.out.println(deleteQuery);
+		//System.out.println(deleteQuery);
 		try{
 			Statement deleteStmt = con.createStatement();
 			deleteStmt.execute(deleteQuery);
@@ -175,6 +200,26 @@ public class Administrator {
 		if (origNumElements != countNumElements("users")){
 			return 1;
 		}
+		return 0;
+	}
+	public int removeQuiz(String quizName){
+		int origNumElements = countNumElements("quizzes");
+		//System.out.println(origNumElements);
+		String deleteQuery = "DELETE FROM quizzes WHERE name =" + "\"" + quizName + "\"" + ";";
+		//System.out.println(deleteQuery);
+		try {
+			Statement deleteStmt = con.createStatement();
+			deleteStmt.execute(deleteQuery);			
+		} catch (Exception ex){}
+		if (origNumElements != countNumElements("quizzes")){
+			return 1;
+		}
+		return 0;
+	}
+	public int removeQuizHistory(String quizName){
+		ScoreBoard sb = new ScoreBoard(); 
+		byte[] sbytes = sb.boardToBytes();
+		
 		return 0;
 	}
 	public ArrayList<String> getNameOfMonths(){
@@ -204,12 +249,6 @@ public class Administrator {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
 	public ArrayList<Announcement> getAnnounce(){
 		ArrayList<Announcement> notices = new ArrayList<Announcement>();
 		String query = "SELECT * FROM announcements;";
