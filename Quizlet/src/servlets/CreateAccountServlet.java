@@ -58,7 +58,7 @@ public class CreateAccountServlet extends HttpServlet {
 			am.newAccount(user, password, con.getStatement());
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
-			request.setAttribute("user", am.getAccount(user));
+			session.setAttribute("am", am.getAccount(user));
 			request.setAttribute("currUser", am.getAccount(user));
 			RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 			rd.forward(request, response);

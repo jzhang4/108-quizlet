@@ -66,7 +66,7 @@
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 				if (achieveContainer != null){
 					ArrayList<Integer> achHolder = new ArrayList<Integer>();
-					String userName = ((User)request.getAttribute("user")).getUserName();
+					String userName = (String)session.getAttribute("user");
 					achHolder = achieveContainer.fetchAchievemnt(userName);
 					if(achHolder != null){
 						int numTotalAchieve = 0;
@@ -99,9 +99,9 @@
 			<h2>Friends</h2>
 			<ul>
 			<%
-				User cu = ((AccountManager)request.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+				User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
 				for (Integer ID : cu.getFriends()) {
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
 					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
@@ -119,7 +119,7 @@
 				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
 					Request r = receivedRequests.get(i);
 					int ID = r.getSenderID();
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 					if (u.getUserName().equals(cu.getUserName().trim())) {
 						break;
 					}
@@ -148,7 +148,7 @@
 					Request r = sentRequests.get(i);
 					int ID = r.getRecipientID();
 			
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
 					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
@@ -168,7 +168,7 @@
   				for (int i = receivedMessages.size() - 1; i >=0; i--) {
   					Message m = receivedMessages.get(i);
 					String sender = m.getSender();
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(sender);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(sender);
 					out.println("<li>");
 					if (!m.isRead()) {
 						out.println("<b>");
@@ -188,7 +188,7 @@
 				for (int i = receivedMessages.size() - 1; i >=0; i--) {
 					Message m = receivedMessages.get(i);
 					String recipient = m.getRecipient();
-					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
+					User u = ((AccountManager)session.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
 					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
@@ -233,7 +233,7 @@
 		<h1> Your Current Picture</h1>
 		<%
 			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
-			String userCurrently = ((User)request.getAttribute("user")).getUserName();
+			String userCurrently = ((String)session.getAttribute("user"));
 			int photoValue = photoLoader.getPhotoName(userCurrently);
 			if (photoValue != 0){
 				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";

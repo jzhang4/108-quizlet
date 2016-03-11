@@ -68,7 +68,7 @@ public class UpdateQuizDataServlet extends HttpServlet {
 		String jsonText = out.toString();
 		InputStream in = new ByteArrayInputStream(jsonText.getBytes());
 		String name = quiz.getName();
-		String username = "jaimiex";
+		String username = (String)session.getAttribute("user");
 		
 		long time = System.currentTimeMillis();
 		
