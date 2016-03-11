@@ -22,7 +22,9 @@ DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
 session.setAttribute("user", "jaimiex");
 
-String username = (String)session.getAttribute("user");
+String currentuser = (String)session.getAttribute("user");
+
+String username = "";
 
 String name = request.getParameter("quizname");
 
@@ -135,6 +137,12 @@ try {
 			for (Score sc : board.getUsers()) {
 				Date dt = new Date(sc.timetaken);
 				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");			
+			}
+			
+			if (username.equals(currentuser)) {
+				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
+				out.println("<input type=\"submit\" value = \"Edit Quiz\"/>");
+				out.println("</form>"); 
 			}
 			%>
 			
