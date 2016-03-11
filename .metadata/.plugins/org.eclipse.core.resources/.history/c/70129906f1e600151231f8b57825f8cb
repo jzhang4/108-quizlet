@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageServlet extends HttpServlet {
     private String imagePath;
     public void init() throws ServletException {
-        this.imagePath = "/Downloads/";
+        this.imagePath = "/Users/liamneath/Downloads/ImageStorage/";
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

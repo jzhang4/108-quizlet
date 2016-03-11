@@ -20,3 +20,9 @@
 0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:44:19 -0800] "GET /Quizlet/SearchUserServlet?user=Molly HTTP/1.1" 200 341
 0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:44:43 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 200 2092
 0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:44:49 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 200 2127
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:49:37 -0800] "GET /Quizlet/HomepageLogin.html HTTP/1.1" 404 992
+127.0.0.1 - - [10/Mar/2016:10:49:53 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:49:54 -0800] "GET /Quizlet/HomepageLogin.html HTTP/1.1" 404 1046
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:51:23 -0800] "GET /Quizlet/HomepageLogin.html HTTP/1.1" 404 1046
+127.0.0.1 - - [10/Mar/2016:10:51:37 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [10/Mar/2016:10:51:38 -0800] "GET /Quizlet/HomepageLogin.html HTTP/1.1" 404 1046
