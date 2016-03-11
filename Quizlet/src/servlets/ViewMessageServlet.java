@@ -61,7 +61,9 @@ public class ViewMessageServlet extends HttpServlet {
 				recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				String message = rs.getString("message");
-				Message m = new Message(type, sender, recipient, message, subject, id, true, null, -1);
+				String quiz = rs.getString("quiz");
+				Long score = rs.getLong("score");
+				Message m = new Message(type, sender, recipient, message, subject, id, true, quiz, score);
 				
 				User recipientUser = am.getAccount(recipient);
 				recipientUser.markRead(m);

@@ -44,7 +44,7 @@
 		out.println("<input type=\"submit\" name=\"Reply\" value=\"Reply\"/>");
 		out.println("<input name=\"userToReplyTo\" type=\"hidden\" value=\"" + m.getSender() + "\"/>");
 		out.println("<input name=\"subject\" type=\"hidden\" value=\"" + m.getSubject() + "\"/>");
-	} else {
+	} else if (m.getType().equals("Challenge")){
 		out.println("<p>Take Quiz: ");
 		//LINK TO QUIZ PAGE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		out.println("<a href =\"/Quizlet/QuizSummaryPage.jsp?quizname=" + m.getQuiz() + "\">");

@@ -92,7 +92,7 @@ try {
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
-<<<<<<< HEAD
+
 			<h1><%=quiz.getName() %>: Summary</h1>
  			<%
 			
@@ -103,13 +103,6 @@ try {
  			
 			out.println("<p>Quiz Name: "+quiz.getName()+ "</p>");
 			out.println("<p>Quiz Description: "+quiz.getDescription()+"</p>");
-=======
-			<h1>Summary: <%=quiz.getName() %></h1>
-			<%
-			
-			out.println("<p><strong>Quiz Name:</strong> "+quiz.getName()+ "</p>");
-			out.println("<p><strong>Quiz Description:</strong> "+quiz.getDescription()+"</p>");
->>>>>>> a3078fc07706ddd6df0785cf363f01ad6542b7d3
 			
 			out.println("<p><strong>Creator:</strong> "+"<a href =\"/Quizlet/SearchUserServlet?user=" + username + "\">" + username +"</a></p>");
 			
@@ -121,11 +114,9 @@ try {
 					out.println("<p>Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
 				}
 			}
-<<<<<<< HEAD
- 			out.println("<p>Top Performers of all time: </p>");
-=======
+
 			out.println("<p><strong>Top Performers of all time:</strong> </p>");
->>>>>>> a3078fc07706ddd6df0785cf363f01ad6542b7d3
+
 			ArrayList<Score> top = board.getTopPerformers();
 			for (Score sc : top) {
 				Date dt = new Date(sc.timetaken);

@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static java.lang.Math.toIntExact;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -56,7 +57,7 @@ public class SendChallengeServlet extends HttpServlet {
 			
 			try {
 				con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message, quiz, score) VALUES(\"Challenge\", \"" + cu.getUserName() + "\", \"" + u.getUserName() 
-				+ "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\", \"" + quiz + "\", score=" + String.valueOf(score) + ");");
+				+ "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\", \"" + quiz + "\", " + toIntExact(score) + ");");
 				ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE sender = \"" + cu.getUserName() + "\" AND recipient=\"" + u.getUserName() + "\" AND message= \"" + m.getMessage() + "\";");
 				if (rs.next()) {
 					int ID = rs.getInt("id");

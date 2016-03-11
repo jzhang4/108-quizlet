@@ -47,6 +47,10 @@ public class Message {
 	public boolean isRead() {
 		return recipientRead;
 	}
+	
+	public long getScore() {
+		return score;
+	}
 
 	public void setMessage(String s) {
 		message = s;
