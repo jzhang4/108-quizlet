@@ -92,8 +92,9 @@
 			<%  
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 				if (achieveContainer != null){
-					ArrayList<Integer> achHolder = new ArrayList<Integer>();
 					String userName = (String)session.getAttribute("user");
+					achieveContainer.doUpdate("Amateur Author", userName);
+					ArrayList<Integer> achHolder = new ArrayList<Integer>();
 					achHolder = achieveContainer.fetchAchievemnt(userName);
 					if(achHolder != null){
 						int numTotalAchieve = 0;
