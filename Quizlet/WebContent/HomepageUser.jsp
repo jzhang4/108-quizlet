@@ -63,7 +63,7 @@
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 				if (achieveContainer != null){
 					ArrayList<Integer> achHolder = new ArrayList<Integer>();
-					String userName = ((User)request.getAttribute("user")).getUserName();
+					String userName = (String)session.getAttribute("user");
 					achHolder = achieveContainer.fetchAchievemnt(userName);
 					if(achHolder != null){
 						int numTotalAchieve = 0;
