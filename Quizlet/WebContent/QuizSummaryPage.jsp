@@ -93,8 +93,13 @@ try {
 		</ul>
 		<div id="extra-large-inner-header">
 			<h1><%=quiz.getName() %>: Summary</h1>
-			<%
+ 			<%
 			
+
+ 			if (request.getAttribute("error") != null) {
+ 				out.println(request.getAttribute("error"));
+ 			}
+ 			
 			out.println("<p>Quiz Name: "+quiz.getName()+ "</p>");
 			out.println("<p>Quiz Description: "+quiz.getDescription()+"</p>");
 			
@@ -109,7 +114,7 @@ try {
 					out.println("<p>Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
 				}
 			}
-			out.println("<p>Top Performers of all time: </p>");
+ 			out.println("<p>Top Performers of all time: </p>");
 			ArrayList<Score> top = board.getTopPerformers();
 			for (Score sc : top) {
 				Date dt = new Date(sc.timetaken);
@@ -141,8 +146,8 @@ try {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
 				out.println("<input type=\"submit\" value = \"Edit Quiz\"/>");
 				out.println("</form>"); 
-			}
-			%>
+			} 
+			%> 
 			
 			<form action="TakeQuizServlet" method="post">
 			  <input type="submit" value = "Take Quiz"/>

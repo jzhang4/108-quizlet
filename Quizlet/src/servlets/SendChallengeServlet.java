@@ -44,29 +44,42 @@ public class SendChallengeServlet extends HttpServlet {
 		
 		User cu = am.getAccount((String)session.getAttribute("user"));
 		User u = am.getAccount(request.getParameter("recipient"));
-		System.out.println(request.getParameter("recipient"));
-		String quiz = request.getParameter("quiz");
-		Long score = Long.getLong(request.getParameter("score"));
 		
-		Message m = new Message("Challenge", cu.getUserName(), u.getUserName(), null, null, -1, false, quiz, score);
+		int uID = u.getID();
 		
-		try {
-			con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message) VALUES(\"Challenge\", \"" + cu.getUserName() + "\", \"" + u.getUserName() + "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\");");
-			ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE sender = \"" + cu.getUserName() + "\" AND recipient=\"" + u.getUserName() + "\" AND message= \"" + m.getMessage() + "\";");
-			if (rs.next()) {
-				int ID = rs.getInt("id");
-				m.setID(ID);
+		if (cu.isFriends(uID)) {
+			String quiz = request.getParameter("quizname");
+			Long score = Long.valueOf(request.getParameter("score")).longValue();
+			
+			
+			Message m = new Message("Challenge", cu.getUserName(), u.getUserName(), null, null, -1, false, quiz, score);
+			
+			try {
+				con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message, quiz, score) VALUES(\"Challenge\", \"" + cu.getUserName() + "\", \"" + u.getUserName() 
+				+ "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\", \"" + quiz + "\", score=" + String.valueOf(score) + ");");
+				ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE sender = \"" + cu.getUserName() + "\" AND recipient=\"" + u.getUserName() + "\" AND message= \"" + m.getMessage() + "\";");
+				if (rs.next()) {
+					int ID = rs.getInt("id");
+					m.setID(ID);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			cu.addSentMessage(m);
+			u.addReceivedMessage(m);
+			request.setAttribute("user", u);
+			request.setAttribute("currUser", cu);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("QuizSummaryPage.jsp");
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("error", "You can only send challenges to friends!");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("QuizSummaryPage.jsp");
+			rd.forward(request, response);
 		}
-		cu.addSentMessage(m);
-		u.addReceivedMessage(m);
-		request.setAttribute("user", u);
-		request.setAttribute("currUser", cu);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
-		rd.forward(request, response);
+		
 	}
 
 	/**
