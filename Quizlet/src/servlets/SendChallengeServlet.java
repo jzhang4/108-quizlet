@@ -1,11 +1,22 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import user.AccountManager;
+import user.DBConnection;
+import user.Message;
+import user.User;
 
 /**
  * Servlet implementation class SendChallengeServlet
@@ -26,11 +37,35 @@ public class SendChallengeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		ServletContext sc = getServletContext();
+		AccountManager am = (AccountManager) sc.getAttribute("AccountManager");
+		DBConnection con = (DBConnection) sc.getAttribute("Connection");
 		
+		User cu = am.getAccount((String)session.getAttribute("user"));
+		User u = am.getAccount(request.getParameter("recipient"));
+		String quiz = request.getParameter("quiz");
+		Long score = Long.getLong(request.getParameter("score"));
 		
+		Message m = new Message("Challenge", cu.getUserName(), u.getUserName(), null, null, -1, false, quiz, score);
 		
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			con.getStatement().executeUpdate("INSERT INTO messages (type, sender, recipient, subject, message) VALUES(\"Challenge\", \"" + cu.getUserName() + "\", \"" + u.getUserName() + "\", \"" + m.getSubject() + "\", \""+ m.getMessage() + "\");");
+			ResultSet rs = con.getStatement().executeQuery("SELECT * FROM messages WHERE sender = \"" + cu.getUserName() + "\" AND recipient=\"" + u.getUserName() + "\" AND message= \"" + m.getMessage() + "\";");
+			if (rs.next()) {
+				int ID = rs.getInt("id");
+				m.setID(ID);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cu.addSentMessage(m);
+		u.addReceivedMessage(m);
+		request.setAttribute("user", u);
+		request.setAttribute("currUser", cu);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

@@ -182,8 +182,9 @@
 			
 			<h2>Sent messages to:</h2>	
   			<%
-				for (int i = receivedMessages.size() - 1; i >=0; i--) {
-					Message m = receivedMessages.get(i);
+				List<Message> sentMessages = cu.getSentMessages();
+				for (int i = sentMessages.size() - 1; i >=0; i--) {
+					Message m = sentMessages.get(i);
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");

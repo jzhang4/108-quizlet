@@ -61,7 +61,7 @@ public class ViewMessageServlet extends HttpServlet {
 				recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				String message = rs.getString("message");
-				Message m = new Message(type, sender, recipient, message, subject, id, true);
+				Message m = new Message(type, sender, recipient, message, subject, id, true, null, -1);
 				
 				User recipientUser = am.getAccount(recipient);
 				recipientUser.markRead(m);

@@ -126,7 +126,7 @@ public class User {
 				String type = rs1.getString("type");
 				String subject = rs1.getString("subject");
 				int ID = rs1.getInt("id");
-				Message toAdd = new Message(type, username, recipient, message, subject, ID, null);
+				Message toAdd = new Message(type, username, recipient, message, subject, ID, null, null, -1);
 				sentMessages.add(toAdd);
 			}
 			rs1.close();
@@ -138,7 +138,7 @@ public class User {
 				String subject = rs2.getString("subject");
 				Boolean read = (rs2.getInt("recipientRead") == 0) ? false : true;
 				int ID = rs2.getInt("id");
-				Message toAdd = new Message(type, sender, username, message, subject, ID, read);
+				Message toAdd = new Message(type, sender, username, message, subject, ID, read, null, -1);
 				receivedMessages.add(toAdd);
 			}
 			rs2.close();
