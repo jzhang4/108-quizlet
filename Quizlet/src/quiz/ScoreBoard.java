@@ -81,7 +81,7 @@ public class ScoreBoard {
 		for (int i = 0; i < 3; i++) {
 			while(index < users.size()) {
 				long timepassed = curtime - users.get(index).timetaken;
-				long minutes = (timepassed / (1000 * 60)) % 60;
+				long minutes = (timepassed / (1000 * 60));
 				if (minutes < MINUTES_PASSED) {
 					top.add(users.get(index));
 					index++;
@@ -100,12 +100,30 @@ public class ScoreBoard {
 
 		while(index < users.size()) {			
 			long timepassed = curtime - users.get(index).timetaken;				
-			long minutes = (timepassed / (1000 * 60)) % 60;
+			long minutes = (timepassed / (1000 * 60));
 				
 			if (minutes < MINUTES_PASSED) {				
 				recent.add(users.get(index));										
 			}			
 			index++;	
+		}
+		return recent;
+	}
+	
+	public ArrayList<Score> getRecentTaken(String username) {
+		ArrayList<Score> recent = new ArrayList<Score>();
+
+		long curtime = System.currentTimeMillis();
+		for(int i = 0; i < users.size(); i++) {			
+			if (users.get(i).user.equals(username)) {
+				long timepassed = curtime - users.get(i).timetaken;				
+				long minutes = (timepassed / (1000 * 60));
+					
+				if (minutes < MINUTES_PASSED) {				
+					Score sc = users.get(i);
+					recent.add(sc);										
+				}
+			}		
 		}
 		return recent;
 	}
