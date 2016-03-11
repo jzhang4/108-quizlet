@@ -1,0 +1,222 @@
+package user;
+import java.util.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
+
+public class User {
+	private String username;
+	private byte[] passwordHash;
+	private int ID;
+	private List<Integer> friends;
+	private List<Request> receivedRequests;
+	private List<Request> sentRequests;
+	private List<Message> receivedMessages;
+	private List<Message> sentMessages;
+	
+	public User(String username, byte[] password, Statement stmt) {
+		this.username = username;
+		this.passwordHash = password;
+		receivedRequests = new ArrayList<Request>();
+		sentRequests = new ArrayList<Request>();
+		friends = new ArrayList<Integer>();
+		receivedMessages = new ArrayList<Message>();
+		sentMessages = new ArrayList<Message>();
+	}
+	
+	public String getPasswordHash() {
+		return hexToString(passwordHash);
+	}
+	
+	public static String hexToString(byte[] bytes) {
+		StringBuffer buff = new StringBuffer();
+		for (int i=0; i<bytes.length; i++) {
+			int val = bytes[i];
+			val = val & 0xff;  // remove higher bits, sign
+			if (val<16) buff.append('0'); // leading 0
+			buff.append(Integer.toString(val, 16));
+		}
+		return buff.toString();
+	}
+	
+	public String getUserName() {
+		return username;
+	}
+	
+	public int getID() {
+		return ID;
+	}
+	
+	public List<Integer> getFriends() {
+		return friends;
+	}
+	
+	public List<Request> getSentRequests() {
+		return sentRequests;
+	}
+	
+	public List<Request> getReceivedRequests() {
+		return receivedRequests;
+	}
+	
+	public List<Message> getSentMessages() {
+		return sentMessages;
+	}
+	
+	public List<Message> getReceivedMessages() {
+		return receivedMessages;
+	}
+	
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	
+	public void addSentRequest(Request r) {
+		sentRequests.add(r);
+	}
+	
+	public void addReceivedRequest(Request r) {
+		receivedRequests.add(r);
+	}
+	
+	public void loadRequests(Statement stmt) {
+		try {
+			ResultSet rs1 = stmt.executeQuery("SELECT * FROM requests WHERE senderID = " + String.valueOf(ID));
+			while(rs1.next()) {
+				int recipientID = rs1.getInt("recipientID");
+				Request toAdd = new Request(ID, recipientID);
+				sentRequests.add(toAdd);
+			}
+			rs1.close();
+			ResultSet rs2 = stmt.executeQuery("SELECT * FROM requests WHERE recipientID = " + String.valueOf(ID));
+			while(rs2.next()) {
+				int senderID = rs2.getInt("senderID");
+				Request toAdd = new Request(senderID, ID);
+				receivedRequests.add(toAdd);
+			}
+			rs2.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadFriends(Statement stmt) {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM friends WHERE user1 = " + String.valueOf(ID) + " OR user2 = " + String.valueOf(ID));
+			while(rs.next()) {
+				int user1 = rs.getInt("user1");
+				int user2 = rs.getInt("user2");
+				
+				int friend = (user1 == ID) ? user2 : user1;
+				friends.add(friend);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadMessages(Statement stmt) {
+		try {
+			ResultSet rs1 = stmt.executeQuery("SELECT * FROM messages WHERE sender = \"" + username + "\"");
+			while(rs1.next()) {
+				String recipient = rs1.getString("recipient");
+				String message = rs1.getString("message");
+				String type = rs1.getString("type");
+				String subject = rs1.getString("subject");
+				String quiz = rs1.getString("quiz");
+				long score = rs1.getLong("score");
+				int ID = rs1.getInt("id");
+				Message toAdd = new Message(type, username, recipient, message, subject, ID, null, quiz, ID);
+				sentMessages.add(toAdd);
+			}
+			rs1.close();
+			ResultSet rs2 = stmt.executeQuery("SELECT * FROM messages WHERE recipient = \"" + username + "\"");
+			while(rs2.next()) {
+				String sender = rs2.getString("sender");
+				String message = rs2.getString("message");
+				String type = rs2.getString("type");
+				String subject = rs2.getString("subject");
+				Boolean read = (rs2.getInt("recipientRead") == 0) ? false : true;
+				int ID = rs2.getInt("id");
+				String quiz = rs2.getString("quiz");
+				long score = rs2.getLong("score");
+				Message toAdd = new Message(type, sender, username, message, subject, ID, read, quiz, score);
+				receivedMessages.add(toAdd);
+			}
+			rs2.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void acceptRequest(User sender) {
+		friends.add(sender.getID());
+		
+		Iterator it = receivedRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getSenderID() == sender.getID()) {
+				it.remove();
+			}
+		}
+	}
+	
+	public void acceptedRequest(User recipient) {
+		friends.add(recipient.getID());		
+		Iterator it = sentRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getRecipientID() == recipient.getID()) {
+				it.remove();
+			}
+		}
+	}
+	
+	public void deleteRequest(User sender) {
+		Iterator it = receivedRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getSenderID() == sender.getID()) {
+				it.remove();
+			}
+		}
+		
+	}
+	
+	public void deletedRequest(User recipient) {
+		Iterator it = sentRequests.iterator();
+		while (it.hasNext()) {
+			if (((Request)it.next()).getRecipientID() == recipient.getID()) {
+				it.remove();
+			}
+		}
+	}
+	
+	public void addSentMessage(Message m) {
+		sentMessages.add(m);
+	}
+	
+	public void addReceivedMessage(Message m) {
+		receivedMessages.add(m);
+	}
+	
+	public void markRead(Message m) {
+		Iterator it = receivedMessages.iterator();
+		while (it.hasNext()) {
+			Message curr = (Message)it.next();
+			if (isSame(curr, m)) {
+				curr.setRead();
+			}
+		}
+	}
+	
+	public boolean isSame(Message m1, Message m2) {
+		return (m1.getMessage().equals(m2.getMessage()) && m1.getSender().equals(m2.getSender()) && m1.getRecipient().equals(m2.getRecipient()));
+	}
+	
+	public boolean isFriends(int ID) {
+		return friends.contains(ID);
+	}
+}
+
+

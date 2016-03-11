@@ -89,16 +89,27 @@ try {
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="HomepageLogin.html">Logout</a></li>
-			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
+<<<<<<< HEAD
+
+			<h1><%=quiz.getName() %>: Summary</h1>
+ 			<%
+=======
 			<h1>Summary: <%=quiz.getName() %></h1>
 			<div>
 			<%
+>>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 			
-			out.println("<p><strong>Quiz Name:</strong> "+quiz.getName()+ "</p>");
-			out.println("<p><strong>Quiz Description:</strong> "+quiz.getDescription()+"</p>");
+
+ 			if (request.getAttribute("error") != null) {
+ 				out.println(request.getAttribute("error"));
+ 			}
+ 			
+			out.println("<p>Quiz Name: "+quiz.getName()+ "</p>");
+			out.println("<p>Quiz Description: "+quiz.getDescription()+"</p>");
 			
 			out.println("<p><strong>Creator:</strong> "+"<a href =\"/Quizlet/SearchUserServlet?user=" + username + "\">" + username +"</a></p>");
 			
@@ -114,12 +125,18 @@ try {
 					out.println("<td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 					out.println("</tr>");
 				}
+<<<<<<< HEAD
+			}
+
+=======
 			}			
 			out.write("</table>");
 			out.write("</div>");
 	
 			out.write("<div>");
+>>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 			out.println("<p><strong>Top Performers of all time:</strong> </p>");
+
 			ArrayList<Score> top = board.getTopPerformers();
 			out.write("<table>");
 			out.write("<tr>");
@@ -186,8 +203,8 @@ try {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Edit Quiz\"/>");
 				out.println("</form>"); 
-			}
-			%>
+			} 
+			%> 
 			
 			<div>
 				<form action="TakeQuizServlet" method="post">
@@ -203,6 +220,6 @@ try {
 
 	 	</div>
 	</div>
-
+</div>
 </body>
 </html>

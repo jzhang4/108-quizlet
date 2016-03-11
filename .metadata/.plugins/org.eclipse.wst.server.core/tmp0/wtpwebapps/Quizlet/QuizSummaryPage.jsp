@@ -4,6 +4,7 @@
 <%@ page import= "quiz.Question"%>
 <%@ page import= "quiz.MAQuestion"%>
 <%@ page import= "java.util.*"%>
+<%@ page import= "java.util.Date"%>
 <%@ page import= "user.*"%>
 
 <%@ page import= "java.util.*"%>    
@@ -19,9 +20,9 @@
 ServletContext context = getServletContext(); 
 DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
-session.setAttribute("username", "jaimiex");
+String currentuser = (String)session.getAttribute("user");
 
-String username = (String)session.getAttribute("username");
+String username = "";
 
 String name = request.getParameter("quizname");
 
@@ -75,7 +76,7 @@ try {
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title><%=quiz.getName() %>: Summary</title>
+	<title>Summary: <%=quiz.getName() %></title>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/common.css">
 	<link rel="stylesheet" href="CSS/login-formatting.css">
@@ -88,37 +89,78 @@ try {
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="HomepageLogin.html">Logout</a></li>
 			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
-			<li><a>Profile</a></li>
+			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
+
 			<h1><%=quiz.getName() %>: Summary</h1>
-			<%
+ 			<%
 			
+
+ 			if (request.getAttribute("error") != null) {
+ 				out.println(request.getAttribute("error"));
+ 			}
+ 			
 			out.println("<p>Quiz Name: "+quiz.getName()+ "</p>");
 			out.println("<p>Quiz Description: "+quiz.getDescription()+"</p>");
 			
+			out.println("<p><strong>Creator:</strong> "+"<a href =\"/Quizlet/SearchUserServlet?user=" + username + "\">" + username +"</a></p>");
 			
-			out.println("<p>Creator: "+username+"</p>");
+			out.println("<p><strong>Your Past Performance:</strong> </p>");
 			
-			out.println("<p>Past Performance: </p>");
 			for (Score sc : board.getUsers()) {
 				if (sc.user.equals(username)){
-					long millis = sc.timetaken;
-					long second = (millis / 1000) % 60;
-					long minute = (millis / (1000 * 60)) % 60;
-					long hour = (millis / (1000 * 60 * 60)) % 24;
-
-					String time = String.format("%02d:%02d:%02d", hour, minute, second);
-					
-					out.println("<p>Taken at: "+ time+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+					Date dt = new Date(sc.timetaken);
+					out.println("<p>Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
 				}
 			}
+
+			out.println("<p><strong>Top Performers of all time:</strong> </p>");
+
+			ArrayList<Score> top = board.getTopPerformers();
+			for (Score sc : top) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+				
+			}
 			
-			%>
+			out.println("<p><strong>Top Performers in last 15 minutes:</strong> </p>");
+			ArrayList<Score> recent = board.getTopRecentPerformers();
+			for (Score sc : recent) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+				
+			}
+			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
+			ArrayList<Score> recentall = board.getRecentPerformers();
+			for (Score sc : recentall) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+				
+			}
+			out.println("<p><strong>All test takers:</strong> </p>");
+			for (Score sc : board.getUsers()) {
+				Date dt = new Date(sc.timetaken);
+				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");			
+			}
 			
-			<form action="TakeQuizServlet" method="post">
-			  <input type="submit" value = "Take Quiz"/>
-			</form>
+			if (username.equals(currentuser)) {
+				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
+				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Edit Quiz\"/>");
+				out.println("</form>"); 
+			} 
+			%> 
+			
+			<div>
+				<form action="TakeQuizServlet" method="post">
+				  <input type="submit" class="btn btn-primary" value = "Take Quiz"/>
+				</form>
+				
+				<form action="ListQuizzes.jsp" method="post">
+				  <input type="submit" class="btn btn-primary" value = "Back"/>
+				</form>
+				
+			</div>
 			
 
 	 	</div>

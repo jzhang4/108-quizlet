@@ -17,7 +17,11 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
+<<<<<<< HEAD
+    <link rel="stylesheet" href="CSS/login-formatting.css">    
+=======
 	<link rel="stylesheet" href="CSS/login-formatting.css">
+>>>>>>> f1cdd457ce43ffd5986755c1591cdc903048961e
 </head>
 <body>
 	<div id=header>
@@ -228,8 +232,9 @@
 			
 			<h2>Sent messages to:</h2>	
   			<%
-				for (int i = receivedMessages.size() - 1; i >=0; i--) {
-					Message m = receivedMessages.get(i);
+				List<Message> sentMessages = cu.getSentMessages();
+				for (int i = sentMessages.size() - 1; i >=0; i--) {
+					Message m = sentMessages.get(i);
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)session.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
