@@ -143,6 +143,12 @@ public class User {
 				String quiz = rs2.getString("quiz");
 				long score = rs2.getLong("score");
 				
+				
+				System.out.println("in load messages");
+				System.out.println(ID);
+				System.out.println(quiz);
+				System.out.println(score);
+				
 				Message toAdd = new Message(type, sender, username, message, subject, ID, read, quiz, score);
 				receivedMessages.add(toAdd);
 			}
@@ -194,6 +200,11 @@ public class User {
 	}
 	
 	public void addSentMessage(Message m) {
+		System.out.println("in addSentMessage");
+		System.out.println(m.getID());
+		System.out.println(m.getQuiz());
+		System.out.println(m.getScore());
+		System.out.println(m.getMessage());
 		sentMessages.add(m);
 	}
 	

@@ -1,0 +1,11 @@
+127.0.0.1 - - [11/Mar/2016:00:11:23 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:11:28 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 500 5340
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:12:17 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 500 5340
+127.0.0.1 - - [11/Mar/2016:00:16:25 -0800] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:16:30 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 200 3553
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:16:31 -0800] "GET /Quizlet/CSS/login-formatting.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:16:31 -0800] "GET /Quizlet/defaultPhotos/photo3.jpg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:16:31 -0800] "GET /Quizlet/CSS/UserHomePage.css HTTP/1.1" 200 1846
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:17:15 -0800] "POST /Quizlet/SearchUserServlet HTTP/1.1" 200 1070
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:18:05 -0800] "GET /Quizlet/HomepageUser.jsp HTTP/1.1" 200 3639
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:00:18:09 -0800] "POST /Quizlet/SearchUserServlet HTTP/1.1" 200 1037

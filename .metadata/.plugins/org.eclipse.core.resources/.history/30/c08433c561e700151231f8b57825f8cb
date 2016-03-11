@@ -25,7 +25,10 @@
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="innerHeaderLarge">
-			<h1><% out.println(u.getUserName());%></h1>
+			<h1><% out.println(((User)request.getAttribute("user")).getUserName());%>'s Page</h1>
+			<h2>ID <% out.println(((User)request.getAttribute("user")).getID());%></h2>
+			
+			
 			
 			<p>
 			<% 
@@ -33,7 +36,7 @@
 					out.println("Request sent to " + request.getAttribute("requestStatus"));
 				} else if (request.getAttribute("friends") == null) {
 					out.println("<form action=\"FriendRequestServlet\" method=\"post\">");
-					out.println("<input name=\"user\" type=\"hidden\" value=\""+ u.getUserName() + "\"/>");
+					out.println("<input name=\"user\" type=\"hidden\" value=\""+ ((User)request.getAttribute("user")).getUserName() + "\"/>");
 					out.println("<input type=\"submit\" class=\"btn btn-primary\" value=\"Send Friend Request\"/>");
 					out.println("<input type=\"hidden\" class=\"btn btn-primary\" name=\"currUser\" value=\"" + request.getAttribute("currUser") + "\"/>");
 					out.println("</form>");

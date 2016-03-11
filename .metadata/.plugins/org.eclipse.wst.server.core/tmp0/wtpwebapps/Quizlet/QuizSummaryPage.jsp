@@ -80,6 +80,7 @@ try {
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/common.css">
 	<link rel="stylesheet" href="CSS/login-formatting.css">
+	<link rel="stylesheet" href="CSS/tableFormatting.css">
 	
 </head>
 <body>
@@ -88,13 +89,15 @@ try {
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="HomepageLogin.html">Logout</a></li>
-			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 
 			<h1><%=quiz.getName() %>: Summary</h1>
- 			<%
+			<h1>Summary: <%=quiz.getName() %></h1>
+			<div>
+			<%
 			
 
  			if (request.getAttribute("error") != null) {
@@ -105,44 +108,94 @@ try {
 			out.println("<p>Quiz Description: "+quiz.getDescription()+"</p>");
 			
 			out.println("<p><strong>Creator:</strong> "+"<a href =\"/Quizlet/SearchUserServlet?user=" + username + "\">" + username +"</a></p>");
+			%>
 			
+			<form action="TakeQuizServlet" method="post">
+				  <input type="submit" class="btn btn-primary" value = "Take Quiz"/>
+			</form>
+			
+			<%
 			out.println("<p><strong>Your Past Performance:</strong> </p>");
-			
+			out.write("<table>");
+			out.write("<tr>");
+			out.write("<th>Date Taken</th><th>Score</th><th>Time</th>");
+			out.write("<tr>");
 			for (Score sc : board.getUsers()) {
 				if (sc.user.equals(username)){
 					Date dt = new Date(sc.timetaken);
-					out.println("<p>Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+					out.println("<tr>");
+					out.println("<td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+					out.println("</tr>");
 				}
 			}
 
+			out.write("</table>");
+			out.write("</div>");
+	
+			out.write("<div>");
 			out.println("<p><strong>Top Performers of all time:</strong> </p>");
 
 			ArrayList<Score> top = board.getTopPerformers();
+			out.write("<table>");
+			out.write("<tr>");
+			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
+			out.write("<tr>");
 			for (Score sc : top) {
+				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
-				
+				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.write("</tr>");
 			}
+			out.write("</table>");
+			out.write("</div>");
 			
+			out.write("<div>");
 			out.println("<p><strong>Top Performers in last 15 minutes:</strong> </p>");
 			ArrayList<Score> recent = board.getTopRecentPerformers();
+			out.write("<table>");
+			out.write("<tr>");
+			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
+			out.write("<tr>");
 			for (Score sc : recent) {
+				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
-				
+				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.write("</tr>");
 			}
+			out.write("</table>");
+			out.write("</div>");
+			
+			out.write("<div>");
 			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
+			out.write("<table>");
+			out.write("<tr>");
+			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
+			out.write("<tr>");
 			ArrayList<Score> recentall = board.getRecentPerformers();
 			for (Score sc : recentall) {
+				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
-				
+				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.write("</tr>");
 			}
+			out.write("</table>");
+			out.write("</div>");
+			
+			out.write("<div>");
+			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
+			out.write("<table>");
+			out.write("<tr>");
+			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
+			out.write("<tr>");
 			out.println("<p><strong>All test takers:</strong> </p>");
 			for (Score sc : board.getUsers()) {
+				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<p>User: "+sc.user +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");			
+				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.write("</tr>");
 			}
+			out.write("</table>");
+			out.write("</div>");
 			
 			if (username.equals(currentuser)) {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
@@ -165,6 +218,6 @@ try {
 
 	 	</div>
 	</div>
-
+</div>
 </body>
 </html>
