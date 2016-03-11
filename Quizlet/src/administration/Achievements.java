@@ -20,7 +20,9 @@ public class Achievements {
 			return (3);
 		} else if (goal.equals("Prodiguous Author")){
 			return (4);
-		} else if (goal.equals("No Sunlight")){
+		} else if (goal.equals("Friendly Quizzer")){
+			return (6);
+		}else if (goal.equals("No Sunlight")){
 			return (7);
 		}
 		return (-1);
@@ -29,7 +31,7 @@ public class Achievements {
 		String one = "1";
 		String columnName = "achieve" + Integer.toString(achieveNum);
 		String query = "UPDATE achievements SET " + columnName + "="+ "\""  + one + "\"" + " WHERE userName = \"" + userName + "\"";
-		System.out.println(query);
+		//System.out.println(query);
 		try {
 			Statement stmt = achieveCon.createStatement();
 			stmt.execute(query);
@@ -43,7 +45,7 @@ public class Achievements {
 		ArrayList<Integer> currentAchieve= new ArrayList<Integer>();
 		currentAchieve = fetchAchievemnt(userName);
 		if (NameOfAchievement.equals("Lonely Bed")){	// Number 1 in our list of achievements
-			System.out.println("WORKING WITH THE LONELY BED ACHIEVEMENT");
+			//System.out.println("WORKING WITH THE LONELY BED ACHIEVEMENT");
 			if (currentAchieve.get(mapGoalToInt("Lonely Bed") - 1) == 0 ){
 				Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -54,7 +56,7 @@ public class Achievements {
 				}		
 			}	
 		} else if (NameOfAchievement.equals("Amateur Author")||NameOfAchievement.equals("Prolific Author") || NameOfAchievement.equals("Prodiguous Author")){
-			System.out.println("WORKING WITH THE QUIZ CREATION Achievements");
+			//System.out.println("WORKING WITH THE QUIZ CREATION Achievements");
 			if (currentAchieve.get(mapGoalToInt("Amateur Author") - 1) == 0 || currentAchieve.get(mapGoalToInt("Prolific Author") - 1) == 0 || currentAchieve.get(mapGoalToInt("Prodigous Author") - 1) == 0){
 				String query = "COUNT * FROM quizzes WHERE username= \"" + userName + "\";";
 				int numQuizzes = 0;
@@ -75,15 +77,20 @@ public class Achievements {
 					if (currentAchieve.get(mapGoalToInt("Prodiguous Author") - 1) == 0) setAchieved(mapGoalToInt("Prodiguous Author"),userName);	
 				}
 			}
-		} else if (NameOfAchievement.equals("No Sunlight")){
-			System.out.println("WORKING WITH NO SUNLIGHT ACHIEVEMENT");
+		}  else if (NameOfAchievement.equals("Friendly Quizzer")){
+			if (currentAchieve.get(mapGoalToInt("Friendly Quizzer") - 1) == 0){
+				//System.out.println("WORKING WITH FRIENDLY QUIZZER");
+				setAchieved(mapGoalToInt("Friendly Quizzer"),userName);
+			}
+		}	else if (NameOfAchievement.equals("No Sunlight")){
+			//System.out.println("WORKING WITH NO SUNLIGHT ACHIEVEMENT");
 			if(currentAchieve.get(mapGoalToInt("No Sunlight") - 1) == 0){
 				setAchieved(mapGoalToInt("No Sunlight"),userName);
 			}
 		}
 		
 	}
-	public static ArrayList<Integer> fetchAchievemnt(String userName){
+	public  ArrayList<Integer> fetchAchievemnt(String userName){
 		ArrayList<Integer> achievements = new ArrayList<Integer>();
 		String query = "SELECT * FROM achievements WHERE userName = " + "\"" + userName + "\"" + ";";
 		try{
