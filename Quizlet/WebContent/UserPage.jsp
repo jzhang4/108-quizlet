@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import="user.User, java.util.*, user.AccountManager" %>
+<%@ page import="user.*, java.util.*, user.AccountManager, quiz.*, java.sql.*" %>
+<%@ page import = "quiz.ScoreBoard.Score" %>
+<%@ page import= "java.util.Date"%>
+
+
 
 <% User u = (User)request.getAttribute("user"); %>
 
@@ -41,7 +45,7 @@
 					out.println("</form>");
 				}
 			%>
-			
+			</p>
 			
 			<%
 				out.write("<table style = \"width:100%\">");
@@ -70,7 +74,76 @@
 
 			%>
 			
-			</p>
+			<h2>Recently Taken Quizzes:</h2>	
+  			<%
+  			
+  			ServletContext context = getServletContext(); 
+			DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+			
+			Statement stmt = connect.getStatement(); 
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+  			
+  			ScoreBoard board = null; 
+			String username = u.getUserName();
+  			try {
+  				rs.beforeFirst();
+  				
+  				while(rs.next()) {
+  					Blob boardblob = rs.getBlob(7);
+ 					board = new ScoreBoard(boardblob);
+ 					ArrayList<Score> recentScores = board.getRecentTaken(username);
+ 					
+ 					String quizname = rs.getString(2);
+ 					for (Score sc : recentScores) {
+ 						Date dt = new Date(sc.timetaken);
+ 						out.println("<p>Quiz : "+quizname +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+ 					}
+  				}
+  			} catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}
+			%>
+			<h2>Recently Created Quizzes:</h2>	
+  			<%
+  			
+  			ArrayList<Long> timelist = new ArrayList<Long>();
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				timelist.add(time);
+			}
+			Collections.sort(timelist); 
+			Collections.reverse(timelist);
+			long timecutoff;
+			if (timelist.size() < 3) {
+				timecutoff = 0;
+			} else timecutoff = timelist.get(2);
+			rs.beforeFirst();
+  			
+			ArrayList<Long> yourquiz = new ArrayList<Long>();
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (rs.getString(1).equals(username)) yourquiz.add(time);
+			}
+			Collections.sort(yourquiz); 
+			Collections.reverse(yourquiz);
+			
+			if (yourquiz.size() < 3) {
+				timecutoff = 0;
+			} else timecutoff = yourquiz.get(2);
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (time >= timecutoff && rs.getString(1).equals(username)) {
+					String name = rs.getString(2);
+					Date dt = new Date(time);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
+				}
+			}
+			%>
+			
 		</div>
 	</div>		
 

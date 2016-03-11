@@ -52,6 +52,8 @@ public class TakeQuizServlet extends HttpServlet {
 		ServletContext context = getServletContext(); 
 		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 		
+		request.setAttribute("error", request.getAttribute("error"));
+		
 		if (quiz.isRandom()) quiz.shuffleQuiz();
 		Iterator<Question> it = quiz.iterator();
 		session.setAttribute("iterator", it);
