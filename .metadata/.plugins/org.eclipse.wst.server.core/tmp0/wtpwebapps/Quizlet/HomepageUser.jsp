@@ -21,7 +21,9 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">
+
+    <link rel="stylesheet" href="CSS/login-formatting.css">    
+
 </head>
 <body>
 	<div id=header>
@@ -89,11 +91,11 @@
 			<h1>Achievements</h1>
 			<p><a href="AchievementViewer.jsp">Click here</a> to view all your achievements</p>
 			<%  
-
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
 				if (achieveContainer != null){
-					ArrayList<Integer> achHolder = new ArrayList<Integer>();
 					String userName = (String)session.getAttribute("user");
+					achieveContainer.doUpdate("Amateur Author", userName);
+					ArrayList<Integer> achHolder = new ArrayList<Integer>();
 					achHolder = achieveContainer.fetchAchievemnt(userName);
 					if(achHolder != null){
 						int numTotalAchieve = 0;
@@ -153,7 +155,6 @@
 							out.write("</tr>");
 						}
 						out.write("</table>");
-
 					%>
 				
 				<h2>Received requests from:</h2>
@@ -259,8 +260,6 @@
 			}
 			Collections.sort(takenlist); 
 			Collections.reverse(takenlist);
-
-
 			long cutoff;
 			if (takenlist.size() < 3) {
 				cutoff = 0;
@@ -275,11 +274,10 @@
 			}
 			%>
 			
-			<h2>Your Recently Created Quizzes:</h2>	
+			<h2>Recently Created Quizzes:</h2>	
   			<%
   			
 			ArrayList<Long> timelist = new ArrayList<Long>();
-
 			rs.beforeFirst();
 			while (rs.next()) {
 				long time = rs.getLong(4);
@@ -297,7 +295,8 @@
 				if (time >= timecutoff) {
 					String name = rs.getString(2);
 					Date dt = new Date(time);
-					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
+					String user = rs.getString(1);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+", by "+user+"</p>");
 				}
 			}
 			%>
@@ -325,8 +324,34 @@
   				e.printStackTrace();
   			}
 			%>
+			<h2>Your Recently Created Quizzes:</h2>	
+  			<%
+  			
+			ArrayList<Long> yourquiz = new ArrayList<Long>();
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (rs.getString(1).equals(username)) yourquiz.add(time);
+			}
+			Collections.sort(yourquiz); 
+			Collections.reverse(yourquiz);
+			
+			if (yourquiz.size() < 3) {
+				timecutoff = 0;
+			} else timecutoff = yourquiz.get(2);
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (time >= timecutoff && rs.getString(1).equals(username)) {
+					String name = rs.getString(2);
+					Date dt = new Date(time);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
+				}
+			}
+			%>
 			
 		</div>
 	</div>
+
 </body>
 </html>

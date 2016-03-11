@@ -21,9 +21,12 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-
+<<<<<<< HEAD
+	<link rel="stylesheet" href="CSS/login-formatting.css">
+=======
     <link rel="stylesheet" href="CSS/login-formatting.css">    
 
+>>>>>>> 48c60d36d97f8cafb17227f1963fc2ffb1691fc1
 </head>
 <body>
 	<div id=header>
