@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import="user.User, java.util.*" %>
+<%@ page import="user.User, java.util.*, user.AccountManager" %>
 
 <% User u = (User)request.getAttribute("user"); %>
 
@@ -27,6 +27,8 @@
 		<div id="innerHeaderLarge">
 			<h1><% out.println(u.getUserName());%></h1>
 			
+			<a href="/Quizlet/SendMessage.jsp?recipient=<% out.println(u.getUserName()); %>">Send a message</a>
+			
 			<p>
 			<% 
 				if(request.getAttribute("requestStatus") != null) {
@@ -38,8 +40,36 @@
 					out.println("<input type=\"hidden\" class=\"btn btn-primary\" name=\"currUser\" value=\"" + request.getAttribute("currUser") + "\"/>");
 					out.println("</form>");
 				}
-				System.out.println(request.getAttribute("friends"));
 			%>
+			
+			
+			<%
+				out.write("<table style = \"width:100%\">");
+				out.write("<tr>");
+				out.write("<th>Friends</th>");
+				out.write("<tr>");
+				if(u.getFriends().size() == 0){
+					out.write("<tr>");
+					out.write("<td> ");
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				for (Integer ID : u.getFriends()) {
+					User friend = ((AccountManager)session.getAttribute("am")).getAccount(ID);
+					out.write("<tr>");
+					out.write("<td>");
+					User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+					
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + friend.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+					out.println(friend.getUserName());
+					out.println("</a>");
+					out.write("</td>");
+					out.write("</tr>");
+				}
+				out.write("</table>");
+
+			%>
+			
 			</p>
 		</div>
 	</div>		

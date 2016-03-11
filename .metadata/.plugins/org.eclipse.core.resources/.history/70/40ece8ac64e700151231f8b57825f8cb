@@ -27,8 +27,6 @@
 		<div id="innerHeaderLarge">
 			<h1><% out.println(u.getUserName());%></h1>
 			
-			<a href="/Quizlet/SendMessage.jsp?recipient=<% out.println(u.getUserName()); %>">Send a message</a>
-			
 			<p>
 			<% 
 				if(request.getAttribute("requestStatus") != null) {
@@ -40,9 +38,10 @@
 					out.println("<input type=\"hidden\" class=\"btn btn-primary\" name=\"currUser\" value=\"" + request.getAttribute("currUser") + "\"/>");
 					out.println("</form>");
 				}
+				System.out.println(request.getAttribute("friends"));
 			%>
 			
-			
+			<h2>Friends</h2>
 			<%
 				out.write("<table style = \"width:100%\">");
 				out.write("<tr>");
@@ -60,8 +59,10 @@
 					out.write("<td>");
 					User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
 					
+					System.out.println(friend.getUserName());
+					System.out.println(((User)session.getAttribute("user")).getUserName());
 					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + friend.getUserName() + "&currUser=" + cu.getUserName() + "\">");
-					out.println(friend.getUserName());
+					out.println(u.getUserName());
 					out.println("</a>");
 					out.write("</td>");
 					out.write("</tr>");

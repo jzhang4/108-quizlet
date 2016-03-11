@@ -60,6 +60,7 @@
 					out.write("<td>");
 					User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
 					
+					System.out.println(cu.getUserName());
 					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + friend.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(friend.getUserName());
 					out.println("</a>");
