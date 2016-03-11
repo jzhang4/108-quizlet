@@ -22,7 +22,7 @@
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
 			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
-			<li><a>Profile</a></li>
+			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 			<h1>Display Quiz</h1>
@@ -78,11 +78,12 @@
 			</form>
 			
 			<form action="AddQuestionServlet" method="post">
-			  <input type="submit" class="btn btn-primary" value = "Add new question."/>
+			  <input type="submit" class="btn btn-primary" value = "Add Additional Questions"/>
 			</form>
 			
+			<p>Done making the quiz?</p>
 			<form action="CreateQuizServlet" method="post">
-			  <input type="submit" class="btn btn-primary" value = "Create quiz"/>
+			  <input type="submit" class="btn btn-primary" value = "Save Quiz"/>
 			</form>
 	 	</div>
 	</div>

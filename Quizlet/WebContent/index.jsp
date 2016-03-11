@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import ="administration.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,7 +21,10 @@
 		  <li><a href="TheTeam.html">Meet the Team</a></li>
 		  <li><a href="HomepageLogin.html">Login</a></li>
 		</ul>
-		
+		<%
+		Administrator adminLink = (Administrator) (request.getServletContext()).getAttribute("currentStats");
+		adminLink.incrementCount("index.jsp");
+		%>
 		<div id="innerHeader">
 			<h1>Ready To Get Those Neurons Firing?</h1>
 			<h2><a href="CreateNewAccount.html" class="sign_up">Sign Up</a> and see what it's all about!</h2>

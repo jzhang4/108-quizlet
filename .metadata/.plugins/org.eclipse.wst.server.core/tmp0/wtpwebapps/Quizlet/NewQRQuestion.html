@@ -3,19 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <title>New Question Response</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/common.css">
+	<link rel="stylesheet" href="CSS/login-formatting.css">
 </head>
 <body>
-<h1>NEW QUESTION RESPONSE</h1>
-
-<form action="QRServlet" method="post">
-<p> Please enter question and correct answer choice(s)</p>
-<p>Question: <input type="text" name="question" />
-<p>Answer(s): <input type="text" name="answer1" />
-<p> <input type="text" name="answer2" />
-<input type="text" name="answer3" />
-<input type="text" name="answer4" />
-<input type="submit" value = "Create"/></p>
-</form>
+	<div id=header>
+		<ul>
+			<li class="name"><a>Quizzler</a></li>
+			<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
+			<li><a>Profile</a></li>
+		</ul>
+		<div id="extra-large-inner-header">
+			<h1>NEW QUESTION RESPONSE</h1>
+			
+			<form action="QRServlet" method="post">
+				<p> Please enter question and correct answer choice(s)</p>
+				<p>Question: <input type="text" name="question" />
+				<p>Answer(s): <input type="text" name="answer1" />
+				<p> <input type="text" name="answer2" />
+				<input type="text" name="answer3" />
+				<input type="text" name="answer4" />
+				<input type="submit" value = "Create"/></p>
+			</form>
+			<form action="QuestionTypeForm.html">
+			  <input type="submit" class="btn btn-primary" value = "Cancel"/>
+			</form>
+		</div>
+	</div>
 
 </body>
 </html>

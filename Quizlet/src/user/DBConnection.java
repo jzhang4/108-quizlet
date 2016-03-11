@@ -55,6 +55,9 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 	}
+	public Connection passConnnection(){
+		return con;
+	}
 	
 	
 	

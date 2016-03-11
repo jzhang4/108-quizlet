@@ -3,15 +3,17 @@
     
 <%@ page import="user.User, java.util.*, user.Request, user.AccountManager, user.Message" %>
 <%@ page import = "administration.*" %>
+<%@ page import = "userPhotos.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Welcome <% out.println(((User)request.getAttribute("user")).getUserName());%> - Quizzler</title>
+	<title>Welcome <% out.println(session.getAttribute("user"));%> - Quizzler</title>
    	<link rel="stylesheet" href="CSS/UserHomePage.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">    
+	 <!--   <link rel="stylesheet" href="CSS/login-formatting.css">    -->
 </head>
 <body>
 	<div id=header>
@@ -24,7 +26,7 @@
 	</ul>
 	<div id="extra-large-inner-header">
 		<div> 
-			<h1>Welcome  <% out.println(((User)request.getAttribute("user")).getUserName());%></h1>
+			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
 		</div>
 		<p>
 		<% 
@@ -57,24 +59,27 @@
 			<h1>Achievements</h1>
 			<p> Click here to view all your achievements </p>
 			<%  
+			
 				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
-				ArrayList<Integer> achHolder = new ArrayList<Integer>();
-				String userName = ((User)request.getAttribute("user")).getUserName();
-				achHolder = achieveContainer.fetchAchievemnt(userName);
-				if(achHolder != null){
-					int numTotalAchieve = 0;
-					if (achHolder.size() > 0){
-						for (int i = 0; i < achHolder.size(); i++){
-							String location = "./AchievementImages/Achieve";
-							if (achHolder.get(i) == 1 && numTotalAchieve < 2){
-								numTotalAchieve += 1;
-								out.write("<div class=\"floated_img\">");
-								out.write("<img src=\"" + location + Integer.toString(i+1) + ".png\">");
-								out.write("</div>");
+				if (achieveContainer != null){
+					ArrayList<Integer> achHolder = new ArrayList<Integer>();
+					String userName = ((User)request.getAttribute("user")).getUserName();
+					achHolder = achieveContainer.fetchAchievemnt(userName);
+					if(achHolder != null){
+						int numTotalAchieve = 0;
+						if (achHolder.size() > 0){
+							for (int i = 0; i < achHolder.size(); i++){
+								String location = "./AchievementImages/Achieve";
+								if (achHolder.get(i) == 1 && numTotalAchieve < 2){
+									numTotalAchieve += 1;
+									out.write("<div class=\"floated_img\">");
+									out.write("<img src=\"" + location + Integer.toString(i+1) + ".png\">");
+									out.write("</div>");
+								}
 							}
+						} else {
+							out.write("<h1> Could Not Find The Requested User</h1>");
 						}
-					} else {
-						out.write("<h1> Could Not Find The Requested User</h1>");
 					}
 				}
 			%>  
@@ -85,16 +90,17 @@
 			<form action="SearchUserServlet" method="post">
 			<input type="text" name="user"/>
 			<input type="submit" value="Search for User"/>
-			<input name="currUser" type="hidden" value="<% out.println(((User)request.getAttribute("user")).getUserName());%>"/>
+			<input name="currUser" type="hidden" value="<% out.println(session.getAttribute("user"));;%>"/>
 			</form>
 			
 			<h2>Friends</h2>
 			<ul>
 			<%
-				for (Integer ID : ((User)request.getAttribute("user")).getFriends()) {
+				User cu = ((AccountManager)request.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+				for (Integer ID : cu.getFriends()) {
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println("</li>");
@@ -106,16 +112,16 @@
 			
 			<ul>
 			<%
-				List<Request> receivedRequests = ((User)request.getAttribute("currUser")).getReceivedRequests();
+				List<Request> receivedRequests = cu.getReceivedRequests();
 				for (int i = receivedRequests.size() - 1; i >= 0; i--) {
 					Request r = receivedRequests.get(i);
 					int ID = r.getSenderID();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
-					if (u.getUserName().equals(((User)request.getAttribute("currUser")).getUserName().trim())) {
+					if (u.getUserName().equals(cu.getUserName().trim())) {
 						break;
 					}
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("currUser")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					
@@ -123,7 +129,7 @@
 					out.println("<form action=\"RequestResponseServlet\" method=\"post\">");
 					out.println("<input type=\"submit\" name=\"AcceptRequest\" value=\"Accept\"/>");
 					out.println("<input type=\"submit\" name=\"DeleteRequest\" value=\"Delete\"/>");
-					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + ((User)request.getAttribute("currUser")).getUserName() + "\"/>");
+					out.println("<input name=\"currUser\" type=\"hidden\" value=\"" + cu.getUserName() + "\"/>");
 					out.println("<input name=\"sender\" type=\"hidden\" value=\"" + u.getUserName() + "\"/>");
 					out.println("</li>");
 				}
@@ -134,14 +140,14 @@
 			
 			<ul>
 			<%
-				List<Request> sentRequests = ((User)request.getAttribute("currUser")).getSentRequests();
+				List<Request> sentRequests = cu.getSentRequests();
 				for (int i = sentRequests.size() - 1; i >= 0; i--) {
 					Request r = sentRequests.get(i);
 					int ID = r.getRecipientID();
 			
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(ID);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println("</li>");
@@ -155,7 +161,7 @@
 
 			<h2>Received messages from:</h2>	
   			<%
-  				List<Message> receivedMessages = ((User)request.getAttribute("user")).getReceivedMessages();
+  				List<Message> receivedMessages = cu.getReceivedMessages();
   				for (int i = receivedMessages.size() - 1; i >=0; i--) {
   					Message m = receivedMessages.get(i);
 					String sender = m.getSender();
@@ -164,7 +170,7 @@
 					if (!m.isRead()) {
 						out.println("<b>");
 					}
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println(m.getSubject());
@@ -181,13 +187,36 @@
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)request.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + ((User)request.getAttribute("user")).getUserName() + "\">");
+					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 				}
 			%>  
 		</div>
 	</div>
+	</div>
+	<div id = "userPicture">
+		<h1> Your Current Picture</h1>
+		<%
+			UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
+			String userCurrently = ((User)request.getAttribute("user")).getUserName();
+			int photoValue = photoLoader.getPhotoName(userCurrently);
+			if (photoValue != 0){
+				String htmlCode = "<img src = \"" + "./defaultPhotos/photo" + Integer.toString(photoValue) + ".jpg" + "\""   + "/>";
+				out.write(htmlCode);
+			} else {	// we need to pull the image file from an area outside the project space
+				String path22 = request.getContextPath();
+				out.write("<img src =\"" + path22 + "/image/" + userCurrently +".jpg" +"\"" + "/>");
+			}
+		%>
+		<form action="UploadServlet" method="post" enctype="multipart/form-data">
+		    <input type="file" name="file" />
+		    <%
+		    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
+		    	out.write(htmlCodeForForm);
+		    %>
+		    <input type="submit" value ="Change Profile Photo"/>
+		</form>		
 	</div>
 </body>
 </html>
