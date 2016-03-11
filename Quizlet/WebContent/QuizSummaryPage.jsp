@@ -94,7 +94,6 @@ try {
 		</ul>
 		<div id="extra-large-inner-header">
 
-			<h1><%=quiz.getName() %>: Summary</h1>
 			<h1>Summary: <%=quiz.getName() %></h1>
 			<div>
 			<%
