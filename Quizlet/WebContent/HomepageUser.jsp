@@ -6,6 +6,10 @@
 <%@ page import = "userPhotos.*" %>
 <%@ page import = "user.*" %>
 <%@ page import = "java.sql.*" %>
+<%@ page import = "java.util.*" %>
+<%@ page import = "quiz.*" %>
+<%@ page import = "quiz.ScoreBoard.Score" %>
+<%@ page import= "java.util.Date"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -196,7 +200,7 @@
 				}
 			%> 
 			<h2>Popular Quizzes:</h2>	
-]  			<%
+  			<%
   			ServletContext context = getServletContext(); 
 			DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 			
@@ -205,13 +209,14 @@
 			
 			ArrayList<Long> takenlist = new ArrayList<Long>();
 			
-		
 			while (rs.next()) {
 				long taken = rs.getLong(3);
 				takenlist.add(taken);
 			}
 			Collections.sort(takenlist); 
 			Collections.reverse(takenlist);
+
+
 			long cutoff;
 			if (takenlist.size() < 3) {
 				cutoff = 0;
@@ -221,11 +226,62 @@
 				long taken = rs.getLong(3);
 				if (taken >= cutoff) {
 					String name = rs.getString(2);
-					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a></p>");
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Taken "+taken+" times</p>");
 				}
 			}
 			%>
- 
+			
+			<h2>Your Recently Created Quizzes:</h2>	
+  			<%
+  			
+			ArrayList<Long> timelist = new ArrayList<Long>();
+
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				timelist.add(time);
+			}
+			Collections.sort(timelist); 
+			Collections.reverse(timelist);
+			long timecutoff;
+			if (timelist.size() < 3) {
+				timecutoff = 0;
+			} else timecutoff = timelist.get(2);
+			rs.beforeFirst();
+			while (rs.next()) {
+				long time = rs.getLong(4);
+				if (time >= timecutoff) {
+					String name = rs.getString(2);
+					Date dt = new Date(time);
+					out.println("<p><a href=\"QuizSummaryPage.jsp?quizname="+name+"\">"+name+"</a> Created on "+dt.toString()+"</p>");
+				}
+			}
+			%>
+ 			
+ 			<h2>Recently Taken Quizzes:</h2>	
+  			<%
+  			ScoreBoard board = null; 
+			String username = (String)session.getAttribute("user");
+  			try {
+  				rs.beforeFirst();
+  				
+  				while(rs.next()) {
+  					Blob boardblob = rs.getBlob(7);
+ 					board = new ScoreBoard(boardblob);
+ 					ArrayList<Score> recentScores = board.getRecentTaken(username);
+ 					
+ 					String quizname = rs.getString(2);
+ 					for (Score sc : recentScores) {
+ 						Date dt = new Date(sc.timetaken);
+ 						out.println("<p>Quiz : "+quizname +", Taken at: "+ dt.toString()+", Score: "+sc.score+", Time: "+sc.timescore+"</p>");
+ 					}
+  				}
+  			} catch (SQLException e) {
+  				// TODO Auto-generated catch block
+  				e.printStackTrace();
+  			}
+			%>
+			
 		</div>
 	</div>
 	</div>
@@ -252,9 +308,6 @@
 		    <input type="submit" value ="Change Profile Photo"/>
 		</form>		
 		
-		<form action="NewQuizForm.html" method="post">
-			  <input type="submit" value = "Create Quiz"/>
-			</form>
 			
 	</div>
 </body>

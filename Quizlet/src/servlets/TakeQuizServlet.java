@@ -1,9 +1,14 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import quiz.Question;
 import quiz.Quiz;
+import user.DBConnection;
 
 /**
  * Servlet implementation class TakeQuizServlet
@@ -43,6 +49,8 @@ public class TakeQuizServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Quiz quiz = (Quiz)(session.getAttribute("quiz"));
+		ServletContext context = getServletContext(); 
+		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 		
 		if (quiz.isRandom()) quiz.shuffleQuiz();
 		Iterator<Question> it = quiz.iterator();
@@ -54,7 +62,28 @@ public class TakeQuizServlet extends HttpServlet {
 		
 		long time = System.currentTimeMillis();
 		session.setAttribute("time", time);
+
+        Statement stmt = connect.getStatement();
+
+        try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+			
+			while(rs.next()) {
+				String quizname = rs.getString(2);
 		
+				if (quizname.equals(quiz.getName())) {
+					long taken = rs.getLong(3); 
+					taken++;
+					stmt.executeUpdate("UPDATE quizzes SET numtaken = "+taken+" WHERE name = \""+quizname+"\"");
+					
+					break; 
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
 		if (it.hasNext()) {
 			RequestDispatcher dispatch;
 			if (quiz.isMulti()) dispatch = request.getRequestDispatcher("DisplayQuestion.jsp");
