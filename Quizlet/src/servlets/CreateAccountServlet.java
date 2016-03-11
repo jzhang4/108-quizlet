@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
@@ -55,6 +56,8 @@ public class CreateAccountServlet extends HttpServlet {
 			rd.forward(request, response);
 		} else {
 			am.newAccount(user, password, con.getStatement());
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
 			request.setAttribute("user", am.getAccount(user));
 			request.setAttribute("currUser", am.getAccount(user));
 			RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
