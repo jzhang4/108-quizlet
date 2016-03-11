@@ -3,7 +3,7 @@
 <%@ page import= "quiz.Quiz"%>
 <%@ page import= "quiz.Question"%>
 <%@ page import= "quiz.MAQuestion"%>
-<%@ page import= "java.util.*"%>
+<%@ page import= "java.util.*, user.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -74,11 +74,19 @@
 			%>
 			
 			<form action="SendChallengeServlet" method="post">
-			  Send Challenge to Your Friend: <input type="text" name="recipient"/>
+			  Send Challenge to a Friend: <!--  <input type="text" name="recipient"/> -->
+			  <select name="recipient">
 			  <%
+			  	User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+			  	for (Integer id : cu.getFriends()) {
+			  		User friend = ((AccountManager)session.getAttribute("am")).getAccount(id);
+			  		out.println("<option value=\"" + friend.getUserName() + "\">" + friend.getUserName() + "</option>");
+			  	}
+			  
 			  	out.println("<input name=\"quizname\" type=\"hidden\" value=\"" + quiz.getName() + "\"/>");
 				out.println("<input name=\"score\" type=\"hidden\" value=\"" + session.getAttribute("score") + "\"/>");
 			  %>
+			  </select>
 			  <input type="submit" name="Send" class="btn btn-primary" value = "Send"/>
 			</form>
 			
