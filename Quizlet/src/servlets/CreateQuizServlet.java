@@ -54,11 +54,10 @@ public class CreateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
 		Quiz quiz = (Quiz)(session.getAttribute("quiz"));
 		
-		//take out this line once we integrate with users
-        session.setAttribute("user", "jaimiex");
         
 		ServletContext context = getServletContext(); 
 		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
@@ -75,7 +74,6 @@ public class CreateQuizServlet extends HttpServlet {
 		InputStream in = new ByteArrayInputStream(jsonText.getBytes());
 		String name = quiz.getName();
 		String username = (String)session.getAttribute("user");
-		
 		long time = System.currentTimeMillis();
 		
 		ScoreBoard sb = new ScoreBoard(); 
@@ -97,6 +95,11 @@ public class CreateQuizServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		in.close();
+		
+		
+		AccountManager am = (AccountManager) context.getAttribute("AccountManager");
+		request.setAttribute("user", am.getAccount(username));
+		request.setAttribute("currUser", am.getAccount(username));
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("HomepageUser.jsp");
 		dispatch.forward(request, response);

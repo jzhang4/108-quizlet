@@ -51,9 +51,7 @@ public class ScoreQuizServlet extends HttpServlet {
 		HttpSession session = request.getSession();
         Quiz quiz = (Quiz)(session.getAttribute("quiz"));
         
-        //take out this line once we integrate with users
-        session.setAttribute("username", "jaimiex");
-        
+        //take out this line once we integrate with users        
         for (int i = 1; i <= quiz.getSize(); i++) {
         	Question q = quiz.getQuestion(i);
         	int points = q.checkAnswer(request.getParameterValues("answer"+i));
@@ -67,7 +65,7 @@ public class ScoreQuizServlet extends HttpServlet {
 
         
         String name = quiz.getName();
-        String username = (String)session.getAttribute("username");
+        String username = (String)session.getAttribute("user");
         int score = (int)session.getAttribute("score");
         
         Statement stmt = connect.getStatement();

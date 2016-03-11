@@ -74,8 +74,8 @@
 			
 			<form action="SendChallengeServlet">
 			  Send Challenge to: <input type="text" name="recipient"/>
-			  <input type="hidden" name="quiz" value ="<%quiz.getName();%>"/>
-			  <input type="hidden" name="score" value ="<%session.getAttribute("score");%>"/>			  
+			  <input type="hidden" value ="<%quiz.getName();%>"/>
+			  <input type="hidden" value ="<%quiz.getName();%>"/>			  
 			  <input type="submit" class="btn btn-primary" value = "Send"/>
 			</form>
 			

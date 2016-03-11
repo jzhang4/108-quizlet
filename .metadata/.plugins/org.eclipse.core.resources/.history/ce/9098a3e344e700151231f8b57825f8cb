@@ -44,7 +44,6 @@ public class SendChallengeServlet extends HttpServlet {
 		
 		User cu = am.getAccount((String)session.getAttribute("user"));
 		User u = am.getAccount(request.getParameter("recipient"));
-		System.out.println(request.getParameter("recipient"));
 		String quiz = request.getParameter("quiz");
 		Long score = Long.getLong(request.getParameter("score"));
 		

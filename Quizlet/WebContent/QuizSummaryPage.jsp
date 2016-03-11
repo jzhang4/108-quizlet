@@ -20,8 +20,6 @@
 ServletContext context = getServletContext(); 
 DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
-session.setAttribute("user", "jaimiex");
-
 String currentuser = (String)session.getAttribute("user");
 
 String username = "";

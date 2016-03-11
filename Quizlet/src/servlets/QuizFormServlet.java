@@ -49,9 +49,9 @@ public class QuizFormServlet extends HttpServlet {
 		ServletContext context = getServletContext(); 
 		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
-		Statement stmt = connect.getStatement(); 
 		ResultSet rs;
 		try {
+			Statement stmt = connect.getStatement(); 
 			rs = stmt.executeQuery("SELECT * FROM quizzes");
 			while (rs.next()) {
 				String name2 = rs.getString("name");
