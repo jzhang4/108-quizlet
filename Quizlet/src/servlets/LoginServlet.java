@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import administration.Achievements;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
@@ -59,6 +62,9 @@ public class LoginServlet extends HttpServlet {
 				//I'm saving the username onto the session so we can
 				//keep track of the user's activities -Jaimie
 				session.setAttribute("user", user);
+				Achievements achieveContainer = (Achievements)(request.getServletContext()).getAttribute("achieveLookUp");
+				achieveContainer.doUpdate("Lonely Bed",user);
+				
 				
 				RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
 				rd.forward(request, response);

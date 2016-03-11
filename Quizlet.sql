@@ -59,6 +59,8 @@ CREATE TABLE messages(
 	recipient char(64),
 	subject char (128),
 	message LONGTEXT,
+	quiz char(64),
+	score MEDIUMINT,
 	recipientRead TINYINT DEFAULT 0,
 	PRIMARY KEY (id)
 );
@@ -86,13 +88,10 @@ CREATE TABLE achievements(
 	achieve4 BIGINT,
 	achieve5 BIGINT,
 	achieve6 BIGINT,
-	achieve7 BIGINT,
-	achieve8 BIGINT,
-	achieve9 BIGINT,
-	achieve10 BIGINT
+	achieve7 BIGINT
 );
 
 INSERT INTO achievements VALUES
-("liamNeath",1,0,0,0,0,0,0,0,0,1),
-("jessicaZhang",1,0,0,0,0,0,0,0,0,1),
-("Molly",1,0,0,0,0,0,0,0,0,1);
+("liamNeath",1,0,0,0,0,0,0),
+("jessicaZhang",1,0,0,0,0,0,0),
+("Molly",1,0,0,0,0,0,0);

@@ -50,7 +50,8 @@ public class AccountManager {
 			User toCheck = new User(user, generate(password), stmt);
 			accounts.add(toCheck);
 			try {
-				stmt.executeUpdate("INSERT INTO users (username, passwordHash, admin) VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\", 0);");
+				stmt.executeUpdate("INSERT INTO achievements (username,achieve1,achieve2,achieve3,achieve4,achieve5,achieve6,achieve7) VALUES (\"" + user + "\"," +"0,0,0,0,0,0,0);");
+				stmt.executeUpdate("INSERT INTO users (username, passwordHash, admin,picKey) VALUES(\"" + user + "\", \"" + toCheck.getPasswordHash() + "\", 0,0);");
 				ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \"" + user + "\";");
 				while (rs.next()) {
 					ID = rs.getInt("id");

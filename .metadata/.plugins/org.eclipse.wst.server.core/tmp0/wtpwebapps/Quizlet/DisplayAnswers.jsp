@@ -27,10 +27,10 @@
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
-			<h1>Answers for <strong><%quiz.getName();%></strong></h1>
-			<%
 			
-			out.println("<p>Description:"+quiz.getDescription()+"</p>");
+			<%
+			out.println("<h1>Answers for <strong>"+ quiz.getName() + "</strong></h1>");
+			out.println("<p><strong>Description: </strong>"+quiz.getDescription()+"</p>");
 			out.println("<h2>Questions and Answers:</h2>");
 			Iterator<Question> it = quiz.iterator();
 			int index = 1;
@@ -72,6 +72,16 @@
 			
 			%>
 			
+			<form action="SendChallengeServlet" method="post">
+			  Send Challenge to Your Friend: <input type="text" name="recipient"/>
+			  <%
+			  	out.println("<input name=\"quizname\" type=\"hidden\" value=\"" + quiz.getName() + "\"/>");
+				out.println("<input name=\"score\" type=\"hidden\" value=\"" + session.getAttribute("score") + "\"/>");
+			  %>
+			  <input type="submit" name="Send" class="btn btn-primary" value = "Send"/>
+			</form>
+			
+						
 			<form action="ListQuizzes.jsp">
 			  <input type="submit" class="btn btn-primary" value = "Back to Quizzes"/>
 			</form>
