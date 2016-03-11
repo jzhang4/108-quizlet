@@ -217,6 +217,11 @@
 		    %>
 		    <input type="submit" value ="Change Profile Photo"/>
 		</form>		
+		
+		<form action="NewQuizForm.html" method="post">
+			  <input type="submit" value = "Take Quiz"/>
+			</form>
+			
 	</div>
 </body>
 </html>
