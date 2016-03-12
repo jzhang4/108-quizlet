@@ -35,6 +35,7 @@
 		<li><a href="HomepageUser.jsp">Profile</a></li>
 		<li><a href="HistorySummaryPage.jsp">History</a></li>
 	</ul>
+	</div>
 	<div id="extra-large-inner-header">
 		<div> 
 			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
@@ -419,7 +420,6 @@
 		</div>
 	</div>
 
-	</div>
 
 </body>
 </html>
