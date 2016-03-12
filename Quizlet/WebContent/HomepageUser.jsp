@@ -38,6 +38,19 @@
 	<div id="extra-large-inner-header">
 		<div> 
 			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
+			<p>Account: 
+				<%
+				
+				User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
+
+				if (cu.privacyOn())
+					out.println("Private");
+				else
+					out.println("Public");
+				%>
+			</p>
+			
+			<p><a href="Quizlet/ChangePrivacyServlet">Change Privacy</a></p>
 		</div>
 		
 		
@@ -138,7 +151,6 @@
 						out.write("<tr>");
 						out.write("<th>Friends</th>");
 						out.write("<tr>");
-						User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
 						if (cu.getFriends().size() >= 10){		// Number of friends achievmeent!
 							String userName = (String)session.getAttribute("user");
 							if (achieveContainer != null)achieveContainer.doUpdate("Friendly Quizzer", userName);		

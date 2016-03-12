@@ -1,4 +1,4 @@
-package user;
+ package user;
 
 import java.util.*;
 import java.security.MessageDigest;
@@ -19,7 +19,8 @@ public class AccountManager {
 			while(rs.next()) {
 				String username = rs.getString("username");
 				String strPasswordHash = rs.getString("passwordHash");
-				User toAdd = new User(username, hexToArray(strPasswordHash), stmt);
+				boolean privacyOn = (rs.getInt("privacy") == 0) ? false : true;
+				User toAdd = new User(username, hexToArray(strPasswordHash), stmt, privacyOn);
 				int ID = rs.getInt("id");
 				toAdd.setID(ID);
 				accounts.add(toAdd);
@@ -47,7 +48,7 @@ public class AccountManager {
 	public void newAccount(String user, String password, Statement stmt) {
 		int ID = -1;
 		if (!accountExists(user)) {
-			User toCheck = new User(user, generate(password), stmt);
+			User toCheck = new User(user, generate(password), stmt, false);
 			accounts.add(toCheck);
 			try {
 				stmt.executeUpdate("INSERT INTO achievements (username,achieve1,achieve2,achieve3,achieve4,achieve5,achieve6,achieve7) VALUES (\"" + user + "\"," +"0,0,0,0,0,0,0);");

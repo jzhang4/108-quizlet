@@ -96,8 +96,8 @@ if (request.getAttribute("temp") == null) {
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
 			<%
-				if (request.getAttribute("temp") == null) {
-					out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
+			if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {					
+				out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
 				} else {
 					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
 					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
@@ -124,7 +124,7 @@ if (request.getAttribute("temp") == null) {
 			
 			<% 
 			
-			if (request.getAttribute("temp") != null) {
+			if (request.getParameter("temp") == null && request.getAttribute("temp") == null) {					
 				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
 				out.println("</form>");
@@ -134,7 +134,7 @@ if (request.getAttribute("temp") == null) {
 			
 			<%
 			
-			if (request.getAttribute("temp") != null) {
+			if (request.getParameter("temp") == null && request.getAttribute("temp") == null) {					
 				out.println("<p><strong>Your Past Performance:</strong> </p>");
 				out.write("<table>");
 				out.write("<tr>");
@@ -231,7 +231,7 @@ if (request.getAttribute("temp") == null) {
 			
 			<% 
 			
-			if (request.getAttribute("temp") != null) {
+			if (request.getParameter("temp") == null && request.getAttribute("temp") == null) {					
 				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
 				out.println("</form>");
@@ -240,7 +240,7 @@ if (request.getAttribute("temp") == null) {
 			%> 				
 				<form action="ListQuizzes.jsp" method="post">
 				<%
-				if (request.getAttribute("temp") == null) {
+				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {					
 					out.println("<input type=\"hidden\" value=\"true\" name=\"temp\"/>");
 					request.setAttribute("temp", "true");
 				}
