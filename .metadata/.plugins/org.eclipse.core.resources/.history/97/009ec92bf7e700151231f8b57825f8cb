@@ -245,7 +245,7 @@ if (request.getAttribute("temp") == null) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
 				if (performer.privacyOn()) {
-					userInTable = "Anonymous";
+					userInTable = "anonymous";
 				} else {
 					userInTable = sc.user;
 				}
