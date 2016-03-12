@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageServlet extends HttpServlet {
     private String imagePath;
     public void init() throws ServletException {
-        this.imagePath = "/Users/jzhang/Downloads/ImageStorage/";	// MUST SET THIS TO A PATH ON YOUR COMPUTER
+        this.imagePath = "/Users/liamneath/Downloads/ImageStorage/";	// MUST SET THIS TO A PATH ON YOUR COMPUTER
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestedImage = request.getPathInfo();				 // Get requested image by path info.

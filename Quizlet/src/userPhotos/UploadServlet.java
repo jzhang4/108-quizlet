@@ -22,7 +22,7 @@ import org.omg.CORBA.portable.OutputStream;
 @WebServlet("/UploadServlet")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
-	private static final String path = "/Users/jzhang/Downloads/ImageStorage/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
+	private static final String path = "/Users/liamneath/Downloads/ImageStorage/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -55,7 +55,12 @@ public class UploadServlet extends HttpServlet {
 	    File targetFile = new File(newFile);						// create a new file in the specified directory 
 	    FileOutputStream outStream = new FileOutputStream(targetFile);
 	    outStream.write(buffer);
-	    outStream.close();											// writing to that file and closing the stream right after
+	    outStream.close();		
+	    
+	    UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
+	    photoLoader.setToCustom(request.getParameter("imageName"));
+	    
+	    // writing to that file and closing the stream right after
 	    String nextJSP = "/HomepageUser.jsp";						
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request,response);						// forward back to the HomePage. The uploaded image should
