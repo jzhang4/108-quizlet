@@ -14,8 +14,11 @@
 		<link rel="stylesheet" href="CSS/03.css">
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 		<link rel="stylesheet" href="CSS/admin-formatting.css">
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		
     	<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 	</head>
 	<script>

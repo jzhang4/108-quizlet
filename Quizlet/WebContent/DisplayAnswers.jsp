@@ -30,7 +30,7 @@
 		<div id="extra-large-inner-header">
 			
 			<%
-			out.println("<h1>Answers for <strong>"+ quiz.getName() + "</strong></h1>");
+			out.println("<h1>Answers for "+ quiz.getName() + "</h1>");
 			out.println("<p><strong>Description: </strong>"+quiz.getDescription()+"</p>");
 			out.println("<h2>Questions and Answers:</h2>");
 			Iterator<Question> it = quiz.iterator();
@@ -41,20 +41,20 @@
 				out.println("<p>Type: "+q.stringType(q.getType()) + "</p>");
 			
 				if (q.getType() == Question.PICTURE_RESPONSE) {
-					out.println("<p>Question "+index + "</p>");
+					out.println("<p><strong>Question "+index + "</strong></p>");
 					out.println("<img src=\""+ques + "\" alt = \""+ques+"\" style = \"width:128px;height:128px;\">");
-				} else out.println("<p>Question "+index + ": "+ques + "</p>");
+				} else out.println("<p><strong>Question "+index + ": </strong>"+ques + "</p>");
 				
 				if (q.getType() == Question.MULTIPLE_ANSWER) {
 					MAQuestion maq = (MAQuestion)q; 
 					String ordered = Boolean.toString(maq.ordered());
 					int numanswers = maq.getNumAnswers();
-					out.println("<p>Ordered: "+ordered + "</p>");
-					out.println("<p>Number of Required Answers: " + numanswers +"</p>");
+					out.println("<p><strong>Ordered: "+ordered + "</strong></p>");
+					out.println("<p><strong>Number of Required Answers:</strong> " + numanswers +"</p>");
 				}
 				
 				ArrayList<String> answers = q.getAnswer().getAnswer();
-				out.println("<p> Answer(s): ");
+				out.println("<p><strong> Answer(s): </strong>");
 				for (String str : answers) {
 					out.println(str+"\n");
 				}
