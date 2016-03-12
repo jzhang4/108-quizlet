@@ -55,9 +55,17 @@
 					count++;
 				}
 				
+				
 				request.setAttribute("temp", request.getParameter("temp"));
+				
+				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {					
+					request.setAttribute("temp", true);
+				}
+				
+				
 				%>
 			<input type="submit" class="btn btn-primary" value = "View Quiz Summary"/>
+			
 			</form>
 			
 			<%

@@ -97,8 +97,13 @@ if (request.getAttribute("temp") == null) {
 			<li class="name"><a>Quizzler</a></li>
 		
 			<%
+<<<<<<< HEAD
+			if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {					
+				out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
+=======
 				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {
 					out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
+>>>>>>> 41976b4ca7c94551309d9fe7f3765ac5d7b3b470
 				} else {
 					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
 					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
@@ -126,7 +131,11 @@ if (request.getAttribute("temp") == null) {
 			
 			<% 
 			
+<<<<<<< HEAD
+			if (request.getParameter("temp") == null && request.getAttribute("temp") == null) {					
+=======
 			if (request.getAttribute("temp") == null) {
+>>>>>>> 41976b4ca7c94551309d9fe7f3765ac5d7b3b470
 				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
 				out.println("</form>");
@@ -136,8 +145,13 @@ if (request.getAttribute("temp") == null) {
 			
 			<%
 			
+<<<<<<< HEAD
+			if (request.getParameter("temp") == null && request.getAttribute("temp") == null) {					
+				out.println("<p><strong>Your Past Performance:</strong> </p>");
+=======
 			if (request.getAttribute("temp") == null) {
 				out.println("<h2>Your Past Performance:</strong> </h2>");
+>>>>>>> 41976b4ca7c94551309d9fe7f3765ac5d7b3b470
 				out.write("<table>");
 				out.write("<tr>");
 				out.write("<th>Date Taken</th><th>Score</th><th>Time</th>");
@@ -249,7 +263,11 @@ if (request.getAttribute("temp") == null) {
 			
 			<% 
 			
+<<<<<<< HEAD
+			if (request.getParameter("temp") == null && request.getAttribute("temp") == null) {					
+=======
 			if (request.getAttribute("temp") == null) {
+>>>>>>> 41976b4ca7c94551309d9fe7f3765ac5d7b3b470
 				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
 				out.println("</form>");
@@ -258,7 +276,7 @@ if (request.getAttribute("temp") == null) {
 			%> 				
 				<form action="ListQuizzes.jsp" method="post">
 				<%
-				if (request.getAttribute("temp") == null) {
+				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {					
 					out.println("<input type=\"hidden\" value=\"true\" name=\"temp\"/>");
 					request.setAttribute("temp", "true");
 				}
