@@ -83,10 +83,8 @@ public class QuizFormServlet extends HttpServlet {
 		boolean correct = false; 
 		if (request.getParameterValues("correct") != null) correct = true;
 		quiz.setCorrect(correct);
-		
-		boolean practice = false; 
-		if (request.getParameterValues("practice") != null) practice = true;
-		quiz.setPractice(practice);
+
+		quiz.setPractice(false);
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("QuestionTypeForm.html");
 		dispatch.forward(request, response);
