@@ -50,7 +50,7 @@
 				%>
 			</p>
 			
-			<p><a href="/Quizlet/ChangePrivacyServlet">Change Privacy</a></p>
+			<p><a href="Quizlet/ChangePrivacyServlet">Change Privacy</a></p>
 		</div>
 		
 		

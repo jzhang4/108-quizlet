@@ -38,7 +38,7 @@
 	<div id="extra-large-inner-header">
 		<div> 
 			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
-			<p>Account: 
+			<p>Quiz Performance: 
 				<%
 				
 				User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
@@ -50,7 +50,7 @@
 				%>
 			</p>
 			
-			<p><a href="Quizlet/ChangePrivacyServlet">Change Privacy</a></p>
+			<p><a href="/Quizlet/ChangePrivacyServlet">Change Privacy</a></p>
 		</div>
 		
 		

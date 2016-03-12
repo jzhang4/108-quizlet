@@ -50,7 +50,7 @@ public class ChangePrivacyServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.html");
 		rd.forward(request, response);
 	}
 
