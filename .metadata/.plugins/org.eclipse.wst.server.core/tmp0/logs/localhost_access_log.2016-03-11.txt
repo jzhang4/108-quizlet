@@ -366,3 +366,4 @@
 0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:23:38 -0800] "POST /Quizlet/ListQuizzes.jsp HTTP/1.1" 200 2416
 0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:23:40 -0800] "GET /Quizlet/ListQuizzes.jsp?temp=true HTTP/1.1" 200 2218
 0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:23:41 -0800] "POST /Quizlet/QuizSummaryPage.jsp HTTP/1.1" 200 3191
+127.0.0.1 - - [11/Mar/2016:17:24:05 -0800] "GET / HTTP/1.1" 404 994
