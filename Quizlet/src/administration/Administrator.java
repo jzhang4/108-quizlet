@@ -8,7 +8,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import quiz.ScoreBoard;
+import user.DBConnection;
 public class Administrator {
 	static String account = MyDBInfo.MYSQL_USERNAME;	// Variables taken from the MyDBInfo 
 	static String password = MyDBInfo.MYSQL_PASSWORD;	// storage class.
@@ -216,10 +220,35 @@ public class Administrator {
 		}
 		return 0;
 	}
-	public int removeQuizHistory(String quizName){
+	public int removeQuizHistory(String quizName, HttpServletRequest request){
 		ScoreBoard sb = new ScoreBoard(); 
 		byte[] sbytes = sb.boardToBytes();
-		
+		ServletContext context = request.getServletContext(); 
+		DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+	    PreparedStatement pstmt = connect.getPreparedStatement2();
+	    try {
+	    	//System.out.println("RUNNING THE COUNT");
+	    	String existQuery = "Select * FROM quizzes WHERE name = " + "\"" + quizName + "\";";
+	    	
+	    	//System.out.println(existQuery);
+	 	    Statement existance = con.createStatement();
+	 	    ResultSet results = existance.executeQuery(existQuery);
+
+	 	   if (!results.isBeforeFirst() ) {   
+	 		 // System.out.println("NO DATA LIAM");
+	 		  return 0;
+	 	   }
+	    } catch (Exception ex){
+	    	return 0;
+	    }	  
+	    try {
+		    pstmt.setBytes(1, sbytes);
+			pstmt.setString(2, quizName);
+			pstmt.execute();
+			return 1;
+	    } catch (Exception ex){
+	    	ex.printStackTrace();
+	    }
 		return 0;
 	}
 	public ArrayList<String> getNameOfMonths(){

@@ -3,12 +3,17 @@ package administration;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import quiz.ScoreBoard;
+import user.DBConnection;
+import java.sql.*;
 
 /**
  * Servlet implementation class quickActionServlet
@@ -57,7 +62,7 @@ public class quickActionServlet extends HttpServlet {
 		} else if (typeOfAction.equals("removeQuiz")){
 			successRemoveQuiz = values.removeQuiz((String) request.getParameter("quizToRemove"));	
 		} else if (typeOfAction.equals("removeQuizHistory")){
-			successClearHistory = values.removeQuizHistory((String) request.getParameter("quizToClear"));
+			successClearHistory = values.removeQuizHistory((String) request.getParameter("quizToClear"),request);
 		}
 		request.setAttribute("successClearHistory", successClearHistory);
 		request.setAttribute("successRemoveQuiz", successRemoveQuiz);
@@ -67,9 +72,5 @@ public class quickActionServlet extends HttpServlet {
 		String nextJSP = "/AdminHomePage.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request,response);
-		
-		
-		
 	}
-
 }

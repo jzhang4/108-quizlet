@@ -148,6 +148,16 @@
 						<input type = "submit" value = "Remove Quiz History">
 						<input name = "quickActionSelected" type = "hidden" value = "removeQuizHistory">
 					</form>
+					<%
+						if (request.getAttribute("successClearHistory") != null){
+							if ((int) request.getAttribute("successClearHistory") == 1){
+								out.write("<p>" + (String)request.getParameter("quizToClear") + " scoreboard was succesfully cleared </p>");
+							} else if ((int) request.getAttribute("successClearHistory") == 0){
+								out.write("<p>" + (String)request.getParameter("quizToClear") + " could not be found or failed to remove board </p>");	
+							}
+						}
+					
+					%>
 				</div>
 			</div>	
 			<div id="wrapper">
