@@ -22,6 +22,7 @@
 
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
+<<<<<<< HEAD
 			
 			<%
 				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {
@@ -32,6 +33,13 @@
 					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
 				}
 			%>
+					
+=======
+			<li><a href="HomepageLogin.html">Logout</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
+			<li><a href="HomepageUser.jsp">Profile</a></li>
+			<li><a href="HistorySummaryPage.jsp">History</a></li>
+>>>>>>> 35b139a1e5548af569ae52117df137d1e50ea7ac
 		</ul>
 		<div id="extra-large-inner-header">
 	

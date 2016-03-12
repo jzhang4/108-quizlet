@@ -32,7 +32,6 @@
 					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
 				}
 			%>
-					
 		</ul>
 		<div id="extra-large-inner-header">
 	
