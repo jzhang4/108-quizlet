@@ -22,13 +22,21 @@
 
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
-			<li><a href="HomepageLogin.html">Logout</a></li>
-			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
-			<li><a href="HomepageUser.jsp">Profile</a></li>
+			
+			<%
+				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {
+					out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
+				} else {
+					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
+					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
+					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
+				}
+			%>
+					
 		</ul>
 		<div id="extra-large-inner-header">
 	
-			<h1>Choose a Quiz to Take! </h1>
+			<h1>Choose a Quiz to View! </h1>
 			<form action="QuizSummaryPage.jsp" method="post">
 				<%
 				ServletContext context = getServletContext(); 
@@ -47,13 +55,18 @@
 					count++;
 				}
 				
+				request.setAttribute("temp", request.getParameter("temp"));
 				%>
 			<input type="submit" class="btn btn-primary" value = "View Quiz Summary"/>
 			</form>
 			
-			<form action="NewQuizForm.html">
-			  <input type="submit" class="btn btn-primary" value = "Create New Quiz"/>
-			</form>
+			<%
+				if (request.getParameter("temp") == null) {
+					out.println("<form action=\"NewQuizForm.html\">");
+					out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Create New Quiz\"/>");
+					out.println("</form>");
+				}
+			%>
 		</div>
 	</div>
 </body>
