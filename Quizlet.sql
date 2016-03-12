@@ -33,6 +33,7 @@ CREATE TABLE users(
 	admin BIGINT,
 	picKey BIGINT,
 	privacy TINYINT DEFAULT 0,
+	searchPrivate TINYINT DEAFAULT 0,
 	PRIMARY KEY (id)
 );
 
