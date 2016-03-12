@@ -3,10 +3,12 @@ table {
     border-collapse: collapse;
     width: 50%;
     text-align: center;
+    table-layout:fixed;
 }
 th, td {
     text-align: center;
     padding: 8px;
+    word-wrap:break-word;
 }
 
 tr:nth-child(even){

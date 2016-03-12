@@ -30,6 +30,7 @@
 					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
 					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
 					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
+					out.println("<li><a href=\"HistorySummaryPage.jsp\">History</a></li>");
 				}
 			%>
 		</ul>

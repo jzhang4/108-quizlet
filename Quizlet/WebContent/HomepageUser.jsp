@@ -35,9 +35,11 @@
 		<li><a href="HomepageUser.jsp">Profile</a></li>
 		<li><a href="HistorySummaryPage.jsp">History</a></li>
 	</ul>
+	</div>
 	<div id="extra-large-inner-header">
 		<div> 
 			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
+			<h2>Account: 
 			<p>Quiz Performance: 
 				<%
 				
@@ -48,9 +50,12 @@
 				else
 					out.println("Public");
 				%>
-			</p>
+			</h2>
 			
-			<p><a href="/Quizlet/ChangePrivacyServlet">Change Privacy</a></p>
+			
+			<form action="ChangePrivacyServlet">
+				<input type="submit" class="btn btn-primary" value ="Change Privacy"/>
+			</form>
 		</div>
 		
 		
@@ -75,7 +80,7 @@
 				    	String htmlCodeForForm = "<input type = \"hidden\" name = \"imageName\" + value = \"" + userCurrently + "\"" + "/>" ;
 				    	out.write(htmlCodeForForm);
 				    %>
-				    <input type="submit" value ="Change Profile Photo"/>
+				    <input type="submit" class="btn btn-primary" value ="Change Profile Photo"/>
 				</form>		
 					
 			</div>
@@ -129,9 +134,7 @@
 					}
 				}
 			%>  
-		</div>
-		
-		<div class="rightSide">
+			
 			<h1> Social Connections </h1>
 			<form action="SearchUserServlet" method="post">
 			<input type="text" name="user"/>
@@ -222,8 +225,6 @@
 				%>
 				</ul>
 			</div>
-			
-			
 			<h2><a href="/Quizlet/SendMessage.jsp">Send a new message</a></h2>
 			
 
@@ -261,6 +262,11 @@
 					out.println("</a>");
 				}
 			%> 
+		</div>
+		
+		<div class="rightSide">			
+			
+			
 			<h2>Popular Quizzes:</h2>	
   			<%
   			ServletContext context = getServletContext(); 
@@ -415,7 +421,6 @@
 		</div>
 	</div>
 
-	</div>
 
 </body>
 </html>

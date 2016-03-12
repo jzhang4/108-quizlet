@@ -8,16 +8,27 @@
 			<title>Achievements</title>
 			<link rel="stylesheet" href ="HomePage.css">
 			<link rel="stylesheet" href="AchievementStyling.css">
-		</head>
-		<body>
-			<div id = "header">		<!-- Page header, CSS styles it with a solid colour background -->
-				<h1><b><font size = "20"> Achievements</font></b></h1> 
-			</div>
-			</br>
-			</br>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/common.css">
+	<link rel="stylesheet" href="CSS/login-formatting.css">
+	<link rel="stylesheet" href="CSS/tableFormatting.css">
+	
+</head>
+<body>
+	<div id=header>
+
+		<ul>
+			<li class="name"><a>Quizzler</a></li>
+			<li><a href="HomepageLogin.html">Logout</a></li>
+			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
+			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<li><a href="HistorySummaryPage.jsp">History</a></li>
+		</ul>
+		<div id="extra-large-inner-header">
+				<h1>Achievements</h1> 
 			<form action = "./achieveGetServlet" method = post>
 				<input type = "text" name = "userNameToLookUp" placeHolder = "Name of user to look up" size = "40">
-				<input type = "submit" value = "Submit">				
+				<input type = "submit" class="btn btn-primary" value = "Submit">				
 			</form>
 			<%  
 				if(request.getAttribute("userAchievements") != null){	// check for the state of achievements when we first generate the page 
@@ -38,5 +49,8 @@
 					}
 				}
 			%>
-		</body>
+			</div>
+		</div>
+</body>
+		
 	</html>
