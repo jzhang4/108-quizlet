@@ -22,7 +22,7 @@ import org.omg.CORBA.portable.OutputStream;
 @WebServlet("/UploadServlet")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
-	private static final String path = "/Users/jzhang/Downloads/ImageStorage/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
+	private static final String path = "/Users/liamneath/Downloads/ImageStorage/"; // YOU MUST CHANGE THIS FOR IT TO WORK ON YOUR COMPUTER
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -48,17 +48,22 @@ public class UploadServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	    Part filePart = request.getPart("file"); 				  // Retrieves <input type="file" name="file">
 	    InputStream fileContent = filePart.getInputStream();
-	    byte[] buffer = new byte [fileContent.available()];
+	    byte[] buffer = new byte [fileContent.available()];			// byte buffer to hold the encoding data
 	    fileContent.read(buffer);
-	    String newFile = path + request.getParameter("imageName") + ".jpg";
-	    System.out.println(newFile);
-	    File targetFile = new File(newFile);
+	    String newFile = path + request.getParameter("imageName") + ".jpg";	// this is where the file will be mapped to 
+	    // System.out.println(newFile);
+	    File targetFile = new File(newFile);						// create a new file in the specified directory 
 	    FileOutputStream outStream = new FileOutputStream(targetFile);
 	    outStream.write(buffer);
-	    outStream.close();
-	    String nextJSP = "/HomepageUser.jsp";
+	    outStream.close();		
+	    
+	    UserPhoto photoLoader = (UserPhoto)(request.getServletContext()).getAttribute("photoAssign");
+	    photoLoader.setToCustom(request.getParameter("imageName"));
+	    
+	    // writing to that file and closing the stream right after
+	    String nextJSP = "/HomepageUser.jsp";						
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request,response);
-	    doGet(request,response);
+		dispatcher.forward(request,response);						// forward back to the HomePage. The uploaded image should
+	    doGet(request,response);									// now be there
 	}
 }

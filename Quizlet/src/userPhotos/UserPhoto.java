@@ -23,6 +23,15 @@ public class UserPhoto {
 		}
 		return value;
 	}
+	public void setToCustom(String userName){
+		String query = "UPDATE users SET picKey =" + "\"" +"0" + "\" " +  "WHERE username =" + "\"" + userName + "\"";
+		try {
+			Statement action = con.createStatement();
+			action.execute(query);
+		} catch (Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	public static void main(String[]args){
 		DBConnection connect = new DBConnection();
 		UserPhoto photo = new UserPhoto(connect.passConnnection());
