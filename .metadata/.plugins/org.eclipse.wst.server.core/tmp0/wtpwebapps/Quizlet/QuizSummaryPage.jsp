@@ -170,9 +170,16 @@ if (request.getAttribute("temp") == null) {
 			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
 			out.write("<tr>");
 			for (Score sc : top) {
+				String userInTable;
+				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
+				if (performer.privacyOn()) {
+					userInTable = "Anonymous";
+				} else {
+					userInTable = sc.user;
+				}
 				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.println("<td>"+userInTable +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 				out.write("</tr>");
 			}
 			out.write("</table>");
@@ -187,9 +194,16 @@ if (request.getAttribute("temp") == null) {
 			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
 			out.write("<tr>");
 			for (Score sc : recent) {
+				String userInTable;
+				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
+				if (performer.privacyOn()) {
+					userInTable = "Anonymous";
+				} else {
+					userInTable = sc.user;
+				}
 				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.println("<td>"+userInTable +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 				out.write("</tr>");
 			}
 			out.write("</table>");
@@ -205,9 +219,16 @@ if (request.getAttribute("temp") == null) {
 			out.write("<tr>");
 			ArrayList<Score> recentall = board.getRecentPerformers();
 			for (Score sc : recentall) {
+				String userInTable;
+				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
+				if (performer.privacyOn()) {
+					userInTable = "Anonymous";
+				} else {
+					userInTable = sc.user;
+				}
 				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.println("<td>"+userInTable +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 				out.write("</tr>");
 			}
 			out.write("</table>");
@@ -221,9 +242,16 @@ if (request.getAttribute("temp") == null) {
 			out.write("<tr>");
 			out.println("<h2>All test takers:</strong> </h2>");
 			for (Score sc : board.getUsers()) {
+				String userInTable;
+				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
+				if (performer.privacyOn()) {
+					userInTable = "Anonymous";
+				} else {
+					userInTable = sc.user;
+				}
 				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
-				out.println("<td>"+sc.user +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+				out.println("<td>"+userInTable +"</td><td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 				out.write("</tr>");
 			}
 			out.write("</table>");
