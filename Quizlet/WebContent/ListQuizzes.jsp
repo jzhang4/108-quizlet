@@ -30,7 +30,6 @@
 					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
 					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
 					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
-					out.println("<li><a href=\"HistorySummaryPage.jsp\">History</a></li>");
 				}
 			%>
 		</ul>
@@ -54,10 +53,15 @@
 					}
 					count++;
 				}
-				
-				request.setAttribute("temp", request.getParameter("temp"));
+							
+				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {
+					out.println("<input type=\"hidden\" value=\"true\" name=\"temp\"/>");
+					request.setAttribute("temp", true);
+				}
+
 				%>
 			<input type="submit" class="btn btn-primary" value = "View Quiz Summary"/>
+			
 			</form>
 			
 			<%

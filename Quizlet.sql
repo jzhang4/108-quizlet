@@ -32,14 +32,15 @@ CREATE TABLE users(
 	passwordHash char(64),
 	admin BIGINT,
 	picKey BIGINT,
+	privacy TINYINT DEFAULT 0,
 	PRIMARY KEY (id)
 );
 
 INSERT INTO users VALUES
-	(1,"liamNeath","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",1,0),
-	(2,"jessicaZhang","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,3),
-	(3,"Molly","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,3),
-	(4,"HBU","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,4);
+	(1,"liamNeath","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",1,0,0),
+	(2,"jessicaZhang","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,3,0),
+	(3,"Molly","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,3,1),
+	(4,"HBU","86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",0,4,0);
 
 
 CREATE TABLE friends(
