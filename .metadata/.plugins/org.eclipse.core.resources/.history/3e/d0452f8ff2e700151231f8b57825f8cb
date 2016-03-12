@@ -53,15 +53,16 @@
 					}
 					count++;
 				}
-							
-				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {
-					out.println("<input type=\"hidden\" value=\"true\" name=\"temp\"/>");
-					request.setAttribute("temp", true);
-				}
-
+				
+				request.setAttribute("temp", request.getParameter("temp"));
+				
+				
+				
+				
 				%>
 			<input type="submit" class="btn btn-primary" value = "View Quiz Summary"/>
 			
+			<!--  <input type="hidden" value="true" name="temp"/> -->
 			</form>
 			
 			<%
