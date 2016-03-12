@@ -13,10 +13,12 @@ public class User {
 	private List<Request> sentRequests;
 	private List<Message> receivedMessages;
 	private List<Message> sentMessages;
+	private boolean privacyOn;
 	
-	public User(String username, byte[] password, Statement stmt) {
+	public User(String username, byte[] password, Statement stmt, boolean privacyOn) {
 		this.username = username;
 		this.passwordHash = password;
+		this.privacyOn = privacyOn;
 		receivedRequests = new ArrayList<Request>();
 		sentRequests = new ArrayList<Request>();
 		friends = new ArrayList<Integer>();
@@ -26,6 +28,14 @@ public class User {
 	
 	public String getPasswordHash() {
 		return hexToString(passwordHash);
+	}
+	
+	public void changePrivacy() { //toggle
+		privacyOn = !privacyOn;
+	}
+	
+	public boolean privacyOn() {
+		return privacyOn;
 	}
 	
 	public static String hexToString(byte[] bytes) {
