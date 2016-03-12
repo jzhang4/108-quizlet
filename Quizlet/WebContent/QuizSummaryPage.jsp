@@ -237,7 +237,9 @@ if (request.getAttribute("temp") == null) {
 				totalTime += sc.timescore;
 				totalScore += sc.score;	
 			}
-			out.write("<h2>Average Score: " + totalScore/board.getUsers().size() + " Average Time: " + totalTime/board.getUsers().size() + " s</h2>");
+			double averageScore = totalScore/board.getUsers().size();
+			double averageTime = totalTime/board.getUsers().size();
+			out.write("<h2>Average Score: " + ((double)((int)(averageScore*100)))/100 + " Average Time: " + ((double)((int)(averageTime*100)))/100 + " s</h2>");
 
 			
 			if (request.getParameter("temp") == null && username.equals(currentuser)) {
