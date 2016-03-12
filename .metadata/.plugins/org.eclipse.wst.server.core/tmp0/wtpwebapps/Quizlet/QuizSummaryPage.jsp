@@ -23,6 +23,7 @@ String username = "";
 ScoreBoard board = null; 
 String name = request.getParameter("quizname");
 String currentuser = "";
+User cu = null;
 
 
 if (request.getAttribute("temp") == null) {
@@ -30,6 +31,7 @@ if (request.getAttribute("temp") == null) {
 	DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
 	currentuser = (String)session.getAttribute("user");
+	cu = ((AccountManager)session.getAttribute("am")).getAccount(currentuser);
 	Statement stmt = connect.getStatement();
 
 
@@ -172,7 +174,7 @@ if (request.getAttribute("temp") == null) {
 			for (Score sc : top) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
-				if (performer.privacyOn()) {
+				if (performer.privacyOn() && cu != null && !cu.isFriends(performer.getID())) {
 					userInTable = "Anonymous";
 				} else {
 					userInTable = sc.user;
@@ -196,7 +198,7 @@ if (request.getAttribute("temp") == null) {
 			for (Score sc : recent) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
-				if (performer.privacyOn()) {
+				if (performer.privacyOn() && cu != null && !cu.isFriends(performer.getID())) {
 					userInTable = "Anonymous";
 				} else {
 					userInTable = sc.user;
@@ -221,7 +223,7 @@ if (request.getAttribute("temp") == null) {
 			for (Score sc : recentall) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
-				if (performer.privacyOn()) {
+				if (performer.privacyOn() && cu != null && !cu.isFriends(performer.getID())) {
 					userInTable = "Anonymous";
 				} else {
 					userInTable = sc.user;
@@ -244,7 +246,7 @@ if (request.getAttribute("temp") == null) {
 			for (Score sc : board.getUsers()) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
-				if (performer.privacyOn()) {
+				if (performer.privacyOn() && cu != null && !cu.isFriends(performer.getID())) {
 					userInTable = "Anonymous";
 				} else {
 					userInTable = sc.user;
