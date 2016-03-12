@@ -1,18 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import= "quiz.Quiz"%>
+<%@ page import= "quiz.*"%>
+<%@ page import= "quiz.ScoreBoard.Score" %>
 <%@ page import= "quiz.Question"%>
 <%@ page import= "quiz.MAQuestion"%>
 <%@ page import= "java.util.*, user.*"%>
+<%@ page import= "java.sql.*"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Display quiz</title>
-<!--  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">-->
+	<link rel="stylesheet" href="CSS/login-formatting.css">
 	
 	
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -96,12 +99,44 @@
 			</form>
 			<div class="ct-chart ct-perfect-fourth" style="height: 400px; width: 600px;">
 				<%
-					ArrayList<Integer> rawValues = new ArrayList<Integer>();
-					for (int i = 0; i < 100; i ++){				// this code is not tested! USE WITH CAUTION
-						rawValues.add(i);
+
+		        	ServletContext context = getServletContext(); 
+					DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+
+		        
+		        	String name = quiz.getName();
+		        	String username = (String)session.getAttribute("user");
+		        	int score = (int)session.getAttribute("score");
+		        
+		        	Statement stmt = connect.getStatement();
+		       	 	PreparedStatement pstmt = connect.getPreparedStatement2();
+		        
+		        	ScoreBoard sb = null; 
+		        	try {
+						ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+					
+						while(rs.next()) {
+							String quizname = rs.getString(2);
+							if (quizname.equals(name)) {
+								Blob boardblob = rs.getBlob(7);
+								sb = new ScoreBoard(boardblob);
+							
+								break; 
+							}
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					int maxValue = Collections.max(rawValues);
-					int bucketSize = maxValue/4;
+		        	ArrayList<Long> rawValues = new ArrayList<Long>();
+		        	for (Score s : sb.getUsers()) {
+		        		rawValues.add(s.score); 
+		        	}
+
+					long maxValue = Collections.max(rawValues);
+					maxValue = ((maxValue-1)/8+ 1)*8;
+					long bucketSize = maxValue/4;
+					
 					int numFirstBucket = 0;
 					int numSecondBucket = 0; 
 					int numThirdBucket = 0;
@@ -117,17 +152,20 @@
 							numFourthBucket++;
 						}
 					}
-					String firstBucketLabel = "0 - " + Integer.toString(bucketSize);
-					String secondBucketLabel = Integer.toString(bucketSize) + " - " + Integer.toString(2*bucketSize);
-					String thirdBucketLabel = Integer.toString(2*bucketSize) + " - " + Integer.toString(3*bucketSize);
-					String fourthBucketLabel = Integer.toString(3*bucketSize) + " - " + Integer.toString(4*bucketSize);
+					String firstBucketLabel = "0 - " + Long.toString(bucketSize);
+					String secondBucketLabel = Long.toString(bucketSize) + " - " + Long.toString(2*bucketSize);
+					String thirdBucketLabel = Long.toString(2*bucketSize) + " - " + Long.toString(3*bucketSize);
+					String fourthBucketLabel = Long.toString(3*bucketSize) + " - " + Long.toString(4*bucketSize);
 					
 					// time to make the chart
 					out.write ("<script>");
 					out.write("new Chartist.Bar('.ct-chart', {");
 					out.write("labels: [\'" + firstBucketLabel + "\',\'" +secondBucketLabel + "\',\'" + thirdBucketLabel + "\',\'" + fourthBucketLabel + "\'],");
-					out.write("series:[20,20,20,20]");
-					//out.write("series: [" + Integer.toString(numFirstBucket) + "," + Integer.toString(numSecondBucket) +"," +Integer.toString(numThirdBucket) + "," + Integer.toString(numFourthBucket) + "]");
+					out.write("series: [");
+					//out.write("[20,20,20,20,20]");
+					
+				    out.write("[" + Integer.toString(numFirstBucket) + "," + Integer.toString(numSecondBucket) +"," +Integer.toString(numThirdBucket) + "," + Integer.toString(numFourthBucket) + "]");
+					out.write("]");
 					out.write("}, {");
 					out.write("fullWidth: true,");
 					out.write("chartPadding: {");
