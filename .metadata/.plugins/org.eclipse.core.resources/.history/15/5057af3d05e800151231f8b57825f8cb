@@ -174,7 +174,7 @@ if (request.getAttribute("temp") == null) {
 			for (Score sc : top) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
-				if (performer.privacyOn() && cu != null && !cu.isFriends(performer.getID())) {
+				if (performer.privacyOn() && cu != null && cu.isFriends(performer.getID())) {
 					userInTable = "Anonymous";
 				} else {
 					userInTable = sc.user;
@@ -246,7 +246,7 @@ if (request.getAttribute("temp") == null) {
 			for (Score sc : board.getUsers()) {
 				String userInTable;
 				User performer = ((AccountManager)session.getAttribute("am")).getAccount(sc.user);
-				if (performer.privacyOn() && cu != null && !cu.isFriends(performer.getID())) {
+				if (performer.privacyOn()) {
 					userInTable = "Anonymous";
 				} else {
 					userInTable = sc.user;

@@ -45,12 +45,12 @@ public class ChangePrivacyServlet extends HttpServlet {
 		int changeTo = (cu.privacyOn()) ? 0 : 1;
 		
 		try {
-			con.getStatement().executeUpdate("UPDATE users SET privacy=" + changeTo + " WHERE id=" + cu.getID());
+			con.getStatement().executeUpdate("UPDATE users SET privacyOn=" + changeTo + " WHERE id=" + cu.getID());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("HomepageUser.html");
 		rd.forward(request, response);
 	}
 

@@ -28,7 +28,7 @@
 		</ul>
 		<div id="extra-large-inner-header">
 			<%
-			out.println("<p>"+quiz.getName()+ "</p>");
+			out.println("<h1>"+quiz.getName()+ "</h1>");
 			Iterator<Question> it = (Iterator<Question>)(session.getAttribute("iterator"));
 			
 			Question q = it.next();
@@ -36,9 +36,9 @@
 			int index = (int)(session.getAttribute("index"));
 			
 			if (q.getType() == Question.PICTURE_RESPONSE) {
-				out.println("<p>Question "+index + "</p>");
+				out.println("<p><strong>Question "+index + "</strong></p>");
 				out.println("<img src=\""+ques + "\" alt = \""+ques+"\" style = \"width:128px;height:128px;\">");
-			} else out.println("<p>Question "+index + ": "+ques + "</p>");
+			} else out.println("<p><strong>Question "+index + ":</strong> "+ques + "</p>");
 			
 			session.setAttribute("index", index+1);
 			out.println("<form action=\"NextQuestionServlet\" method=\"post\">");
