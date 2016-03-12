@@ -143,6 +143,12 @@ h3{
   	overflow-y:scroll;
 }
 
+.blacklist{
+	color:black;
+	font-size:15px;
+	text-align:left;
+}
+
 .divclass{
 	padding-top:100px;
 }

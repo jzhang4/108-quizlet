@@ -40,7 +40,6 @@
 		<div> 
 			<h1>Welcome  <% out.println(session.getAttribute("user")); %></h1>
 			<h2>Account: 
-			<p>Quiz Performance: 
 				<%
 				
 				User cu = ((AccountManager)session.getAttribute("am")).getAccount((String)session.getAttribute("user"));
@@ -190,7 +189,7 @@
 							break;
 						}
 						out.println("<li>");
-						out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+						out.println("<a class=\"blacklist\" href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 						out.println(u.getUserName());
 						out.println("</a>");
 						
@@ -216,7 +215,7 @@
 				
 						User u = ((AccountManager)session.getAttribute("am")).getAccount(ID);
 						out.println("<li>");
-						out.println("<a href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
+						out.println("<a class=\"blacklist\" href =\"/Quizlet/SearchUserServlet?user=" + u.getUserName() + "&currUser=" + cu.getUserName() + "\">");
 						out.println(u.getUserName());
 						out.println("</a>");
 						out.println("</li>");
@@ -239,7 +238,7 @@
 					if (!m.isRead()) {
 						out.println("<b>");
 					}
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
+					out.println("<a class=\"blacklist\" href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 					out.println(m.getSubject());
@@ -257,7 +256,7 @@
 					String recipient = m.getRecipient();
 					User u = ((AccountManager)session.getAttribute("am")).getAccount(recipient);
 					out.println("<li>");
-					out.println("<a href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
+					out.println("<a class=\"blacklist\" href =\"/Quizlet/ViewMessageServlet?id=" + m.getID() + "&currUser=" + cu.getUserName() + "\">");
 					out.println(u.getUserName());
 					out.println("</a>");
 				}
