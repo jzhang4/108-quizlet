@@ -1,18 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import= "quiz.Quiz"%>
+<%@ page import= "quiz.*"%>
+<%@ page import= "quiz.ScoreBoard.Score" %>
 <%@ page import= "quiz.Question"%>
 <%@ page import= "quiz.MAQuestion"%>
 <%@ page import= "java.util.*, user.*"%>
+<%@ page import= "java.sql.*"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Display quiz</title>
-<!--  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/common.css">
-	<link rel="stylesheet" href="CSS/login-formatting.css">-->
+	<link rel="stylesheet" href="CSS/login-formatting.css">
 	
 	
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -96,11 +99,42 @@
 			</form>
 			<div class="ct-chart ct-perfect-fourth" style="height: 400px; width: 600px;">
 				<%
-					ArrayList<Long> rawValues = new ArrayList<Long>();
-					for (int i = 0; i < 100; i ++){				// this code is not tested! USE WITH CAUTION
-						rawValues.add((long)i);
+
+		        	ServletContext context = getServletContext(); 
+					DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+
+		        
+		        	String name = quiz.getName();
+		        	String username = (String)session.getAttribute("user");
+		        	int score = (int)session.getAttribute("score");
+		        
+		        	Statement stmt = connect.getStatement();
+		       	 	PreparedStatement pstmt = connect.getPreparedStatement2();
+		        
+		        	ScoreBoard sb = null; 
+		        	try {
+						ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+					
+						while(rs.next()) {
+							String quizname = rs.getString(2);
+							if (quizname.equals(name)) {
+								Blob boardblob = rs.getBlob(7);
+								sb = new ScoreBoard(boardblob);
+							
+								break; 
+							}
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+		        	ArrayList<Long> rawValues = new ArrayList<Long>();
+		        	for (Score s : sb.getUsers()) {
+		        		rawValues.add(s.score); 
+		        	}
+
 					long maxValue = Collections.max(rawValues);
+					maxValue = ((maxValue-1)/8+ 1)*8;
 					long bucketSize = maxValue/4;
 					
 					int numFirstBucket = 0;
