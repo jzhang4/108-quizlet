@@ -92,16 +92,18 @@ if (request.getAttribute("temp") == null) {
 </head>
 <body>
 	<div id=header>
-
+		
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
+		
 			<%
-				if (request.getAttribute("temp") == null) {
+				if (request.getParameter("temp") != null || request.getAttribute("temp") != null) {
 					out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
 				} else {
 					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
 					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
 					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
+					out.println("<li><a href=\"HistorySummaryPage.jsp\">History</a></li>");
 				}
 			%>
 		</ul>
@@ -124,7 +126,7 @@ if (request.getAttribute("temp") == null) {
 			
 			<% 
 			
-			if (request.getAttribute("temp") != null) {
+			if (request.getAttribute("temp") == null) {
 				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
 				out.println("</form>");
@@ -134,28 +136,30 @@ if (request.getAttribute("temp") == null) {
 			
 			<%
 			
-			if (request.getAttribute("temp") != null) {
-				out.println("<p><strong>Your Past Performance:</strong> </p>");
+			if (request.getAttribute("temp") == null) {
+				out.println("<h2>Your Past Performance:</strong> </h2>");
 				out.write("<table>");
 				out.write("<tr>");
 				out.write("<th>Date Taken</th><th>Score</th><th>Time</th>");
 				out.write("<tr>");
+				int count = 0;
 				for (Score sc : board.getUsers()) {
-					if (sc.user.equals(username)){
+					if (sc.user.equals(currentuser)){
 						Date dt = new Date(sc.timetaken);
 						out.println("<tr>");
 						out.println("<td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
 						out.println("</tr>");
+						count++;
 					}
 				}
-
 				out.write("</table>");
+				if(count==0)out.write("<p>None</p>");
 				out.write("</div>");
 			}
 			
 	
 			out.write("<div>");
-			out.println("<p><strong>Top Performers of all time:</strong> </p>");
+			out.println("<h2>Top Performers of all time:</strong> </h2>");
 
 			ArrayList<Score> top = board.getTopPerformers();
 			out.write("<table>");
@@ -169,10 +173,11 @@ if (request.getAttribute("temp") == null) {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			if(top.size()==0)out.write("<p>None</p>");
 			out.write("</div>");
 			
 			out.write("<div>");
-			out.println("<p><strong>Top Performers in last 15 minutes:</strong> </p>");
+			out.println("<h2>Top Performers in last 15 minutes:</strong> </h2>");
 			ArrayList<Score> recent = board.getTopRecentPerformers();
 			out.write("<table>");
 			out.write("<tr>");
@@ -185,10 +190,12 @@ if (request.getAttribute("temp") == null) {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			if(recent.size()==0)out.write("<p>None</p>");
 			out.write("</div>");
+
 			
 			out.write("<div>");
-			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
+			out.println("<h2>All recent test takers(last 15 minutes):</strong> </h2>");
 			out.write("<table>");
 			out.write("<tr>");
 			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
@@ -201,15 +208,15 @@ if (request.getAttribute("temp") == null) {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			if(recentall.size()==0)out.write("<p>None</p>");
 			out.write("</div>");
 			
 			out.write("<div>");
-			out.println("<p><strong>All recent test takers(last 15 minutes):</strong> </p>");
 			out.write("<table>");
 			out.write("<tr>");
 			out.write("<th>User</th><th>Date Taken</th><th>Score</th><th>Time</th>");
 			out.write("<tr>");
-			out.println("<p><strong>All test takers:</strong> </p>");
+			out.println("<h2>All test takers:</strong> </h2>");
 			for (Score sc : board.getUsers()) {
 				out.write("<tr>");
 				Date dt = new Date(sc.timetaken);
@@ -217,13 +224,25 @@ if (request.getAttribute("temp") == null) {
 				out.write("</tr>");
 			}
 			out.write("</table>");
+			if(board.getUsers().size()==0)out.write("<p>None</p>");
 			out.write("</div>");
+			
+			
+			double totalScore = 0;
+			double totalTime = 0;
+			for (Score sc : board.getUsers()) {
+				totalTime += sc.timescore;
+				totalScore += sc.score;	
+			}
+			
 			
 			if (request.getAttribute("temp") != null && username.equals(currentuser)) {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Edit Quiz\"/>");
 				out.println("</form>"); 
 			} 
+			out.write("<h2>Average Score:" + totalScore/board.getUsers().size() + " Average Time: " + totalTime/board.getUsers().size() + " s</h2>");
+			
 			
 			%>
 			
@@ -231,7 +250,7 @@ if (request.getAttribute("temp") == null) {
 			
 			<% 
 			
-			if (request.getAttribute("temp") != null) {
+			if (request.getAttribute("temp") == null) {
 				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
 				out.println("</form>");
@@ -247,7 +266,6 @@ if (request.getAttribute("temp") == null) {
 				%>
 				  <input type="submit" class="btn btn-primary" value = "Back"/>
 				</form>
-				
 			</div>
 			
 
