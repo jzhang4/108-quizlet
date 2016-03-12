@@ -403,3 +403,12 @@
 0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:40:11 -0800] "GET /Quizlet/ListQuizzes.jsp?temp=true HTTP/1.1" 200 2357
 0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:40:12 -0800] "POST /Quizlet/QuizSummaryPage.jsp HTTP/1.1" 200 3194
 0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:40:14 -0800] "POST /Quizlet/ListQuizzes.jsp HTTP/1.1" 200 2357
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:09 -0800] "GET /Quizlet/CreateNewAccount.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:10 -0800] "GET /Quizlet/HomepageLogin.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:14 -0800] "POST /Quizlet/LoginServlet HTTP/1.1" 200 4611
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:16 -0800] "GET /Quizlet/ListQuizzes.jsp HTTP/1.1" 200 2507
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:18 -0800] "POST /Quizlet/QuizSummaryPage.jsp HTTP/1.1" 200 3787
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:20 -0800] "POST /Quizlet/TakeQuizServlet HTTP/1.1" 200 1170
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:22 -0800] "GET /Quizlet/LogoutServlet HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:24 -0800] "GET /Quizlet/ListQuizzes.jsp?temp=true HTTP/1.1" 200 2357
+0:0:0:0:0:0:0:1 - - [11/Mar/2016:17:41:25 -0800] "POST /Quizlet/QuizSummaryPage.jsp HTTP/1.1" 200 3024
