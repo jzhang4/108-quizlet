@@ -18,6 +18,7 @@
 			<li><a href="HomepageLogin.html">Logout</a></li>
 			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
 			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<li><a href="HistorySummaryPage.jsp">History</a></li>
 		</ul>
 		<div id="innerHeaderLarge">
 
@@ -30,14 +31,14 @@
 					out.println("To: <input type=\"text\" name=\"recipient\" value=\"" + request.getAttribute("to") + "\"><br>");
 					out.println("Subject: <input type=\"text\" name=\"subject\" value=\"" + request.getAttribute("subject") + "\"><br>");
 				} else {
-					out.println("To: <input type=\"text\" name=\"recipient\"><br>");
+					if (request.getParameter("recipient") != null) {
+						out.println("To: <input type=\"text\" name=\"recipient\" value=\"" + request.getParameter("recipient") + "\"><br>");
+					} else {
+						out.println("To: <input type=\"text\" name=\"recipient\"><br>");
+					}
 					out.println("Subject: <input type=\"text\" name=\"subject\"><br>");
 				}	
 			%>
-			
-			
-			<!--   To: <input type="text" name="recipient"><br>
-			  Subject: <input type="text" name="subject"><br> -->
 			  Message:<br>
 			  <textarea name="message" form="newmessage"></textarea>
 			  <input type="submit" value="Send">

@@ -23,7 +23,8 @@
 			<li class="name"><a>Quizzler</a></li>
 			<li><a href="/Quizlet/LogoutServlet">Logout</a></li>
 			<li><a href="TakeNewQuiz.jsp">Quizzes</a></li>
-			<li><a>Profile</a></li>
+			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<li><a href="HistorySummaryPage.jsp">History</a></li>
 		</ul>
 		<div id="extra-large-inner-header">
 			<%

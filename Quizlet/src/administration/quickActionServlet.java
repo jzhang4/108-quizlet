@@ -36,14 +36,17 @@ public class quickActionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Administrator values = (Administrator) session.getAttribute("currentStats");
+		
+		
+		Administrator values = (Administrator) (request.getServletContext()).getAttribute("currentStats");
 		String typeOfAction = (String) request.getParameter("quickActionSelected");
 		int successAdmin = -1;
 		int successAnnounce = -1;
 		int successRemove = -1;
+		int successRemoveQuiz = -1;
+		int successClearHistory = -1;
 		if (values == null){
-			System.out.println("STUFF IS BAD");
+			System.err.println("Administrator is null, check to make sure the server started everything correctly");
 		}
 		if (typeOfAction.equals("admin")){		// trying to make somebody an administrator
 			successAdmin = values.makeAdminUpdate((String)request.getParameter("username"));
@@ -51,7 +54,13 @@ public class quickActionServlet extends HttpServlet {
 			successAnnounce = values.logAnnounce((String)request.getParameter("newAnnouncement"));
 		} else if (typeOfAction.equals("remove")){
 			successRemove = values.removeUser((String) request.getParameter("userNameToRemove"));
+		} else if (typeOfAction.equals("removeQuiz")){
+			successRemoveQuiz = values.removeQuiz((String) request.getParameter("quizToRemove"));	
+		} else if (typeOfAction.equals("removeQuizHistory")){
+			successClearHistory = values.removeQuizHistory((String) request.getParameter("quizToClear"));
 		}
+		request.setAttribute("successClearHistory", successClearHistory);
+		request.setAttribute("successRemoveQuiz", successRemoveQuiz);
 		request.setAttribute("successRemove", successRemove);
 		request.setAttribute("successAdmin", successAdmin);
 		request.setAttribute("successAnnounce", successAnnounce);

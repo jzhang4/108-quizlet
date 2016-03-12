@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/common.css">
+	<link rel="stylesheet" href="CSS/nav-bar.css">
+	<title>Log In - Quizzler</title>
+</head>
+<body>
+	<div id=header>
+		<ul>
+		  <li class="name"><a href="index.jsp">Quizzler</a></li>
+		  <li><a href="TheTeam.html">Meet the Team</a></li>
+		  <li><a href="HomepageLogin.html">Login</a></li>
+		</ul>
+		<form action="LoginServlet" method="post">
+		<div id="innerHeaderLarge">
+			<h1>Please Log In:</h1>
+			<div>
+				<h2>Username: <input type="text" name="user" /></h2>
+				<h2>Password: <input type="password" name="password" /></h2>
+				<p>User: <input type = "radio" name ="typeOfUser" value ="user" checked />
+				Administrator: <input type = "radio" name ="typeOfUser" value ="admin" /></p>
+			</div>
+			<input type="submit" class="btn btn-primary" value="Login"/>
+			<h3>Don't have an account? 	<a href="/Quizlet/CreateNewAccount.html" class="sign_up">Sign up here!</a>
+			</h3>
+			
+			<h3>Want to see some quizzes?<a href="/Quizlet/ListQuizzes.jsp?user=temp" class="sign_up">Click here!</a>
+			
+		</div>
+		</form>
+	</div>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package quiz;
 
+import java.io.File;
 import java.util.*;
 
 import org.json.simple.JSONObject;
@@ -22,7 +23,13 @@ public class Quiz {
 	
 	private boolean practicemode; 
 	
-	
+	public static Quiz readXML(String XMLfile) {
+		Quiz quiz = null; 
+		
+		File fXmlFile = new File(XMLfile);
+		
+		return quiz;
+	}
 	
 	public Quiz(String name, String description) {
 		questions = new ArrayList<Question>(); 

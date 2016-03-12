@@ -17,42 +17,49 @@
 <%@ page import= "org.json.simple.parser.ParseException" %>
 
 <%
-ServletContext context = getServletContext(); 
-DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
 
-String currentuser = (String)session.getAttribute("user");
-
-String username = "";
-
-String name = request.getParameter("quizname");
-
-Statement stmt = connect.getStatement();
 String quizstr = "";
+String username = "";
 ScoreBoard board = null; 
+String name = request.getParameter("quizname");
+String currentuser = "";
 
-try {
-	ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
-	
-	while(rs.next()) {
-		String quizname = rs.getString(2);
 
-		if (quizname.equals(name)) {
-			long taken = rs.getLong(3); 
-			username = rs.getString(1);
-			Blob quizblob = rs.getBlob(5);
-			Blob boardblob = rs.getBlob(7);
-			
-			board = new ScoreBoard(boardblob);
-			
-			byte[] bdata = quizblob.getBytes(1, (int)quizblob.length());
-			quizstr = new String(bdata);			
-			break; 
+if (request.getAttribute("temp") == null) {
+	ServletContext context = getServletContext(); 
+	DBConnection connect = (DBConnection)(context.getAttribute("Connection"));
+
+	currentuser = (String)session.getAttribute("user");
+	Statement stmt = connect.getStatement();
+
+
+	try {
+		ResultSet rs = stmt.executeQuery("SELECT * FROM quizzes");
+		
+		while(rs.next()) {
+			String quizname = rs.getString(2);
+
+			if (quizname.equals(name)) {
+				long taken = rs.getLong(3); 
+				username = rs.getString(1);
+				Blob quizblob = rs.getBlob(5);
+				Blob boardblob = rs.getBlob(7);
+				
+				board = new ScoreBoard(boardblob);
+				
+				byte[] bdata = quizblob.getBytes(1, (int)quizblob.length());
+				quizstr = new String(bdata);			
+				break; 
+			}
 		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
-} catch (SQLException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
 }
+
+
+
 
 	JSONParser parser = new JSONParser(); 
 
@@ -88,9 +95,15 @@ try {
 
 		<ul>
 			<li class="name"><a>Quizzler</a></li>
-			<li><a href="HomepageLogin.html">Logout</a></li>
-			<li><a href="ListQuizzes.jsp">Quizzes</a></li>
-			<li><a href="/Quizlet/HomepageUser.jsp">Profile</a></li>
+			<%
+				if (request.getAttribute("temp") == null) {
+					out.println("<li><a href=\"CreateNewAccount.html\">Create Account</a></li>");
+				} else {
+					out.println("<li><a href=\"HomepageLogin.html\">Logout</a></li>");
+					out.println("<li><a href=\"ListQuizzes.jsp\">Quizzes</a></li>");
+					out.println("<li><a href=\"HomepageUser.jsp\">Profile</a></li>");
+				}
+			%>
 		</ul>
 		<div id="extra-large-inner-header">
 
@@ -109,27 +122,37 @@ try {
 			out.println("<p><strong>Creator:</strong> "+"<a href =\"/Quizlet/SearchUserServlet?user=" + username + "\">" + username +"</a></p>");
 			%>
 			
-			<form action="TakeQuizServlet" method="post">
-				  <input type="submit" class="btn btn-primary" value = "Take Quiz"/>
-			</form>
+			<% 
 			
-			<%
-			out.println("<p><strong>Your Past Performance:</strong> </p>");
-			out.write("<table>");
-			out.write("<tr>");
-			out.write("<th>Date Taken</th><th>Score</th><th>Time</th>");
-			out.write("<tr>");
-			for (Score sc : board.getUsers()) {
-				if (sc.user.equals(username)){
-					Date dt = new Date(sc.timetaken);
-					out.println("<tr>");
-					out.println("<td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
-					out.println("</tr>");
-				}
+			if (request.getAttribute("temp") != null) {
+				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
+				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
+				out.println("</form>");
 			}
 
-			out.write("</table>");
-			out.write("</div>");
+			%> 	
+			
+			<%
+			
+			if (request.getAttribute("temp") != null) {
+				out.println("<p><strong>Your Past Performance:</strong> </p>");
+				out.write("<table>");
+				out.write("<tr>");
+				out.write("<th>Date Taken</th><th>Score</th><th>Time</th>");
+				out.write("<tr>");
+				for (Score sc : board.getUsers()) {
+					if (sc.user.equals(username)){
+						Date dt = new Date(sc.timetaken);
+						out.println("<tr>");
+						out.println("<td>"+ dt.toString()+"</td><td>"+sc.score+"</td><td>"+sc.timescore+"</td>");
+						out.println("</tr>");
+					}
+				}
+
+				out.write("</table>");
+				out.write("</div>");
+			}
+			
 	
 			out.write("<div>");
 			out.println("<p><strong>Top Performers of all time:</strong> </p>");
@@ -196,19 +219,32 @@ try {
 			out.write("</table>");
 			out.write("</div>");
 			
-			if (username.equals(currentuser)) {
+			if (request.getAttribute("temp") != null && username.equals(currentuser)) {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Edit Quiz\"/>");
 				out.println("</form>"); 
 			} 
-			%> 
+			
+			%>
 			
 			<div>
-				<form action="TakeQuizServlet" method="post">
-				  <input type="submit" class="btn btn-primary" value = "Take Quiz"/>
-				</form>
-				
+			
+			<% 
+			
+			if (request.getAttribute("temp") != null) {
+				out.println("<form action=\"TakeQuizServlet\" method=\"post\">");
+				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Take Quiz\"/>");
+				out.println("</form>");
+			}
+
+			%> 				
 				<form action="ListQuizzes.jsp" method="post">
+				<%
+				if (request.getAttribute("temp") == null) {
+					out.println("<input type=\"hidden\" value=\"true\" name=\"temp\"/>");
+					request.setAttribute("temp", "true");
+				}
+				%>
 				  <input type="submit" class="btn btn-primary" value = "Back"/>
 				</form>
 				
