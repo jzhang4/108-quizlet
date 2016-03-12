@@ -234,15 +234,14 @@ if (request.getAttribute("temp") == null) {
 				totalTime += sc.timescore;
 				totalScore += sc.score;	
 			}
+			out.write("<h2>Average Score:" + totalScore/board.getUsers().size() + " Average Time: " + totalTime/board.getUsers().size() + " s</h2>");
+
 			
-			
-			if (request.getAttribute("temp") != null && username.equals(currentuser)) {
+			if (request.getAttribute("temp") == null && username.equals(currentuser)) {
 				out.println("<form action=\"DisplayQuiz.jsp\" method=\"post\">"); 
 				out.println("<input type=\"submit\" class=\"btn btn-primary\" value = \"Edit Quiz\"/>");
 				out.println("</form>"); 
 			} 
-			out.write("<h2>Average Score:" + totalScore/board.getUsers().size() + " Average Time: " + totalTime/board.getUsers().size() + " s</h2>");
-			
 			
 			%>
 			
